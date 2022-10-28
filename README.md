@@ -65,3 +65,11 @@ Feature: accountability
             ]
             """
 ```
+
+## Documentation
+
+[Prettier plugin documentation](https://prettier.io/docs/en/plugins.html#developing-plugins)
+
+Gherkin AST schema
+
+![Gherkin AST schema](https://raw.githubusercontent.com/cucumber/common/main/gherkin/docs/ast.png)

@@ -107,11 +107,6 @@ const languages: SupportLanguage[] = [
 
 const gherkinParser: Parser<GherkinNode> = {
   parse: (text: string): GherkinDocument => {
-    console.log(
-      '\n=== Parsing Gherkin file ===\n',
-      text,
-      '\n============================\n'
-    );
     const uuidFn = IdGenerator.uuid();
     const builder = new AstBuilder(uuidFn);
     const matcher = new GherkinClassicTokenMatcher(); // or GherkinInMarkdownTokenMatcher()
