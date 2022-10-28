@@ -1,0 +1,33 @@
+{
+  "name": "prettier-plugin-gherkin",
+  "version": "1.0.0",
+  "description": "This prettier plugin format your gherkin (`.feature` files) documents.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "example": "yarn build && prettier --plugin . example.feature",
+    "test": "jest"
+  },
+  "keywords": [
+    "prettier",
+    "plugin",
+    "gherkin"
+  ],
+  "author": {
+    "name": "Julien Deniau",
+    "email": "julien.deniau@gmail.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@cucumber/gherkin": "^24.1.0",
+    "@cucumber/messages": "^19.1.4",
+    "prettier": "^2.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.7",
+    "@types/prettier": "^2.7.1",
+    "jest": "^24.0.0",
+    "jest-watch-typeahead": "^0.2.1",
+    "typescript": "^4.8.4"
+  }
+}
