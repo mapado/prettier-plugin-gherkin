@@ -10,6 +10,7 @@ import {
   Comment,
   Feature,
   Tag,
+  FeatureChild,
 } from '@cucumber/messages';
 import {
   AstPath,
@@ -25,51 +26,76 @@ const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
 
 type GherkinNode = GherkinDocument | Comment | Feature | Tag;
 
-enum NodeType {
-  GherkinDocument = 'GherkinDocument',
-  Comment = 'Comment',
-  Feature = 'Feature',
-  Tag = 'Tag',
+abstract class TypedGherkinNode<N extends GherkinNode> {
+  constructor(originalNode: N) {}
 }
 
-function arrayEquals(a: unknown[], b: unknown[]): boolean {
-  if (a.length !== b.length) {
-    return false;
+class TypedGherkinDocument
+  extends TypedGherkinNode<GherkinDocument>
+  implements GherkinDocument
+{
+  uri?: string;
+
+  feature?: TypedFeature;
+
+  comments: readonly TypedComment[];
+
+  constructor(originalNode: GherkinDocument) {
+    super(originalNode);
+
+    this.uri = originalNode.uri;
+    this.feature = originalNode.feature
+      ? new TypedFeature(originalNode.feature)
+      : undefined;
+    this.comments = originalNode.comments.map((c) => new TypedComment(c));
   }
+}
 
-  const uniqueValues = new Set([...a, ...b]);
-  for (const v of uniqueValues) {
-    const aCount = a.filter((e) => e === v).length;
-    const bCount = b.filter((e) => e === v).length;
+class TypedFeature extends TypedGherkinNode<Feature> implements Feature {
+  location: Location;
+  tags: readonly TypedTag[];
+  language: string;
+  keyword: string;
+  name: string;
+  description: string;
+  children: readonly FeatureChild[];
 
-    if (aCount !== bCount) return false;
+  constructor(originalNode: Feature) {
+    super(originalNode);
+
+    this.location = originalNode.location;
+    this.tags = originalNode.tags.map((t) => new TypedTag(t));
+    this.language = originalNode.language;
+    this.keyword = originalNode.keyword;
+    this.name = originalNode.name;
+    this.description = originalNode.description;
+    this.children = originalNode.children;
   }
-
-  return true;
 }
 
-function isGherkinDocument(node: GherkinNode): node is GherkinDocument {
-  return typeof node === 'object' && node.hasOwnProperty('feature');
+class TypedTag extends TypedGherkinNode<Tag> implements Tag {
+  location: Location;
+  name: string;
+  id: string;
+  constructor(originalNode: Tag) {
+    super(originalNode);
+
+    this.location = originalNode.location;
+    this.name = originalNode.name;
+    this.id = originalNode.id;
+  }
 }
 
-function isFeature(node: GherkinNode, nodeType: NodeType): node is Feature {
-  return nodeType === NodeType.Feature;
+class TypedComment extends TypedGherkinNode<Comment> implements Comment {
+  location: Location;
+  text: string;
+  constructor(originalNode: Comment) {
+    super(originalNode);
+
+    this.location = originalNode.location;
+    this.text = originalNode.text;
+  }
 }
-
-function isTag(node: GherkinNode, nodeType: NodeType): node is Tag {
-  return nodeType === NodeType.Tag;
-}
-
-function isComment(node: GherkinNode): node is Comment {
-  return (
-    typeof node === 'object' &&
-    arrayEquals(Object.keys(node), ['location', 'text'])
-  );
-}
-
-// function addTypesToDocument(document: GherkinDocument) {
-
-// }
 
 const languages: SupportLanguage[] = [
   {
@@ -81,6 +107,11 @@ const languages: SupportLanguage[] = [
 
 const gherkinParser: Parser<GherkinNode> = {
   parse: (text: string): GherkinDocument => {
+    console.log(
+      '\n=== Parsing Gherkin file ===\n',
+      text,
+      '\n============================\n'
+    );
     const uuidFn = IdGenerator.uuid();
     const builder = new AstBuilder(uuidFn);
     const matcher = new GherkinClassicTokenMatcher(); // or GherkinInMarkdownTokenMatcher()
@@ -89,30 +120,26 @@ const gherkinParser: Parser<GherkinNode> = {
 
     const document = parser.parse(text);
 
-    // const documentWithTypes = addTypesToDocument(document);
-
-    // return document;
-
-    return {
+    return new TypedGherkinDocument({
       ...document,
-      // ...documentWithTypes,
       comments: [], // igonre comments for now
-    };
+    });
   },
-  locStart: (node: GherkinNode) => {
+
+  locStart: (node: TypedGherkinNode<GherkinNode>) => {
     return 0; // TMP ignore comments
 
-    if (!isComment(node)) {
+    if (!(node instanceof TypedComment)) {
       throw new Error('locStart: not a comment');
     }
 
     console.log('locStart', node, '\n');
     // return node.location.column ?? 0
   },
-  locEnd: (node: GherkinNode) => {
+  locEnd: (node: TypedGherkinNode<GherkinNode>) => {
     return 0; // TMP ignore comments
 
-    if (!isComment(node)) {
+    if (!(node instanceof TypedComment)) {
       throw new Error('locEnd: not a comment');
     }
 
@@ -126,34 +153,26 @@ const gherkinAstPrinter: Printer<GherkinNode> = {
   print: (path, options, print) => {
     const node = path.getValue();
 
-    // @ts-expect-error we inject the node type
-    const nodeType = options?.nodeType;
-
-    console.log({ node, nodeType });
+    console.log({ node, isDocument: node instanceof TypedGherkinDocument });
 
     // if (Array.isArray(node)) {
     //   return concat(path.map(print));
     // }
 
-    if (isGherkinDocument(node)) {
+    if (node instanceof TypedGherkinDocument) {
       if (node.feature) {
-        // @ts-expect-error we inject the node type
-        options.nodeType = NodeType.Feature;
-
         // @ts-expect-error
-        return path.call(print, 'feature');
+        return [path.call(print, 'feature'), hardline];
       } else {
         throw new Error('unhandled case where there is no feature');
       }
-    } else if (isFeature(node, nodeType)) {
-      // @ts-expect-error we inject the node type
-      options.nodeType = NodeType.Tag;
-
-      // @ts-expect-error
-      const tags = join([hardline], path.map(print, 'tags'));
-
+    } else if (node instanceof TypedFeature) {
       return [
-        join(hardline, [tags, `Feature: ${node.name}`]),
+        join(hardline, [
+          // @ts-expect-error TODO don't know why this is not working
+          join([hardline], path.map(print, 'tags')),
+          `Feature: ${node.name}`,
+        ]),
         indent([hardline, node.description.trim()]),
       ];
 
@@ -166,10 +185,10 @@ const gherkinAstPrinter: Printer<GherkinNode> = {
       //     node.feature.description,
       //   ]
       // }
-    } else if (isTag(node, nodeType)) {
+    } else if (node instanceof TypedTag) {
       return node.name;
     } else {
-      console.error('Unhandled node type', node, nodeType);
+      console.error('Unhandled node type', node);
       return '';
     }
   },

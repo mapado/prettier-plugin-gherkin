@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "lint": "tsc --noEmit",
     "example": "yarn build && prettier --plugin . example.feature",
     "test": "jest"
   },
