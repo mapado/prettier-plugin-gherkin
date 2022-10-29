@@ -3,15 +3,7 @@ import {
   AstBuilder,
   GherkinClassicTokenMatcher,
 } from '@cucumber/gherkin';
-import {
-  IdGenerator,
-  GherkinDocument,
-  Location,
-  Comment,
-  Feature,
-  Tag,
-  FeatureChild,
-} from '@cucumber/messages';
+import { IdGenerator, GherkinDocument } from '@cucumber/messages';
 import {
   AstPath,
   Parser,
@@ -21,81 +13,18 @@ import {
   util,
   doc,
 } from 'prettier';
+import {
+  TypedGherkinDocument,
+  TypedComment,
+  TypedFeature,
+  TypedTag,
+  TypedFeatureChild,
+  TypedScenario,
+  GherkinNode,
+  TypedGherkinNode,
+} from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
-
-type GherkinNode = GherkinDocument | Comment | Feature | Tag;
-
-abstract class TypedGherkinNode<N extends GherkinNode> {
-  constructor(originalNode: N) {}
-}
-
-class TypedGherkinDocument
-  extends TypedGherkinNode<GherkinDocument>
-  implements GherkinDocument
-{
-  uri?: string;
-
-  feature?: TypedFeature;
-
-  comments: readonly TypedComment[];
-
-  constructor(originalNode: GherkinDocument) {
-    super(originalNode);
-
-    this.uri = originalNode.uri;
-    this.feature = originalNode.feature
-      ? new TypedFeature(originalNode.feature)
-      : undefined;
-    this.comments = originalNode.comments.map((c) => new TypedComment(c));
-  }
-}
-
-class TypedFeature extends TypedGherkinNode<Feature> implements Feature {
-  location: Location;
-  tags: readonly TypedTag[];
-  language: string;
-  keyword: string;
-  name: string;
-  description: string;
-  children: readonly FeatureChild[];
-
-  constructor(originalNode: Feature) {
-    super(originalNode);
-
-    this.location = originalNode.location;
-    this.tags = originalNode.tags.map((t) => new TypedTag(t));
-    this.language = originalNode.language;
-    this.keyword = originalNode.keyword;
-    this.name = originalNode.name;
-    this.description = originalNode.description;
-    this.children = originalNode.children;
-  }
-}
-
-class TypedTag extends TypedGherkinNode<Tag> implements Tag {
-  location: Location;
-  name: string;
-  id: string;
-  constructor(originalNode: Tag) {
-    super(originalNode);
-
-    this.location = originalNode.location;
-    this.name = originalNode.name;
-    this.id = originalNode.id;
-  }
-}
-
-class TypedComment extends TypedGherkinNode<Comment> implements Comment {
-  location: Location;
-  text: string;
-  constructor(originalNode: Comment) {
-    super(originalNode);
-
-    this.location = originalNode.location;
-    this.text = originalNode.text;
-  }
-}
 
 const languages: SupportLanguage[] = [
   {
@@ -144,11 +73,11 @@ const gherkinParser: Parser<GherkinNode> = {
   astFormat: 'gherkin-ast',
 };
 
-const gherkinAstPrinter: Printer<GherkinNode> = {
+const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
   print: (path, options, print) => {
     const node = path.getValue();
 
-    console.log({ node, isDocument: node instanceof TypedGherkinDocument });
+    // console.log({ node, isDocument: node instanceof TypedGherkinDocument });
 
     // if (Array.isArray(node)) {
     //   return concat(path.map(print));
@@ -168,7 +97,14 @@ const gherkinAstPrinter: Printer<GherkinNode> = {
           join([hardline], path.map(print, 'tags')),
           `Feature: ${node.name}`,
         ]),
-        indent([hardline, node.description.trim()]),
+        indent([
+          hardline,
+          node.description.trim(),
+          hardline,
+
+          // @ts-expect-error TODO need to investigate "print" method
+          join(hardline, path.map(print, 'children')),
+        ]),
       ];
 
       // const tags = node.feature.tags.map(tag =>  tag.name));
@@ -182,6 +118,31 @@ const gherkinAstPrinter: Printer<GherkinNode> = {
       // }
     } else if (node instanceof TypedTag) {
       return node.name;
+    } else if (node instanceof TypedFeatureChild) {
+      if (node.scenario) {
+        // @ts-expect-error TODO need to investigate "print" method
+        return path.call(print, 'scenario');
+      } else {
+        throw new Error('unhandled case for now');
+      }
+    } else if (node instanceof TypedScenario) {
+      return [
+        join(hardline, [
+          // @ts-expect-error TODO don't know why this is not working
+          join([hardline], path.map(print, 'tags')),
+          `${node.keyword}: ${node.name}`,
+        ]),
+        indent([
+          hardline,
+          node.description.trim(),
+          hardline,
+
+          // // @ts-expect-error TODO don't know why this is not working
+          // join(hardline, path.map(print, 'steps')),
+          // // @ts-expect-error TODO don't know why this is not working
+          // join(hardline, path.map(print, 'examples')),
+        ]),
+      ];
     } else {
       console.error('Unhandled node type', node);
       return '';
@@ -189,7 +150,7 @@ const gherkinAstPrinter: Printer<GherkinNode> = {
   },
 };
 
-const plugin: Plugin<GherkinNode> = {
+const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
   languages,
   parsers: {
     'gherkin-parse': gherkinParser,

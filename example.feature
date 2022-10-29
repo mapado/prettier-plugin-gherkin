@@ -2,8 +2,20 @@
 @accountability-json
 Feature: accountability
     accounts should always be good
+
+    Scenario Outline: Scenario Outline name
+        Given I have <number> cukes in my belly
+        When I wait <hour> hour
+        Then my belly should growl
+
+        Examples:
+            | number | hour |
+            | 1      | 1    |
+            | 2      | 2    |
+
     @truncateTables
     Scenario: Check accountability
+        The scenario definition for "Check accountability"
         # Insert fixtures
         Given the following fixtures files are loaded:
             | 10.contracts.yml            |
