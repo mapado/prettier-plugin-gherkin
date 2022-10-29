@@ -16,6 +16,7 @@ import {
   SupportLanguage,
   util,
   doc,
+  Doc,
 } from 'prettier';
 import {
   TypedGherkinDocument,
@@ -27,6 +28,7 @@ import {
   GherkinNode,
   TypedGherkinNode,
   TypedStep,
+  TypedDocString,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -164,12 +166,37 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           ? hardline
           : '',
         `${node.keyword.trim()} ${node.text.trim()}`,
-        // TODO node.docString ? indent([hardline, node.docString.content.trim()]) : '',
+        node.docString ? indent([hardline, path.call(print, 'docString')]) : '',
       ];
+    } else if (node instanceof TypedDocString) {
+      console.log({ node });
+      return join(hardline, [node.delimiter, node.content, node.delimiter]);
     } else {
-      // console.error('Unhandled node type', node);
+      console.error('Unhandled node type', node);
       return '';
     }
+  },
+
+  embed(path: AstPath, print, textToDoc, options: object): Doc | null {
+    const node = path.getValue();
+    if (node instanceof TypedDocString) {
+      const { content } = node;
+
+      try {
+        JSON.parse(content);
+
+        return [
+          node.delimiter,
+          hardline,
+          textToDoc(content, { ...options, parser: 'json' }),
+          node.delimiter,
+        ];
+      } catch (e) {
+        // igonre non-JSON content
+      }
+    }
+
+    return null;
   },
 };
 
