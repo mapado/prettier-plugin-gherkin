@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`minimal.feature 1`] = `
+Feature: Minimal
+
+  Scenario: minimalistic
+    Given the minimalism
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Feature: Minimal
+
+    Scenario: minimalistic
+        Given the minimalism
+
+`;
