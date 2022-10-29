@@ -3,7 +3,11 @@ import {
   AstBuilder,
   GherkinClassicTokenMatcher,
 } from '@cucumber/gherkin';
-import { IdGenerator, GherkinDocument } from '@cucumber/messages';
+import {
+  IdGenerator,
+  GherkinDocument,
+  StepKeywordType,
+} from '@cucumber/messages';
 import {
   AstPath,
   Parser,
@@ -22,9 +26,11 @@ import {
   TypedScenario,
   GherkinNode,
   TypedGherkinNode,
+  TypedStep,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
+const { hasNewline, isPreviousLineEmpty } = util;
 
 const languages: SupportLanguage[] = [
   {
@@ -99,11 +105,11 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         ]),
         indent([
           hardline,
-          node.description.trim(),
-          hardline,
+          node.description ? node.description.trim() : '',
+          node.description ? hardline : '',
 
           // @ts-expect-error TODO need to investigate "print" method
-          join(hardline, path.map(print, 'children')),
+          join([hardline, hardline], path.map(print, 'children')),
         ]),
       ];
 
@@ -126,6 +132,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         throw new Error('unhandled case for now');
       }
     } else if (node instanceof TypedScenario) {
+      // console.log(node);
       return [
         join(hardline, [
           // @ts-expect-error TODO don't know why this is not working
@@ -134,17 +141,33 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         ]),
         indent([
           hardline,
-          node.description.trim(),
-          hardline,
+          node.description ? node.description.trim() : '',
+          node.description ? hardline : '',
+          node.description ? hardline : '',
 
-          // // @ts-expect-error TODO don't know why this is not working
-          // join(hardline, path.map(print, 'steps')),
-          // // @ts-expect-error TODO don't know why this is not working
-          // join(hardline, path.map(print, 'examples')),
+          // @ts-expect-error TODO don't know why this is not working
+          join(hardline, path.map(print, 'steps')),
+          // @ts-expect-error TODO don't know why this is not working
+          join(hardline, path.map(print, 'examples')),
         ]),
       ];
+    } else if (node instanceof TypedStep) {
+      // console.log(node);
+      const isFirstStep = path.stack[path.stack.length - 2] === 0; // path.getParentNode(1).scenario.steps[0] === node;
+
+      return [
+        !isFirstStep &&
+        node.keywordType &&
+        [StepKeywordType.CONTEXT, StepKeywordType.ACTION].includes(
+          node.keywordType
+        )
+          ? hardline
+          : '',
+        `${node.keyword.trim()} ${node.text.trim()}`,
+        // TODO node.docString ? indent([hardline, node.docString.content.trim()]) : '',
+      ];
     } else {
-      console.error('Unhandled node type', node);
+      // console.error('Unhandled node type', node);
       return '';
     }
   },
