@@ -66,6 +66,27 @@ Feature: DataTables
 
 `;
 
+exports[`datatables_with_new_lines.feature 1`] = `
+Feature: DataTables
+
+  Scenario: some whitespace is important
+    Given 3 lines of poetry on 5 lines
+      |  \\nraindrops--\\nher last kiss\\ngoodbye.\\r\\n  |
+    Given an example of negative space
+      |        lost        i n        space        |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: DataTables
+
+    Scenario: some whitespace is important
+        Given 3 lines of poetry on 5 lines
+            | \\nraindrops--\\nher last kiss\\ngoodbye.\\r\\n |
+
+        Given an example of negative space
+            | lost        i n        space |
+
+`;
+
 exports[`example_token_multiple.feature 1`] = `
 Feature: Example token used multiple times
 

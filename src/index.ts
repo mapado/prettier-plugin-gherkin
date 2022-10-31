@@ -59,6 +59,15 @@ function printTwoHardlines() {
   return [hardline, hardline];
 }
 
+const LINEBREAK_MATCHER = /\r\n|[\r\n\u2028\u2029]/;
+
+/**
+ * escaple line breaks in a string
+ */
+function escapeMultilineString(str: string): string {
+  return str.replace(new RegExp(LINEBREAK_MATCHER, 'g'), '\\n');
+}
+
 const gherkinParser: Parser<GherkinNode> = {
   parse: (text: string): GherkinDocument => {
     const uuidFn = IdGenerator.uuid();
@@ -253,7 +262,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         ' |',
       ];
     } else if (node instanceof TypedTableCell) {
-      return node.value.padEnd(node.displaySize);
+      return escapeMultilineString(node.value.padEnd(node.displaySize));
     } else {
       console.error('Unhandled node type', node);
       return '';
