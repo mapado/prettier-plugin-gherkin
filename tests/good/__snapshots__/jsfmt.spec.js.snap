@@ -764,6 +764,22 @@ Feature: Incomplete scenario outlines
 
 `;
 
+exports[`language.feature 1`] = `
+#language:en
+
+Feature: Explicit language specification
+
+  Scenario: minimalistic
+    Given the minimalism
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Explicit language specification
+
+    Scenario: minimalistic
+        Given the minimalism
+
+`;
+
 exports[`minimal.feature 1`] = `
 Feature: Minimal
 
@@ -773,6 +789,20 @@ Feature: Minimal
 Feature: Minimal
 
     Scenario: minimalistic
+        Given the minimalism
+
+`;
+
+exports[`minimal-example.feature 1`] = `
+Feature: Minimal
+
+  Example: minimalistic
+    Given the minimalism
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal
+
+    Example: minimalistic
         Given the minimalism
 
 `;
@@ -962,6 +992,45 @@ Feature: Some tagged rules
 
 `;
 
+exports[`rule_without_name_and_description.feature 1`] = `
+Feature:
+
+  Rule:
+  Scenario:
+    Given text
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature:
+
+    Rule:
+
+        Scenario:
+            Given text
+
+`;
+
+exports[`scenario_outline.feature 1`] = `
+Feature: Minimal Scenario Outline
+
+  Scenario: minimalistic
+    Given the <what>
+
+    Examples:
+      | what       |
+      | minimalism |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal Scenario Outline
+
+    Scenario: minimalistic
+        Given the <what>
+
+        Examples:
+            | what       |
+            | minimalism |
+
+`;
+
 exports[`scenario_outline_no_newline.feature 1`] = `
 Feature: Minimal Scenario Outline
 
@@ -980,6 +1049,36 @@ Feature: Minimal Scenario Outline
         Examples:
             | what       |
             | minimalism |
+
+`;
+
+exports[`scenario_outline_with_docstring.feature 1`] = `
+Feature: Scenario Outline with a docstring
+
+Scenario Outline: Greetings come in many forms
+    Given this file:
+    """<type>
+    Greeting:<content>
+    """
+
+Examples:
+  | type  | content |
+  | en    | Hello   |
+  | fr    | Bonjour |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Scenario Outline with a docstring
+
+    Scenario Outline: Greetings come in many forms
+        Given this file:
+            """<type>
+            Greeting:<content>
+            """
+
+        Examples:
+            | type | content |
+            | en   | Hello   |
+            | fr   | Bonjour |
 
 `;
 
