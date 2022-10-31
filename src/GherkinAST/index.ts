@@ -35,6 +35,21 @@ export type GherkinNode =
   | DataTable
   | RuleChild;
 
+/**
+ * Set the max size of each column in the table
+ */
+function generateColumnSizes(tableRows: readonly TableRow[]): number[] {
+  return tableRows.reduce((acc: number[], row) => {
+    row.cells.forEach((cell, index) => {
+      if (!acc[index]) {
+        acc[index] = 0;
+      }
+      acc[index] = Math.max(acc[index], cell.value.length);
+    });
+    return acc;
+  }, []);
+}
+
 export abstract class TypedGherkinNode<N extends GherkinNode> {
   constructor(originalNode: N) {}
 }
@@ -259,15 +274,24 @@ export class TypedExamples
   constructor(originalNode: Examples) {
     super(originalNode);
 
+    const rows = [
+      originalNode.tableHeader,
+      ...(originalNode.tableBody ?? []),
+    ].filter<TableRow>((row): row is TableRow => typeof row !== 'undefined');
+
+    const columnSizes = generateColumnSizes(rows);
+
     this.location = originalNode.location;
     this.tags = originalNode.tags.map((t) => new TypedTag(t));
     this.keyword = originalNode.keyword;
     this.name = originalNode.name;
     this.description = originalNode.description;
     this.tableHeader = originalNode.tableHeader
-      ? new TypedTableRow(originalNode.tableHeader)
+      ? new TypedTableRow(originalNode.tableHeader, columnSizes)
       : undefined;
-    this.tableBody = originalNode.tableBody.map((r) => new TypedTableRow(r));
+    this.tableBody = originalNode.tableBody.map(
+      (r) => new TypedTableRow(r, columnSizes)
+    );
     this.id = originalNode.id;
   }
 }
@@ -279,13 +303,18 @@ export class TypedTableRow
   location: Location;
   cells: readonly TypedTableCell[];
   id: string;
+  columnSizes: number[] | undefined;
 
-  constructor(originalNode: TableRow) {
+  constructor(originalNode: TableRow, columnSizes: number[]) {
     super(originalNode);
 
     this.location = originalNode.location;
-    this.cells = originalNode.cells.map((c) => new TypedTableCell(c));
+    this.cells = originalNode.cells.map(
+      (c, index) => new TypedTableCell(c, columnSizes[index])
+    );
     this.id = originalNode.id;
+
+    this.columnSizes = columnSizes;
   }
 }
 
@@ -295,12 +324,15 @@ export class TypedTableCell
 {
   location: Location;
   value: string;
+  displaySize: number;
 
-  constructor(originalNode: TableCell) {
+  constructor(originalNode: TableCell, displaySize: number) {
     super(originalNode);
 
     this.location = originalNode.location;
     this.value = originalNode.value;
+
+    this.displaySize = Math.max(displaySize ?? 0, this.value.length);
   }
 }
 
@@ -334,6 +366,9 @@ export class TypedDataTable
     super(originalNode);
 
     this.location = originalNode.location;
-    this.rows = originalNode.rows.map((r) => new TypedTableRow(r));
+
+    const columnSizes = generateColumnSizes(originalNode.rows);
+
+    this.rows = originalNode.rows.map((r) => new TypedTableRow(r, columnSizes));
   }
 }

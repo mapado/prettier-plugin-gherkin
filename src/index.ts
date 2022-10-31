@@ -31,6 +31,8 @@ import {
   TypedDocString,
   TypedBackground,
   TypedExamples,
+  TypedTableRow,
+  TypedTableCell,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -50,8 +52,8 @@ function printHardline() {
   return hardline;
 }
 
-function printTwoHardline() {
-  console.log(new Error().stack?.split('\n')[2]);
+function printTwoHardlines() {
+  // console.log(new Error().stack?.split('\n')[2]);
 
   return [hardline, hardline];
 }
@@ -126,7 +128,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           node.description ? printHardline() : '',
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
-          join(printTwoHardline(), path.map(print, 'children')),
+          join(printTwoHardlines(), path.map(print, 'children')),
         ]),
       ];
 
@@ -155,7 +157,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         );
       }
     } else if (node instanceof TypedBackground) {
-      console.log(node.steps);
+      // console.log(node.steps);
       return [
         `${node.keyword} : ${node.name}`,
         indent([
@@ -182,8 +184,12 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
           join(printHardline(), path.map(print, 'steps')),
+
+          node.steps.length > 0 && node.examples.length > 0
+            ? printTwoHardlines()
+            : '',
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
-          join(printHardline(), path.map(print, 'examples')),
+          join(printTwoHardlines(), path.map(print, 'examples')),
         ]),
       ];
     } else if (node instanceof TypedStep) {
@@ -205,26 +211,43 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           : '',
       ];
     } else if (node instanceof TypedDocString) {
-      console.log({ node });
+      // console.log({ node });
       return join(printHardline(), [
         node.delimiter,
         node.content,
         node.delimiter,
       ]);
     } else if (node instanceof TypedExamples) {
-      // TODO implement examples
+      // console.log({ node, columnSizes: node.columnSizes });
+
+      return [
+        // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+        join(printHardline(), path.map(print, 'tags')),
+        node.tags.length > 0 ? printHardline() : '',
+
+        `${node.keyword}: ${node.name}`,
+        indent([
+          printHardline(),
+
+          join(printHardline(), [
+            // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+            path.call(print, 'tableHeader'),
+            // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+            ...path.map(print, 'tableBody'),
+          ]),
+        ]),
+      ];
+      // return [printHardline(), '#### some examples to implement'];
+    } else if (node instanceof TypedTableRow) {
       // console.log(node);
-      // return [
-      //   `${node.keyword}: ${node.name}`,
-      //   indent([
-      //     debugHardline(),
-      //     // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
-      //     join(debugHardline(), path.map(print, 'tableHeader')),
-      //     // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
-      //     join(debugHardline(), path.map(print, 'tableBody')),
-      //   ]),
-      // ];
-      return [printHardline(), '#### some examples to implement'];
+      return [
+        '| ',
+        // @ts-expect-error TODO path should be recognized as an AstPath<TypedTableRow>
+        join(' | ', path.map(print, 'cells')),
+        ' |',
+      ];
+    } else if (node instanceof TypedTableCell) {
+      return node.value.padEnd(node.displaySize);
     } else {
       console.error('Unhandled node type', node);
       return '';

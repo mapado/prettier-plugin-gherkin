@@ -10,7 +10,7 @@ Feature: accountability
 
         Examples:
             | number | hour |
-            | 1      | 1    |
+            | 1      |   the first hour of the day    |
             | 2      | 2    |
 
     @truncateTables

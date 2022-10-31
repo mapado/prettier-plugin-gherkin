@@ -27,6 +27,62 @@ Feature: Background
 
 `;
 
+exports[`example_token_multiple.feature 1`] = `
+Feature: Example token used multiple times
+
+  Scenario Outline: Token used twice in a single step
+    Given <what> <what>
+
+    Examples:
+      | what  |
+      | usage |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Example token used multiple times
+
+    Scenario Outline: Token used twice in a single step
+        Given <what> <what>
+
+        Examples:
+            | what  |
+            | usage |
+
+`;
+
+exports[`example_tokens_everywhere.feature 1`] = `
+Feature: Example tokens everywhere
+
+  Scenario Outline: the <one>
+    Given the <two>:
+      """
+      <three>
+      """
+    Given the <four>:
+      | <five> |
+
+    Examples:
+      | one | two  | three | four   | five  |
+      | un  | deux | trois | quatre | cinq  |
+      | uno | dos  | tres  | quatro | cinco |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Example tokens everywhere
+
+    Scenario Outline: the <one>
+        Given the <two>:
+            """
+            <three>
+            """
+
+        Given the <four>:
+
+        Examples:
+            | one | two  | three | four   | five  |
+            | un  | deux | trois | quatre | cinq  |
+            | uno | dos  | tres  | quatro | cinco |
+
+`;
+
 exports[`minimal.feature 1`] = `
 Feature: Minimal
 
@@ -37,5 +93,122 @@ Feature: Minimal
 
     Scenario: minimalistic
         Given the minimalism
+
+`;
+
+exports[`padded_example.feature 1`] = `
+Feature: test
+
+  Scenario: test
+    Given a <color> ball with:
+      | type     | diameter |
+      | football |       69 |
+      |   pool   |      5.6 |
+
+
+    # The "red" cell below has the following whitespace characters on each side:
+    # - U+00A0 (non-breaking space)
+    # - U+0020 (space)
+    # - U+0009 (tab)
+    # This is generated with \`ruby -e 'STDOUT.write "\\u00A0\\u0020\\u0009".encode("utf-8")' | pbcopy\`
+    # and pasted. 
+    Examples:
+      | color   |
+      |  	red  	|
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: test
+
+    Scenario: test
+        Given a <color> ball with:
+
+        Examples:
+            | color |
+            | red   |
+
+`;
+
+exports[`readme_example.feature 1`] = `
+@a
+Feature:
+  @b @c
+  Scenario Outline:
+    Given <x>
+
+    Examples:
+      | x |
+      | y |
+
+  @d @e
+  Scenario Outline:
+    Given <m>
+
+    @f
+    Examples:
+      | m |
+      | n |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@a
+Feature:
+    @b
+    @c
+    Scenario Outline:
+        Given <x>
+
+        Examples:
+            | x |
+            | y |
+
+    @d
+    @e
+    Scenario Outline:
+        Given <m>
+
+        @f
+        Examples:
+            | m |
+            | n |
+
+`;
+
+exports[`several_examples.feature 1`] = `
+Feature: Tagged Examples
+
+  Scenario Outline: minimalistic
+    Given the <what>
+
+    @foo
+    Examples:
+      | what |
+      | foo  |
+
+    @bar
+    Examples:
+      | what |
+      | bar  |
+
+  @zap
+  Scenario: ha ok
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Tagged Examples
+
+    Scenario Outline: minimalistic
+        Given the <what>
+
+        @foo
+        Examples:
+            | what |
+            | foo  |
+
+        @bar
+        Examples:
+            | what |
+            | bar  |
+
+    @zap
+    Scenario: ha ok
+
 
 `;
