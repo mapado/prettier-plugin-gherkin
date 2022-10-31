@@ -33,6 +33,7 @@ import {
   TypedExamples,
   TypedTableRow,
   TypedTableCell,
+  TypedDataTable,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -207,6 +208,9 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           ? // @ts-expect-error TODO path should be recognized as an AstPath<TypedStep>
             indent([printHardline(), path.call(print, 'docString')])
           : '',
+        node.dataTable // @ts-expect-error TODO path should be recognized as an AstPath<TypedStep>
+          ? indent([printHardline(), path.call(print, 'dataTable')])
+          : '',
       ];
     } else if (node instanceof TypedDocString) {
       // console.log({ node });
@@ -233,7 +237,13 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           ]),
         ]),
       ];
-      // return [printHardline(), '#### some examples to implement'];
+    } else if (node instanceof TypedDataTable) {
+      // console.log({ node, columnSizes: node.columnSizes });
+
+      return join(printHardline(), [
+        // @ts-expect-error TODO path should be recognized as an AstPath<TypedDataTable>
+        ...path.map(print, 'rows'),
+      ]);
     } else if (node instanceof TypedTableRow) {
       // console.log(node);
       return [
