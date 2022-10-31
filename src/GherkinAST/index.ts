@@ -236,7 +236,7 @@ export class TypedScenario
   implements Scenario
 {
   location: Location;
-  tags: TypedTag[];
+  tags: readonly TypedTag[];
   keyword: string;
   name: string;
   description: string;
@@ -263,7 +263,7 @@ export class TypedExamples
   implements Examples
 {
   location: Location;
-  tags: TypedTag[];
+  tags: readonly TypedTag[];
   keyword: string;
   name: string;
   description: string;

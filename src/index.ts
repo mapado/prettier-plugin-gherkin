@@ -97,6 +97,19 @@ const gherkinParser: Parser<GherkinNode> = {
   astFormat: 'gherkin-ast',
 };
 
+function printTags(
+  path: AstPath<TypedGherkinNode<GherkinNode & { tags: readonly TypedTag[] }>>,
+  node: GherkinNode & { tags: readonly TypedTag[] }
+) {
+  // console.log(node);
+
+  return [
+    // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
+    join(printHardline(), path.map(gherkinAstPrinter.print, 'tags')),
+    node.tags.length > 0 ? printHardline() : '',
+  ];
+}
+
 const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
   print: (path, options, print) => {
     const node = path.getValue();
@@ -116,31 +129,19 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       }
     } else if (node instanceof TypedFeature) {
       return [
-        // node.tags.length > 0 ? printHardline() : '',
-        // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
-        join(printHardline(), path.map(print, 'tags')),
-        node.tags.length > 0 ? printHardline() : '',
+        printTags(path, node),
         `Feature: ${node.name}`,
 
         indent([
           printHardline(),
           node.description ? node.description.trim() : '',
           node.description ? printHardline() : '',
+          printHardline(),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
           join(printTwoHardlines(), path.map(print, 'children')),
         ]),
       ];
-
-      // const tags = node.feature.tags.map(tag =>  tag.name));
-
-      //   return [
-      //     ...node?.tags.map(tag => tag.name),
-      //     `Feature: ${node.feature.name}`,
-      //     debugHardline(),
-      //     node.feature.description,
-      //   ]
-      // }
     } else if (node instanceof TypedTag) {
       return node.name;
     } else if (node instanceof TypedFeatureChild) {
@@ -171,11 +172,8 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     } else if (node instanceof TypedScenario) {
       // console.log(node);
       return [
-        join(printHardline(), [
-          // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
-          node.tags ? join(printHardline(), path.map(print, 'tags')) : '',
-          `${node.keyword}: ${node.name}`,
-        ]),
+        printTags(path, node),
+        `${node.keyword}: ${node.name}`,
         indent([
           printHardline(),
           node.description ? node.description.trim() : '',
@@ -221,9 +219,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       // console.log({ node, columnSizes: node.columnSizes });
 
       return [
-        // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
-        join(printHardline(), path.map(print, 'tags')),
-        node.tags.length > 0 ? printHardline() : '',
+        printTags(path, node),
 
         `${node.keyword}: ${node.name}`,
         indent([
