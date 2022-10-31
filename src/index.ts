@@ -223,9 +223,18 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ];
     } else if (node instanceof TypedDocString) {
       // console.log({ node });
+
+      // if the content contains the delimiter, the parser will unescape it, so we need to escape it again
+      const escapeDelimiter = (content: string) =>
+        content.replace(
+          new RegExp(node.delimiter[0], 'g'),
+          `\\${node.delimiter[0]}`
+        );
+
       return join(printHardline(), [
         node.delimiter,
-        node.content,
+        // split the string on newlines to preserve the indentation
+        escapeDelimiter(node.content).split('\n'),
         node.delimiter,
       ]);
     } else if (node instanceof TypedExamples) {
@@ -272,7 +281,16 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
   embed(path: AstPath, print, textToDoc, options: object): Doc | null {
     const node = path.getValue();
     if (node instanceof TypedDocString) {
-      const { content } = node;
+      const { content, mediaType } = node;
+
+      if (mediaType === 'xml') {
+        return [
+          node.delimiter,
+          printHardline(),
+          textToDoc(content, { ...options, parser: 'html' }),
+          node.delimiter,
+        ];
+      }
 
       try {
         JSON.parse(content);
