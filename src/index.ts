@@ -158,7 +158,8 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedGherkinDocument>
         return [path.call(print, 'feature'), printHardline()];
       } else {
-        throw new Error('unhandled case where there is no feature');
+        // return empty sting if there is no feature (it can contain only comments)
+        return '';
       }
     } else if (node instanceof TypedFeature || node instanceof TypedRule) {
       return [

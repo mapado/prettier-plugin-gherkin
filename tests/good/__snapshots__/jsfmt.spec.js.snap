@@ -664,6 +664,34 @@ Feature: Incomplete backgrounds, Part 2
 
 `;
 
+exports[`incomplete_feature_1.feature 1`] = `
+Feature: Just a description
+  A short description
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Just a description
+    A short description
+
+
+
+`;
+
+exports[`incomplete_feature_2.feature 1`] = `
+Feature: Empty feature
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Empty feature
+
+
+
+`;
+
+exports[`incomplete_feature_3.feature 1`] = `
+# Just a comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`;
+
 exports[`minimal.feature 1`] = `
 Feature: Minimal
 
