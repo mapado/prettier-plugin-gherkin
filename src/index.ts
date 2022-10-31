@@ -37,7 +37,7 @@ import {
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
-const { hasNewline, isPreviousLineEmpty } = util;
+const { hasNewline, isPreviousLineEmpty, makeString } = util;
 
 const languages: SupportLanguage[] = [
   {
@@ -271,6 +271,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         ' |',
       ];
     } else if (node instanceof TypedTableCell) {
+      // console.log(node);
       return escapeMultilineString(node.value.padEnd(node.displaySize));
     } else {
       console.error('Unhandled node type', node);

@@ -35,6 +35,10 @@ export type GherkinNode =
   | DataTable
   | RuleChild;
 
+function reEscape(str: string) {
+  return str.replace(/\\/g, '\\\\');
+}
+
 /**
  * Set the max size of each column in the table
  */
@@ -44,7 +48,7 @@ function generateColumnSizes(tableRows: readonly TableRow[]): number[] {
       if (!acc[index]) {
         acc[index] = 0;
       }
-      acc[index] = Math.max(acc[index], cell.value.length);
+      acc[index] = Math.max(acc[index], reEscape(cell.value).length);
     });
     return acc;
   }, []);
@@ -330,7 +334,7 @@ export class TypedTableCell
     super(originalNode);
 
     this.location = originalNode.location;
-    this.value = originalNode.value;
+    this.value = reEscape(originalNode.value);
 
     this.displaySize = Math.max(displaySize ?? 0, this.value.length);
   }
