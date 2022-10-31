@@ -234,7 +234,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       return join(printHardline(), [
         node.delimiter,
         // split the string on newlines to preserve the indentation
-        escapeDelimiter(node.content).split('\n'),
+        ...escapeDelimiter(node.content).split('\n'),
         node.delimiter,
       ]);
     } else if (node instanceof TypedExamples) {
