@@ -624,6 +624,46 @@ Egenskap: i18n support
 
 `;
 
+exports[`incomplete_background_1.feature 1`] = `
+Feature: Incomplete backgrounds, Part 1
+
+  Background: no steps
+
+  Scenario: still pickles up
+    * a step
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Incomplete backgrounds, Part 1
+
+    Background: no steps
+
+    Scenario: still pickles up
+        * a step
+
+`;
+
+exports[`incomplete_background_2.feature 1`] = `
+Feature: Incomplete backgrounds, Part 2
+
+  Background: just a description
+    A short description
+
+  Scenario: still pickles up
+    * a step
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Incomplete backgrounds, Part 2
+
+    Background: just a description
+        A short description
+
+
+
+    Scenario: still pickles up
+        * a step
+
+`;
+
 exports[`minimal.feature 1`] = `
 Feature: Minimal
 

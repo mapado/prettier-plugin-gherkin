@@ -160,7 +160,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       } else {
         throw new Error('unhandled case where there is no feature');
       }
-    } else if (node instanceof TypedFeature) {
+    } else if (node instanceof TypedFeature || node instanceof TypedRule) {
       return [
         printTags(path, node),
         `${node.keyword}: ${node.name}`,
@@ -173,60 +173,45 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           join(printTwoHardlines(), path.map(print, 'children')),
         ]),
       ];
-    } else if (node instanceof TypedFeatureChild) {
+    } else if (
+      node instanceof TypedFeatureChild ||
+      node instanceof TypedRuleChild
+    ) {
       if (node.scenario) {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
         return path.call(print, 'scenario');
       } else if (node.background) {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
         return path.call(print, 'background');
-      } else if (node.rule) {
+      } else if (node instanceof TypedFeatureChild && node.rule) {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
         return path.call(print, 'rule');
       } else {
         console.log(node);
         throw new Error(
-          'unhandled case where TypedFeatureChild has no scenario'
+          `unhandled case where ${
+            node instanceof TypedFeatureChild
+              ? 'TypedFeatureChild'
+              : 'TypedRuleChild'
+          } has no scenario`
         );
-      }
-    } else if (node instanceof TypedRule) {
-      // console.log({ node });
-
-      return [
-        printTags(path, node),
-        `${node.keyword}: ${node.name}`,
-        indent([
-          printHardline(),
-          printDescription(path, node, true),
-
-          // @ts-expect-error TODO path should be recognized as an AstPath<TypedRule>
-          join(printTwoHardlines(), path.map(print, 'children')),
-        ]),
-      ];
-    } else if (node instanceof TypedRuleChild) {
-      // console.log({ node });
-      if (node.scenario) {
-        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
-        return path.call(print, 'scenario');
-      } else if (node.background) {
-        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
-        return path.call(print, 'background');
-      } else {
-        console.log(node);
-        throw new Error('unhandled case where TypedRuleChild has no scenario');
       }
     } else if (node instanceof TypedTag) {
       return node.name;
     } else if (node instanceof TypedBackground) {
       // console.log(node.steps);
+
+      // console.log(node.description || node.steps.length > 0);
       return [
         `${node.keyword}: ${node.name}`,
-        indent([
-          printHardline(),
-          printDescription(path, node, false),
-          // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
-          join(printHardline(), path.map(print, 'steps')),
-        ]),
+        node.description || node.steps.length > 0
+          ? indent([
+              printHardline(),
+              printDescription(path, node, false),
+              // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
+              join(printHardline(), path.map(print, 'steps')),
+            ])
+          : '',
       ];
     } else if (node instanceof TypedScenario) {
       // console.log(node);
