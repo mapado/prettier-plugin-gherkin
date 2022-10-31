@@ -29,6 +29,8 @@ import {
   TypedGherkinNode,
   TypedStep,
   TypedDocString,
+  TypedBackground,
+  TypedExamples,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -41,6 +43,18 @@ const languages: SupportLanguage[] = [
     parsers: ['gherkin-parse'],
   },
 ];
+
+function printHardline() {
+  // console.log(new Error().stack?.split('\n')[2]);
+
+  return hardline;
+}
+
+function printTwoHardline() {
+  console.log(new Error().stack?.split('\n')[2]);
+
+  return [hardline, hardline];
+}
 
 const gherkinParser: Parser<GherkinNode> = {
   parse: (text: string): GherkinDocument => {
@@ -93,25 +107,26 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
     if (node instanceof TypedGherkinDocument) {
       if (node.feature) {
-        // @ts-expect-error
-        return [path.call(print, 'feature'), hardline];
+        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedGherkinDocument>
+        return [path.call(print, 'feature'), printHardline()];
       } else {
         throw new Error('unhandled case where there is no feature');
       }
     } else if (node instanceof TypedFeature) {
       return [
-        join(hardline, [
-          // @ts-expect-error TODO don't know why this is not working
-          join([hardline], path.map(print, 'tags')),
-          `Feature: ${node.name}`,
-        ]),
-        indent([
-          hardline,
-          node.description ? node.description.trim() : '',
-          node.description ? hardline : '',
+        // node.tags.length > 0 ? printHardline() : '',
+        // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
+        join(printHardline(), path.map(print, 'tags')),
+        node.tags.length > 0 ? printHardline() : '',
+        `Feature: ${node.name}`,
 
-          // @ts-expect-error TODO need to investigate "print" method
-          join([hardline, hardline], path.map(print, 'children')),
+        indent([
+          printHardline(),
+          node.description ? node.description.trim() : '',
+          node.description ? printHardline() : '',
+
+          // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
+          join(printTwoHardline(), path.map(print, 'children')),
         ]),
       ];
 
@@ -120,7 +135,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       //   return [
       //     ...node?.tags.map(tag => tag.name),
       //     `Feature: ${node.feature.name}`,
-      //     hardline,
+      //     debugHardline(),
       //     node.feature.description,
       //   ]
       // }
@@ -128,29 +143,47 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       return node.name;
     } else if (node instanceof TypedFeatureChild) {
       if (node.scenario) {
-        // @ts-expect-error TODO need to investigate "print" method
+        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
         return path.call(print, 'scenario');
+      } else if (node.background) {
+        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
+        return path.call(print, 'background');
       } else {
-        throw new Error('unhandled case for now');
+        console.log(node);
+        throw new Error(
+          'unhandled case where TypedFeatureChild has no scenario'
+        );
       }
+    } else if (node instanceof TypedBackground) {
+      console.log(node.steps);
+      return [
+        `${node.keyword} : ${node.name}`,
+        indent([
+          printHardline(),
+          node.description ? node.description.trim() : '',
+          node.description ? printHardline() : '',
+          // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
+          join(printHardline(), path.map(print, 'steps')),
+        ]),
+      ];
     } else if (node instanceof TypedScenario) {
       // console.log(node);
       return [
-        join(hardline, [
-          // @ts-expect-error TODO don't know why this is not working
-          join([hardline], path.map(print, 'tags')),
+        join(printHardline(), [
+          // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
+          node.tags ? join(printHardline(), path.map(print, 'tags')) : '',
           `${node.keyword}: ${node.name}`,
         ]),
         indent([
-          hardline,
+          printHardline(),
           node.description ? node.description.trim() : '',
-          node.description ? hardline : '',
-          node.description ? hardline : '',
+          node.description ? printHardline() : '',
+          node.description ? printHardline() : '',
 
-          // @ts-expect-error TODO don't know why this is not working
-          join(hardline, path.map(print, 'steps')),
-          // @ts-expect-error TODO don't know why this is not working
-          join(hardline, path.map(print, 'examples')),
+          // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
+          join(printHardline(), path.map(print, 'steps')),
+          // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
+          join(printHardline(), path.map(print, 'examples')),
         ]),
       ];
     } else if (node instanceof TypedStep) {
@@ -163,14 +196,35 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         [StepKeywordType.CONTEXT, StepKeywordType.ACTION].includes(
           node.keywordType
         )
-          ? hardline
+          ? printHardline()
           : '',
         `${node.keyword.trim()} ${node.text.trim()}`,
-        node.docString ? indent([hardline, path.call(print, 'docString')]) : '',
+        node.docString
+          ? // @ts-expect-error TODO path should be recognized as an AstPath<TypedStep>
+            indent([printHardline(), path.call(print, 'docString')])
+          : '',
       ];
     } else if (node instanceof TypedDocString) {
       console.log({ node });
-      return join(hardline, [node.delimiter, node.content, node.delimiter]);
+      return join(printHardline(), [
+        node.delimiter,
+        node.content,
+        node.delimiter,
+      ]);
+    } else if (node instanceof TypedExamples) {
+      // TODO implement examples
+      // console.log(node);
+      // return [
+      //   `${node.keyword}: ${node.name}`,
+      //   indent([
+      //     debugHardline(),
+      //     // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+      //     join(debugHardline(), path.map(print, 'tableHeader')),
+      //     // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+      //     join(debugHardline(), path.map(print, 'tableBody')),
+      //   ]),
+      // ];
+      return [printHardline(), '#### some examples to implement'];
     } else {
       console.error('Unhandled node type', node);
       return '';
@@ -187,7 +241,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
         return [
           node.delimiter,
-          hardline,
+          printHardline(),
           textToDoc(content, { ...options, parser: 'json' }),
           node.delimiter,
         ];

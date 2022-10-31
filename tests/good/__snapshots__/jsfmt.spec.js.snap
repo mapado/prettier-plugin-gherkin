@@ -1,12 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`background.feature 1`] = `
+Feature: Background
+
+  Background: a simple background
+    Given the minimalism inside a background
+
+
+  Scenario: minimalistic
+    Given the minimalism
+
+  Scenario: also minimalistic
+    Given the minimalism
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Background
+    Background : a simple background
+        Given the minimalism inside a background
+
+
+    Scenario: minimalistic
+        Given the minimalism
+
+
+    Scenario: also minimalistic
+        Given the minimalism
+
+`;
+
 exports[`minimal.feature 1`] = `
 Feature: Minimal
 
   Scenario: minimalistic
     Given the minimalism
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 Feature: Minimal
 
     Scenario: minimalistic
