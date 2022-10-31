@@ -259,7 +259,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         )
           ? printHardline()
           : '',
-        `${node.keyword.trim()} ${node.text.trim()}`,
+        `${node.keyword}${node.text.trim()}`,
         node.docString
           ? // @ts-expect-error TODO path should be recognized as an AstPath<TypedStep>
             indent([printHardline(), path.call(print, 'docString')])
