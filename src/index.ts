@@ -34,6 +34,8 @@ import {
   TypedTableRow,
   TypedTableCell,
   TypedDataTable,
+  TypedRule,
+  TypedRuleChild,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -114,7 +116,7 @@ function printTags(
   // console.log(node);
 
   return [
-    // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
+    // @ts-expect-error TODO path should be recognized as an AstPath<GherkinNode & { tags: readonly TypedTag[] }>>
     join(printHardline(), path.map(gherkinAstPrinter.print, 'tags')),
     node.tags.length > 0 ? printHardline() : '',
   ];
@@ -152,9 +154,40 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           join(printTwoHardlines(), path.map(print, 'children')),
         ]),
       ];
-    } else if (node instanceof TypedTag) {
-      return node.name;
     } else if (node instanceof TypedFeatureChild) {
+      if (node.scenario) {
+        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
+        return path.call(print, 'scenario');
+      } else if (node.background) {
+        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
+        return path.call(print, 'background');
+      } else if (node.rule) {
+        // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
+        return path.call(print, 'rule');
+      } else {
+        console.log(node);
+        throw new Error(
+          'unhandled case where TypedFeatureChild has no scenario'
+        );
+      }
+    } else if (node instanceof TypedRule) {
+      // console.log({ node });
+
+      return [
+        printTags(path, node),
+        `${node.keyword}: ${node.name}`,
+        indent([
+          printHardline(),
+          node.description ? node.description.trim() : '',
+          node.description ? printHardline() : '',
+          printHardline(),
+
+          // @ts-expect-error TODO path should be recognized as an AstPath<TypedRule>
+          join(printTwoHardlines(), path.map(print, 'children')),
+        ]),
+      ];
+    } else if (node instanceof TypedRuleChild) {
+      console.log({ node });
       if (node.scenario) {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
         return path.call(print, 'scenario');
@@ -163,14 +196,14 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         return path.call(print, 'background');
       } else {
         console.log(node);
-        throw new Error(
-          'unhandled case where TypedFeatureChild has no scenario'
-        );
+        throw new Error('unhandled case where TypedRuleChild has no scenario');
       }
+    } else if (node instanceof TypedTag) {
+      return node.name;
     } else if (node instanceof TypedBackground) {
       // console.log(node.steps);
       return [
-        `${node.keyword} : ${node.name}`,
+        `${node.keyword}: ${node.name}`,
         indent([
           printHardline(),
           node.description ? node.description.trim() : '',
