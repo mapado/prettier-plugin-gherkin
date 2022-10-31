@@ -280,12 +280,15 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         indent([
           printHardline(),
 
-          join(printHardline(), [
-            // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
-            path.call(print, 'tableHeader'),
-            // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
-            ...path.map(print, 'tableBody'),
-          ]),
+          join(
+            printHardline(),
+            [
+              // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+              node.tableHeader && path.call(print, 'tableHeader'),
+              // @ts-expect-error TODO path should be recognized as an AstPath<TypedExamples>
+              ...path.map(print, 'tableBody'),
+            ].filter((d): d is Doc => !!d)
+          ),
         ]),
       ];
     } else if (node instanceof TypedDataTable) {
