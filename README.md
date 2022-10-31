@@ -74,6 +74,13 @@ Gherkin AST schema
 
 ![Gherkin AST schema](https://raw.githubusercontent.com/cucumber/common/main/gherkin/docs/ast.png)
 
+### Useful resources on Gherkin language
+
+- [Learn Gherkin on specflow.org](https://specflow.org/learn/gherkin/)
+- [Cucumber Gherkin reference](https://cucumber.io/docs/gherkin/reference/)
+- [Cucumber Gherkin JavaScript parser](https://github.com/cucumber/gherkin-javascript/)
+- [Prettier command reference](https://github.com/prettier/prettier/blob/main/commands.md)
+
 ## Test datas
 
 Test datas can be found here : https://github.com/cucumber/common/tree/main/gherkin/testdata
