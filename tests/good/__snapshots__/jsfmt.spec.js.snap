@@ -447,6 +447,21 @@ Feature: Example tokens everywhere
 
 `;
 
+exports[`i18n_emoji.feature 1`] = `
+# language: em
+📚: 🙈🙉🙊
+
+  📕: 💃
+    😐🎸
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+📚: 🙈🙉🙊
+
+    📕: 💃
+        😐 🎸
+
+`;
+
 exports[`minimal.feature 1`] = `
 Feature: Minimal
 

@@ -163,7 +163,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     } else if (node instanceof TypedFeature) {
       return [
         printTags(path, node),
-        `Feature: ${node.name}`,
+        `${node.keyword}: ${node.name}`,
 
         indent([
           printHardline(),
