@@ -80,7 +80,7 @@ Feature: DataTables
 
     Scenario: some whitespace is important
         Given 3 lines of poetry on 5 lines
-            | \\nraindrops--\\nher last kiss\\ngoodbye.\\r\\n |
+            | \\nraindrops--\\nher last kiss\\ngoodbye.\\\\r\\n |
 
         Given an example of negative space
             | lost        i n        space |
@@ -297,6 +297,98 @@ Feature: test
 `;
 
 exports[`readme_example.feature 1`] = `
+@a
+Feature:
+  @b @c
+  Scenario Outline:
+    Given <x>
+
+    Examples:
+      | x |
+      | y |
+
+  @d @e
+  Scenario Outline:
+    Given <m>
+
+    @f
+    Examples:
+      | m |
+      | n |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@a
+Feature:
+
+    @b
+    @c
+    Scenario Outline:
+        Given <x>
+
+        Examples:
+            | x |
+            | y |
+
+    @d
+    @e
+    Scenario Outline:
+        Given <m>
+
+        @f
+        Examples:
+            | m |
+            | n |
+
+`;
+
+exports[`scenario_outline_no_newline.feature 1`] = `
+Feature: Minimal Scenario Outline
+
+Scenario Outline: minimalistic
+    Given the <what>
+
+Examples:
+  | what       |
+  | minimalism |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal Scenario Outline
+
+    Scenario Outline: minimalistic
+        Given the <what>
+
+        Examples:
+            | what       |
+            | minimalism |
+
+`;
+
+exports[`scenario_outline_with_value_with_trailing_backslash.feature 1`] = `
+Feature: Scenario Outline with values with trailing backslash
+
+Scenario Outline: minimalistic
+    Given <what>
+    When <this>
+    Then <that>
+
+Examples:
+  | what | this  | that   |
+  | x\\\\y | this\\ | that\\\\ |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Scenario Outline with values with trailing backslash
+
+    Scenario Outline: minimalistic
+        Given <what>
+
+        When <this>
+        Then <that>
+
+        Examples:
+            | what | this   | that   |
+            | x\\\\y | this\\\\ | that\\\\ |
+
+`;
+
+exports[`scenario_outlines_with_tags.feature 1`] = `
 @a
 Feature:
   @b @c
