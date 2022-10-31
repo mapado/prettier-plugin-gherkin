@@ -355,6 +355,41 @@ Feature: DocString variations
 
 `;
 
+exports[`empty.feature 1`] = `
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`;
+
+exports[`escaped_pipes.feature 1`] = `
+Feature: Escaped pipes
+    The \\-character will be considered as an escape in table cell
+    iff it is followed by a |-character, a \\-character or an n.
+
+  Scenario: They are the future
+    Given they have arrived
+      | æ | o |
+      | a | ø |
+    Given they have arrived
+      | \\|æ\\\\n     | \\o\\no\\  |
+      | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\\\|
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Escaped pipes
+    The \\-character will be considered as an escape in table cell
+    iff it is followed by a |-character, a \\-character or an n.
+
+    Scenario: They are the future
+        Given they have arrived
+            | æ | o |
+            | a | ø |
+
+        Given they have arrived
+            | \\|æ\\\\n     | \\\\o\\no\\\\ |
+            | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\\\ |
+
+`;
+
 exports[`example_token_multiple.feature 1`] = `
 Feature: Example token used multiple times
 
