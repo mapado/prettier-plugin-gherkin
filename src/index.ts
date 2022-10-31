@@ -124,12 +124,13 @@ function printTags(
 
 function printDescription(
   path: AstPath<TypedGherkinNode<GherkinNode & { description: string }>>,
-  node: GherkinNode & { description: string }
+  node: GherkinNode & { description: string },
+  hardlineIfDescription: boolean
 ) {
   // console.log(node);
 
   if (!node.description) {
-    return '';
+    return hardlineIfDescription ? printHardline() : '';
   }
 
   return [
@@ -137,6 +138,7 @@ function printDescription(
       printHardline(),
       node.description.split('\n').map((s) => s.trim())
     ),
+    printHardline(),
     printHardline(),
   ];
 }
@@ -165,8 +167,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
         indent([
           printHardline(),
-          printDescription(path, node),
-          printHardline(),
+          printDescription(path, node, true),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
           join(printTwoHardlines(), path.map(print, 'children')),
@@ -196,8 +197,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         `${node.keyword}: ${node.name}`,
         indent([
           printHardline(),
-          printDescription(path, node),
-          printHardline(),
+          printDescription(path, node, true),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedRule>
           join(printTwoHardlines(), path.map(print, 'children')),
@@ -223,7 +223,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         `${node.keyword}: ${node.name}`,
         indent([
           printHardline(),
-          printDescription(path, node),
+          printDescription(path, node, false),
           // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
           join(printHardline(), path.map(print, 'steps')),
         ]),
@@ -235,8 +235,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         `${node.keyword}: ${node.name}`,
         indent([
           printHardline(),
-          printDescription(path, node),
-          node.description ? printHardline() : '',
+          printDescription(path, node, false),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
           join(printHardline(), path.map(print, 'steps')),
