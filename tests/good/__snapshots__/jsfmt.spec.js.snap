@@ -116,6 +116,7 @@ Feature: DataTables
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
 `;
@@ -227,12 +228,14 @@ Feature: Descriptions everywhere
         This description
         has a comment after
 
+        # this is a comment
         Given the minimalism
 
     Scenario: comment right after description
         This description
         has a comment right after
 
+        #  this is another comment
         Given the minimalism
 
     Scenario: description with escaped docstring separator
@@ -689,6 +692,7 @@ Feature: Empty feature
 exports[`incomplete_feature_3.feature 1`] = `
 # Just a comment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Just a comment
 
 `;
 
@@ -836,6 +840,12 @@ Feature: test
             | football | 69       |
             | pool     | 5.6      |
 
+        # The "red" cell below has the following whitespace characters on each side:
+        # - U+00A0 (non-breaking space)
+        # - U+0020 (space)
+        # - U+0009 (tab)
+        # This is generated with \`ruby -e 'STDOUT.write "\\u00A0\\u0020\\u0009".encode("utf-8")' | pbcopy\`
+        # and pasted.
         Examples:
             | color |
             | red   |
@@ -3066,6 +3076,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 02
@@ -3081,6 +3092,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 03
@@ -3096,6 +3108,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 04
@@ -3111,6 +3124,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 05
@@ -3126,6 +3140,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 06
@@ -3141,6 +3156,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 07
@@ -3156,6 +3172,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 08
@@ -3171,6 +3188,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 09
@@ -3186,6 +3204,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 10
@@ -3201,6 +3220,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 11
@@ -3216,6 +3236,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 12
@@ -3231,6 +3252,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 13
@@ -3246,6 +3268,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 14
@@ -3261,6 +3284,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 15
@@ -3276,6 +3300,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 16
@@ -3291,6 +3316,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 17
@@ -3306,6 +3332,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 18
@@ -3321,6 +3348,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 19
@@ -3336,6 +3364,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 20
@@ -3351,6 +3380,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 21
@@ -3366,6 +3396,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 22
@@ -3381,6 +3412,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 23
@@ -3396,6 +3428,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 24
@@ -3411,6 +3444,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 25
@@ -3426,6 +3460,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 26
@@ -3441,6 +3476,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 27
@@ -3456,6 +3492,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 28
@@ -3471,6 +3508,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 29
@@ -3486,6 +3524,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 30
@@ -3501,6 +3540,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 31
@@ -3516,6 +3556,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 32
@@ -3531,6 +3572,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 33
@@ -3546,6 +3588,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 34
@@ -3561,6 +3604,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 35
@@ -3576,6 +3620,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 36
@@ -3591,6 +3636,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 37
@@ -3606,6 +3652,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 38
@@ -3621,6 +3668,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 39
@@ -3636,6 +3684,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 40
@@ -3651,6 +3700,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 41
@@ -3666,6 +3716,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 42
@@ -3681,6 +3732,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 43
@@ -3696,6 +3748,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 44
@@ -3711,6 +3764,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 45
@@ -3726,6 +3780,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 46
@@ -3741,6 +3796,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 47
@@ -3756,6 +3812,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 48
@@ -3771,6 +3828,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 49
@@ -3786,6 +3844,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 50
@@ -3801,6 +3860,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 51
@@ -3816,6 +3876,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 52
@@ -3831,6 +3892,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 53
@@ -3846,6 +3908,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 54
@@ -3861,6 +3924,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 55
@@ -3876,6 +3940,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 56
@@ -3891,6 +3956,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 57
@@ -3906,6 +3972,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 58
@@ -3921,6 +3988,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 59
@@ -3936,6 +4004,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 60
@@ -3951,6 +4020,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 61
@@ -3966,6 +4036,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 62
@@ -3981,6 +4052,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 63
@@ -3996,6 +4068,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 64
@@ -4011,6 +4084,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 65
@@ -4026,6 +4100,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 66
@@ -4041,6 +4116,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 67
@@ -4056,6 +4132,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 68
@@ -4071,6 +4148,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 69
@@ -4086,6 +4164,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 70
@@ -4101,6 +4180,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 71
@@ -4116,6 +4196,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 72
@@ -4131,6 +4212,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 73
@@ -4146,6 +4228,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 74
@@ -4161,6 +4244,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 75
@@ -4176,6 +4260,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 76
@@ -4191,6 +4276,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 77
@@ -4206,6 +4292,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 78
@@ -4221,6 +4308,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 79
@@ -4236,6 +4324,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 80
@@ -4251,6 +4340,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 81
@@ -4266,6 +4356,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 82
@@ -4281,6 +4372,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 83
@@ -4296,6 +4388,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 84
@@ -4311,6 +4404,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 85
@@ -4326,6 +4420,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 86
@@ -4341,6 +4436,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 87
@@ -4356,6 +4452,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 88
@@ -4371,6 +4468,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 89
@@ -4386,6 +4484,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 90
@@ -4401,6 +4500,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 91
@@ -4416,6 +4516,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 92
@@ -4431,6 +4532,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 93
@@ -4446,6 +4548,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 94
@@ -4461,6 +4564,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 95
@@ -4476,6 +4580,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 96
@@ -4491,6 +4596,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 97
@@ -4506,6 +4612,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 98
@@ -4521,6 +4628,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 99
@@ -4536,6 +4644,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
     Scenario: scenario 100
@@ -4551,6 +4660,7 @@ Feature: Long feature file
         And a data table with comments and newlines inside
             | foo  | bar  |
             | boz  | boo  |
+            # this is a comment
             | boz2 | boo2 |
 
 `;

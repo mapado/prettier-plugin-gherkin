@@ -7,6 +7,7 @@ import {
   IdGenerator,
   GherkinDocument,
   StepKeywordType,
+  Location,
 } from '@cucumber/messages';
 import {
   AstPath,
@@ -36,6 +37,12 @@ import {
   TypedDataTable,
   TypedRule,
   TypedRuleChild,
+  isHasChildren,
+  isHasChild,
+  HasChild,
+  HasChildren,
+  GherkinNodeWithLocation,
+  isWithLocation,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -70,6 +77,32 @@ function escapeMultilineString(str: string): string {
   return str.replace(new RegExp(LINEBREAK_MATCHER, 'g'), '\\n');
 }
 
+function assertNodeHasLocation(
+  node: GherkinNode
+): asserts node is GherkinNode & { location: Location } {
+  if (!('location' in node)) {
+    throw new Error('no location for node ' + node.constructor.name);
+  }
+}
+
+let textColumnWidth: Array<number> = [];
+
+function generateColumnSizes(text: string) {
+  let columnSizes: Array<number> = [];
+
+  let index: number | false = 0;
+  let currentLine = 1;
+  while ((index = util.skipEverythingButNewLine(text, index)) !== false) {
+    columnSizes.push(index + 1);
+    index++;
+    currentLine++;
+  }
+
+  // console.log(columnSizes);
+
+  textColumnWidth = columnSizes;
+}
+
 const gherkinParser: Parser<GherkinNode> = {
   parse: (text: string): GherkinDocument => {
     const uuidFn = IdGenerator.uuid();
@@ -80,31 +113,91 @@ const gherkinParser: Parser<GherkinNode> = {
 
     const document = parser.parse(text);
 
+    generateColumnSizes(text);
+
+    // console.log({
+    //   textColumnWidth,
+    //   // document: JSON.stringify(document, null, 2),
+    // });
+
+    // console.log(
+    //   util.getStringWidth(text),
+    //   util.skipEverythingButNewLine(text, 18)
+    // );
+
     return new TypedGherkinDocument({
       ...document,
-      comments: [], // igonre comments for now
+      // comments: [], // igonre comments for now
     });
   },
 
   locStart: (node: TypedGherkinNode<GherkinNode>) => {
-    return 0; // TMP ignore comments
+    // return 0;
+    // if (!(node instanceof TypedComment)) {
+    //   throw new Error('locStart: not a comment');
+    // }
 
-    if (!(node instanceof TypedComment)) {
-      throw new Error('locStart: not a comment');
-    }
+    // console.log('locStart', node);
 
-    console.log('locStart', node, '\n');
-    // return node.location.column ?? 0
+    assertNodeHasLocation(node);
+
+    // sum all column size until the current line
+    let index =
+      node.location.line > 1 ? textColumnWidth[node.location.line - 2] : 0;
+
+    index += (node.location.column ?? 1) - 1;
+
+    return index;
+
+    // if (node instanceof TypedComment) {
+    //   return 0;
+    // }
+
+    // if (node.location) {
+    //   return node.location.line * 1000000 + node.location.column;
+    // }
+
+    // return 0;
+    // return node.location.column ?? 0;
   },
   locEnd: (node: TypedGherkinNode<GherkinNode>) => {
-    return 0; // TMP ignore comments
+    // return 0; // TMP ignore comments
 
-    if (!(node instanceof TypedComment)) {
-      throw new Error('locEnd: not a comment');
+    // if (!(node instanceof TypedComment)) {
+    //   throw new Error('locEnd: not a comment');
+    // }
+
+    // console.log('locEnd', node, '\n');
+
+    if (node instanceof TypedComment) {
+      return gherkinParser.locStart(node) + node.text.trim().length;
     }
 
-    console.log('locEnd', node, '\n');
-    // return (node.location.column ?? 0) + node.text.length
+    if (!(node instanceof TypedComment)) {
+      console.log({ method: 'locEnd', nodeName: node.constructor.name });
+    }
+
+    if (node instanceof TypedFeature) {
+      return (
+        gherkinParser.locStart(node) +
+        node.keyword.length +
+        node.name.length +
+        2
+      );
+    }
+
+    // if (!(node instanceof TypedComment)) {
+    //   console.log(node, gherkinParser.locStart(node));
+    // }
+
+    // if (node.location) {
+    //   return node.location.line * 1000000 + node.location.column + 1;
+    // }
+
+    // console.log('locEnd', node);
+
+    return gherkinParser.locStart(node) + 1;
+    // return (node.location.column ?? 0) + node.text.length;
   },
   astFormat: 'gherkin-ast',
 };
@@ -143,7 +236,187 @@ function printDescription(
   ];
 }
 
+/**
+ * This method will try to find the the location of the
+ */
+function findNodeForCommentInAST(
+  ast: TypedGherkinNode<GherkinNode>,
+  comment: TypedComment
+): GherkinNodeWithLocation | null {
+  const { line, column } = comment.location;
+
+  if (isWithLocation(ast) && ast.location.line > line) {
+    return ast;
+  }
+
+  if (isHasChild(ast)) {
+    const { child } = ast;
+
+    if (child) {
+      const node = findNodeForCommentInAST(child, comment);
+
+      if (node) {
+        return node;
+      }
+    }
+  }
+
+  if (isHasChildren(ast)) {
+    const { children } = ast;
+
+    for (const child of children) {
+      const node = findNodeForCommentInAST(child, comment);
+
+      if (node) {
+        return node;
+      }
+    }
+  }
+
+  return null;
+
+  // if (!child || !children) {
+  //   return null;
+  // }
+
+  // for (const featureChild of feature.children) {
+  //   if (isHasChildren(featureChild)) {
+  //     for (const child of featureChild.children) {
+  //     }
+  //   }
+
+  //   if (isHasChild(featureChild)) {
+  //   }
+
+  //   // const item =
+  //   //   featureChild.scenario || featureChild.background || featureChild.rule;
+
+  //   // if (!item) {
+  //   //   continue;
+  //   // }
+
+  //   // if (item.location.line > line) {
+  //   //   return item;
+  //   // }
+
+  //   // if (item instanceof TypedScenario || item instanceof TypedBackground) {
+  //   //   for (const step of item.steps) {
+  //   //     if (step.location.line > line) {
+  //   //       return step;
+  //   //     }
+  //   //   }
+  //   // } else {
+  //   //   for (const ruleChild of item.children) {
+  //   //     const ruleItem = featureChild.scenario || featureChild.background;
+
+  //   //     if (!ruleItem) {
+  //   //       continue;
+  //   //     }
+
+  //   //     for (const step of ruleItem.steps) {
+  //   //       if (step.location.line > line) {
+  //   //         return step;
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // }
+
+  //   // for (const step of scenario.steps) {
+  //   //   if (step.location.line > line) {
+  //   //     return step;
+  //   //   }
+  //   // }
+  // }
+
+  return null;
+}
+
 const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
+  printComment: (path, options) => {
+    const node = path.getValue();
+    // console.log(node);
+
+    if (!(node instanceof TypedComment)) {
+      throw new Error('printComment: not a comment');
+    }
+
+    // console.log('printComment', node, path, '\n');
+
+    return [
+      node.text.trim(),
+      // node.text.split('\n').map((s) => s.trim()),
+      // printHardline(),
+    ];
+  },
+
+  // canAttachComment(node): boolean {
+  //   console.log('canAttachComment', node);
+  //   return true;
+  // },
+
+  isBlockComment(node): boolean {
+    //   // console.log('isBlockComment', node);
+    return false; // block comments are not supported by gherkin for now. See https://cucumber.io/docs/gherkin/reference/
+  },
+
+  handleComments: {
+    ownLine: (
+      commentNode: TypedComment,
+      text: string,
+      options,
+      ast,
+      isLastComment: boolean
+    ) => {
+      const node = findNodeForCommentInAST(ast, commentNode);
+      if (node) {
+        util.addLeadingComment(node, commentNode);
+
+        return true;
+      }
+      // console.log({ ownLine: commentNode, ast });
+
+      return false;
+    },
+    endOfLine: (
+      commentNode: TypedComment,
+      text: string,
+      options,
+      ast,
+      isLastComment: boolean
+    ) => {
+      const node = findNodeForCommentInAST(ast, commentNode);
+      if (node) {
+        util.addLeadingComment(node, commentNode);
+
+        return true;
+      }
+      // console.log({ ownLine: commentNode, ast });
+
+      return false;
+    },
+
+    remaining: (
+      commentNode: TypedComment,
+      text: string,
+      options,
+      ast,
+      isLastComment: boolean
+    ) => {
+      if (ast instanceof TypedGherkinDocument && !ast.feature) {
+        // special case where the document only contains comments : let's attach the comment to the document directly
+        util.addLeadingComment(ast, commentNode);
+
+        return true;
+      }
+
+      // commentNode.followingNode = ast;
+
+      // return true;
+      // return commentNode.text;
+      return false;
+    },
+  },
+
   print: (path, options, print) => {
     const node = path.getValue();
 
