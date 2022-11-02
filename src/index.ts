@@ -249,15 +249,33 @@ function findNodeForCommentInAST(
     const item =
       featureChild.scenario || featureChild.background || featureChild.rule;
 
-    if (item && item.location.line > line) {
+    if (!item) {
+      continue;
+    }
+
+    if (item.location.line > line) {
       return item;
     }
 
-    const children = item.steps || item.children;
+    if (item instanceof TypedScenario || item instanceof TypedBackground) {
+      for (const step of item.steps) {
+        if (step.location.line > line) {
+          return step;
+        }
+      }
+    } else {
+      for (const ruleChild of item.children) {
+        const ruleItem = featureChild.scenario || featureChild.background;
 
-    for (const step of children) {
-      if (step.location.line > line) {
-        return step;
+        if (!ruleItem) {
+          continue;
+        }
+
+        for (const step of ruleItem.steps) {
+          if (step.location.line > line) {
+            return step;
+          }
+        }
       }
     }
 
@@ -307,6 +325,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ast,
       isLastComment: boolean
     ) => {
+      // @ts-expect-error ast should be a TypedGherkinDocument
       const node = findNodeForCommentInAST(ast, commentNode);
       if (node) {
         util.addLeadingComment(node, commentNode);
@@ -321,8 +340,10 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ast,
       isLastComment: boolean
     ) => {
+      // @ts-expect-error ast should be a TypedGherkinDocument
       console.log({ endOfLine: commentNode, feature: ast.feature });
 
+      // @ts-expect-error ast should be a TypedGherkinDocument
       util.addLeadingComment(ast.feature, commentNode);
 
       return true;

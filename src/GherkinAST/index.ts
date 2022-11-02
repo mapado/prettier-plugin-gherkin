@@ -18,12 +18,10 @@ import {
   RuleChild,
 } from '@cucumber/messages';
 
-export type GherkinNode =
-  | GherkinDocument
+export type GherkinNodeWithLocation =
   | Comment
   | Feature
   | Tag
-  | FeatureChild
   | Scenario
   | Rule
   | Background
@@ -32,7 +30,12 @@ export type GherkinNode =
   | TableRow
   | TableCell
   | DocString
-  | DataTable
+  | DataTable;
+
+export type GherkinNode =
+  | GherkinNodeWithLocation
+  | GherkinDocument
+  | FeatureChild
   | RuleChild;
 
 function reEscapeTableCell(str: string) {
@@ -58,6 +61,17 @@ export abstract class TypedGherkinNode<N extends GherkinNode> {
   constructor(originalNode: N) {}
 }
 
+export abstract class TypedGherkinNodeWithLocation<
+  N extends GherkinNodeWithLocation
+> extends TypedGherkinNode<N> {
+  location: Location;
+
+  constructor(originalNode: N) {
+    super(originalNode);
+    this.location = originalNode.location;
+  }
+}
+
 export class TypedGherkinDocument
   extends TypedGherkinNode<GherkinDocument>
   implements GherkinDocument
@@ -78,8 +92,10 @@ export class TypedGherkinDocument
     this.comments = originalNode.comments.map((c) => new TypedComment(c));
   }
 }
-export class TypedFeature extends TypedGherkinNode<Feature> implements Feature {
-  location: Location;
+export class TypedFeature
+  extends TypedGherkinNodeWithLocation<Feature>
+  implements Feature
+{
   tags: readonly TypedTag[];
   language: string;
   keyword: string;
@@ -90,7 +106,6 @@ export class TypedFeature extends TypedGherkinNode<Feature> implements Feature {
   constructor(originalNode: Feature) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.tags = originalNode.tags.map((t) => new TypedTag(t));
     this.language = originalNode.language;
     this.keyword = originalNode.keyword;
@@ -100,26 +115,25 @@ export class TypedFeature extends TypedGherkinNode<Feature> implements Feature {
   }
 }
 
-export class TypedTag extends TypedGherkinNode<Tag> implements Tag {
-  location: Location;
+export class TypedTag extends TypedGherkinNodeWithLocation<Tag> implements Tag {
   name: string;
   id: string;
   constructor(originalNode: Tag) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.name = originalNode.name;
     this.id = originalNode.id;
   }
 }
 
-export class TypedComment extends TypedGherkinNode<Comment> implements Comment {
-  location: Location;
+export class TypedComment
+  extends TypedGherkinNodeWithLocation<Comment>
+  implements Comment
+{
   text: string;
   constructor(originalNode: Comment) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.text = originalNode.text;
   }
 
@@ -150,8 +164,10 @@ export class TypedFeatureChild
   }
 }
 
-export class TypedRule extends TypedGherkinNode<Rule> implements Rule {
-  location: Location;
+export class TypedRule
+  extends TypedGherkinNodeWithLocation<Rule>
+  implements Rule
+{
   tags: readonly TypedTag[];
   keyword: string;
   name: string;
@@ -162,7 +178,6 @@ export class TypedRule extends TypedGherkinNode<Rule> implements Rule {
   constructor(originalNode: Rule) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.tags = originalNode.tags.map((t) => new TypedTag(t));
     this.keyword = originalNode.keyword;
     this.name = originalNode.name;
@@ -191,10 +206,9 @@ export class TypedRuleChild
 }
 
 export class TypedBackground
-  extends TypedGherkinNode<Background>
+  extends TypedGherkinNodeWithLocation<Background>
   implements Background
 {
-  location: Location;
   keyword: string;
   name: string;
   description: string;
@@ -204,7 +218,6 @@ export class TypedBackground
   constructor(originalNode: Background) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.keyword = originalNode.keyword;
     this.name = originalNode.name;
     this.description = originalNode.description;
@@ -213,8 +226,10 @@ export class TypedBackground
   }
 }
 
-export class TypedStep extends TypedGherkinNode<Step> implements Step {
-  location: Location;
+export class TypedStep
+  extends TypedGherkinNodeWithLocation<Step>
+  implements Step
+{
   keyword: string;
   keywordType?: StepKeywordType;
   text: string;
@@ -225,7 +240,6 @@ export class TypedStep extends TypedGherkinNode<Step> implements Step {
   constructor(originalNode: Step) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.keyword = originalNode.keyword;
     this.keywordType = originalNode.keywordType;
     this.text = originalNode.text;
@@ -240,10 +254,9 @@ export class TypedStep extends TypedGherkinNode<Step> implements Step {
 }
 
 export class TypedScenario
-  extends TypedGherkinNode<Scenario>
+  extends TypedGherkinNodeWithLocation<Scenario>
   implements Scenario
 {
-  location: Location;
   tags: readonly TypedTag[];
   keyword: string;
   name: string;
@@ -267,10 +280,9 @@ export class TypedScenario
 }
 
 export class TypedExamples
-  extends TypedGherkinNode<Examples>
+  extends TypedGherkinNodeWithLocation<Examples>
   implements Examples
 {
-  location: Location;
   tags: readonly TypedTag[];
   keyword: string;
   name: string;
@@ -289,7 +301,6 @@ export class TypedExamples
 
     const columnSizes = generateColumnSizes(rows);
 
-    this.location = originalNode.location;
     this.tags = originalNode.tags.map((t) => new TypedTag(t));
     this.keyword = originalNode.keyword;
     this.name = originalNode.name;
@@ -305,10 +316,9 @@ export class TypedExamples
 }
 
 export class TypedTableRow
-  extends TypedGherkinNode<TableRow>
+  extends TypedGherkinNodeWithLocation<TableRow>
   implements TableRow
 {
-  location: Location;
   cells: readonly TypedTableCell[];
   id: string;
   columnSizes: number[] | undefined;
@@ -316,7 +326,6 @@ export class TypedTableRow
   constructor(originalNode: TableRow, columnSizes: number[]) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.cells = originalNode.cells.map(
       (c, index) => new TypedTableCell(c, columnSizes[index])
     );
@@ -327,17 +336,15 @@ export class TypedTableRow
 }
 
 export class TypedTableCell
-  extends TypedGherkinNode<TableCell>
+  extends TypedGherkinNodeWithLocation<TableCell>
   implements TableCell
 {
-  location: Location;
   value: string;
   displaySize: number;
 
   constructor(originalNode: TableCell, displaySize: number) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.value = reEscapeTableCell(originalNode.value);
 
     this.displaySize = Math.max(displaySize ?? 0, this.value.length);
@@ -345,10 +352,9 @@ export class TypedTableCell
 }
 
 export class TypedDocString
-  extends TypedGherkinNode<DocString>
+  extends TypedGherkinNodeWithLocation<DocString>
   implements DocString
 {
-  location: Location;
   mediaType?: string;
   content: string;
   delimiter: string;
@@ -356,7 +362,6 @@ export class TypedDocString
   constructor(originalNode: DocString) {
     super(originalNode);
 
-    this.location = originalNode.location;
     this.mediaType = originalNode.mediaType;
     this.content = originalNode.content;
     this.delimiter = originalNode.delimiter;
@@ -364,16 +369,13 @@ export class TypedDocString
 }
 
 export class TypedDataTable
-  extends TypedGherkinNode<DataTable>
+  extends TypedGherkinNodeWithLocation<DataTable>
   implements DataTable
 {
-  location: Location;
   rows: readonly TypedTableRow[];
 
   constructor(originalNode: DataTable) {
     super(originalNode);
-
-    this.location = originalNode.location;
 
     const columnSizes = generateColumnSizes(originalNode.rows);
 
