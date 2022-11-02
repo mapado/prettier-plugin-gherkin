@@ -37,6 +37,12 @@ import {
   TypedDataTable,
   TypedRule,
   TypedRuleChild,
+  isHasChildren,
+  isHasChild,
+  HasChild,
+  HasChildren,
+  GherkinNodeWithLocation,
+  isWithLocation,
 } from './GherkinAST';
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
@@ -109,10 +115,10 @@ const gherkinParser: Parser<GherkinNode> = {
 
     generateColumnSizes(text);
 
-    console.log({
-      textColumnWidth,
-      // document: JSON.stringify(document, null, 2),
-    });
+    // console.log({
+    //   textColumnWidth,
+    //   // document: JSON.stringify(document, null, 2),
+    // });
 
     // console.log(
     //   util.getStringWidth(text),
@@ -230,61 +236,97 @@ function printDescription(
   ];
 }
 
+/**
+ * This method will try to find the the location of the
+ */
 function findNodeForCommentInAST(
-  ast: TypedGherkinDocument,
+  ast: TypedGherkinNode<GherkinNode>,
   comment: TypedComment
-): GherkinNode | null {
-  const { feature } = ast;
+): GherkinNodeWithLocation | null {
   const { line, column } = comment.location;
 
-  if (!feature) {
-    return null;
+  if (isWithLocation(ast) && ast.location.line > line) {
+    return ast;
   }
 
-  if (feature.location.line > line) {
-    return feature;
-  }
+  if (isHasChild(ast)) {
+    const { child } = ast;
 
-  for (const featureChild of feature.children) {
-    const item =
-      featureChild.scenario || featureChild.background || featureChild.rule;
+    if (child) {
+      const node = findNodeForCommentInAST(child, comment);
 
-    if (!item) {
-      continue;
-    }
-
-    if (item.location.line > line) {
-      return item;
-    }
-
-    if (item instanceof TypedScenario || item instanceof TypedBackground) {
-      for (const step of item.steps) {
-        if (step.location.line > line) {
-          return step;
-        }
-      }
-    } else {
-      for (const ruleChild of item.children) {
-        const ruleItem = featureChild.scenario || featureChild.background;
-
-        if (!ruleItem) {
-          continue;
-        }
-
-        for (const step of ruleItem.steps) {
-          if (step.location.line > line) {
-            return step;
-          }
-        }
+      if (node) {
+        return node;
       }
     }
-
-    // for (const step of scenario.steps) {
-    //   if (step.location.line > line) {
-    //     return step;
-    //   }
-    // }
   }
+
+  if (isHasChildren(ast)) {
+    const { children } = ast;
+
+    for (const child of children) {
+      const node = findNodeForCommentInAST(child, comment);
+
+      if (node) {
+        return node;
+      }
+    }
+  }
+
+  return null;
+
+  // if (!child || !children) {
+  //   return null;
+  // }
+
+  // for (const featureChild of feature.children) {
+  //   if (isHasChildren(featureChild)) {
+  //     for (const child of featureChild.children) {
+  //     }
+  //   }
+
+  //   if (isHasChild(featureChild)) {
+  //   }
+
+  //   // const item =
+  //   //   featureChild.scenario || featureChild.background || featureChild.rule;
+
+  //   // if (!item) {
+  //   //   continue;
+  //   // }
+
+  //   // if (item.location.line > line) {
+  //   //   return item;
+  //   // }
+
+  //   // if (item instanceof TypedScenario || item instanceof TypedBackground) {
+  //   //   for (const step of item.steps) {
+  //   //     if (step.location.line > line) {
+  //   //       return step;
+  //   //     }
+  //   //   }
+  //   // } else {
+  //   //   for (const ruleChild of item.children) {
+  //   //     const ruleItem = featureChild.scenario || featureChild.background;
+
+  //   //     if (!ruleItem) {
+  //   //       continue;
+  //   //     }
+
+  //   //     for (const step of ruleItem.steps) {
+  //   //       if (step.location.line > line) {
+  //   //         return step;
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // }
+
+  //   // for (const step of scenario.steps) {
+  //   //   if (step.location.line > line) {
+  //   //     return step;
+  //   //   }
+  //   // }
+  // }
 
   return null;
 }
@@ -325,13 +367,15 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ast,
       isLastComment: boolean
     ) => {
-      // @ts-expect-error ast should be a TypedGherkinDocument
       const node = findNodeForCommentInAST(ast, commentNode);
       if (node) {
         util.addLeadingComment(node, commentNode);
+
+        return true;
       }
-      console.log({ ownLine: commentNode, ast });
-      return true;
+      // console.log({ ownLine: commentNode, ast });
+
+      return false;
     },
     endOfLine: (
       commentNode: TypedComment,
@@ -340,14 +384,17 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ast,
       isLastComment: boolean
     ) => {
-      // @ts-expect-error ast should be a TypedGherkinDocument
-      console.log({ endOfLine: commentNode, feature: ast.feature });
+      const node = findNodeForCommentInAST(ast, commentNode);
+      if (node) {
+        util.addLeadingComment(node, commentNode);
 
-      // @ts-expect-error ast should be a TypedGherkinDocument
-      util.addLeadingComment(ast.feature, commentNode);
+        return true;
+      }
+      // console.log({ ownLine: commentNode, ast });
 
-      return true;
+      return false;
     },
+
     remaining: (
       commentNode: TypedComment,
       text: string,
@@ -355,7 +402,12 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ast,
       isLastComment: boolean
     ) => {
-      console.log({ remaining: commentNode });
+      if (ast instanceof TypedGherkinDocument && !ast.feature) {
+        // special case where the document only contains comments : let's attach the comment to the document directly
+        util.addLeadingComment(ast, commentNode);
+
+        return true;
+      }
 
       // commentNode.followingNode = ast;
 

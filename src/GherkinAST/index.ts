@@ -38,6 +38,10 @@ export type GherkinNode =
   | FeatureChild
   | RuleChild;
 
+export function isWithLocation(node: unknown): node is GherkinNodeWithLocation {
+  return typeof node === 'object' && node !== null && 'location' in node;
+}
+
 function reEscapeTableCell(str: string) {
   return str.replace(/\\/g, '\\\\').replace('|', '\\|');
 }
@@ -61,6 +65,26 @@ export abstract class TypedGherkinNode<N extends GherkinNode> {
   constructor(originalNode: N) {}
 }
 
+export interface HasChildren<N extends TypedGherkinNode<N>> {
+  get children(): ReadonlyArray<TypedGherkinNode<N>>;
+}
+
+export function isHasChildren<N extends TypedGherkinNode<N>>(
+  node: unknown
+): node is HasChildren<N> {
+  return typeof node === 'object' && node !== null && 'children' in node;
+}
+
+export interface HasChild<N extends TypedGherkinNode<N>> {
+  get child(): undefined | TypedGherkinNode<N>;
+}
+
+export function isHasChild<N extends TypedGherkinNode<N>>(
+  node: unknown
+): node is HasChild<N> {
+  return typeof node === 'object' && node !== null && 'child' in node;
+}
+
 export abstract class TypedGherkinNodeWithLocation<
   N extends GherkinNodeWithLocation
 > extends TypedGherkinNode<N> {
@@ -74,7 +98,7 @@ export abstract class TypedGherkinNodeWithLocation<
 
 export class TypedGherkinDocument
   extends TypedGherkinNode<GherkinDocument>
-  implements GherkinDocument
+  implements GherkinDocument, HasChild<TypedFeature>
 {
   uri?: string;
 
@@ -91,10 +115,14 @@ export class TypedGherkinDocument
       : undefined;
     this.comments = originalNode.comments.map((c) => new TypedComment(c));
   }
+
+  get child(): undefined | TypedFeature {
+    return this.feature;
+  }
 }
 export class TypedFeature
   extends TypedGherkinNodeWithLocation<Feature>
-  implements Feature
+  implements Feature, HasChildren<TypedFeatureChild>
 {
   tags: readonly TypedTag[];
   language: string;
@@ -131,6 +159,7 @@ export class TypedComment
   implements Comment
 {
   text: string;
+
   constructor(originalNode: Comment) {
     super(originalNode);
 
@@ -144,7 +173,9 @@ export class TypedComment
 
 export class TypedFeatureChild
   extends TypedGherkinNode<FeatureChild>
-  implements FeatureChild
+  implements
+    FeatureChild,
+    HasChild<TypedRule | TypedScenario | TypedBackground>
 {
   rule?: TypedRule;
   background?: TypedBackground;
@@ -162,11 +193,15 @@ export class TypedFeatureChild
       ? new TypedScenario(originalNode.scenario)
       : undefined;
   }
+
+  get child(): undefined | TypedRule | TypedScenario | TypedBackground {
+    return this.rule || this.background || this.scenario;
+  }
 }
 
 export class TypedRule
   extends TypedGherkinNodeWithLocation<Rule>
-  implements Rule
+  implements Rule, HasChildren<TypedRuleChild>
 {
   tags: readonly TypedTag[];
   keyword: string;
@@ -189,7 +224,7 @@ export class TypedRule
 
 export class TypedRuleChild
   extends TypedGherkinNode<RuleChild>
-  implements RuleChild
+  implements RuleChild, HasChild<TypedScenario>
 {
   background?: TypedBackground;
   scenario?: TypedScenario;
@@ -203,11 +238,15 @@ export class TypedRuleChild
       ? new TypedScenario(originalNode.scenario)
       : undefined;
   }
+
+  get child(): undefined | TypedScenario {
+    return this.scenario;
+  }
 }
 
 export class TypedBackground
   extends TypedGherkinNodeWithLocation<Background>
-  implements Background
+  implements Background, HasChildren<TypedStep>
 {
   keyword: string;
   name: string;
@@ -224,11 +263,15 @@ export class TypedBackground
     this.steps = originalNode.steps.map((s) => new TypedStep(s));
     this.id = originalNode.id;
   }
+
+  get children(): ReadonlyArray<TypedStep> {
+    return this.steps;
+  }
 }
 
 export class TypedStep
   extends TypedGherkinNodeWithLocation<Step>
-  implements Step
+  implements Step, HasChildren<TypedDataTable | TypedDocString>
 {
   keyword: string;
   keywordType?: StepKeywordType;
@@ -251,11 +294,17 @@ export class TypedStep
       : undefined;
     this.id = originalNode.id;
   }
+
+  get children(): ReadonlyArray<TypedDataTable | TypedDocString> {
+    return [this.docString, this.dataTable].filter(
+      (c): c is TypedDataTable | TypedDocString => typeof c !== 'undefined'
+    );
+  }
 }
 
 export class TypedScenario
   extends TypedGherkinNodeWithLocation<Scenario>
-  implements Scenario
+  implements Scenario, HasChildren<TypedStep | TypedExamples | TypedTag>
 {
   tags: readonly TypedTag[];
   keyword: string;
@@ -277,11 +326,15 @@ export class TypedScenario
     this.examples = originalNode.examples.map((e) => new TypedExamples(e));
     this.id = originalNode.id;
   }
+
+  get children(): ReadonlyArray<TypedStep | TypedExamples | TypedTag> {
+    return [...this.steps, ...this.examples, ...this.tags];
+  }
 }
 
 export class TypedExamples
   extends TypedGherkinNodeWithLocation<Examples>
-  implements Examples
+  implements Examples, HasChildren<TypedTableRow | TypedTag>
 {
   tags: readonly TypedTag[];
   keyword: string;
@@ -313,11 +366,19 @@ export class TypedExamples
     );
     this.id = originalNode.id;
   }
+
+  get children(): ReadonlyArray<TypedTableRow | TypedTag> {
+    return [
+      ...(this.tableHeader ? [this.tableHeader] : []),
+      ...this.tableBody,
+      ...this.tags,
+    ];
+  }
 }
 
 export class TypedTableRow
   extends TypedGherkinNodeWithLocation<TableRow>
-  implements TableRow
+  implements TableRow, HasChildren<TypedTableCell>
 {
   cells: readonly TypedTableCell[];
   id: string;
@@ -332,6 +393,10 @@ export class TypedTableRow
     this.id = originalNode.id;
 
     this.columnSizes = columnSizes;
+  }
+
+  get children(): ReadonlyArray<TypedTableCell> {
+    return this.cells;
   }
 }
 
@@ -370,7 +435,7 @@ export class TypedDocString
 
 export class TypedDataTable
   extends TypedGherkinNodeWithLocation<DataTable>
-  implements DataTable
+  implements DataTable, HasChildren<TypedTableRow>
 {
   rows: readonly TypedTableRow[];
 
@@ -380,5 +445,9 @@ export class TypedDataTable
     const columnSizes = generateColumnSizes(originalNode.rows);
 
     this.rows = originalNode.rows.map((r) => new TypedTableRow(r, columnSizes));
+  }
+
+  get children(): ReadonlyArray<TypedTableRow> {
+    return this.rows;
   }
 }
