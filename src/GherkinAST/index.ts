@@ -122,6 +122,10 @@ export class TypedComment extends TypedGherkinNode<Comment> implements Comment {
     this.location = originalNode.location;
     this.text = originalNode.text;
   }
+
+  get value() {
+    return this.text.trim();
+  }
 }
 
 export class TypedFeatureChild
