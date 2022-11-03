@@ -1,5 +1,85 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`datatable_with_PHP_FQCN.feature 1`] = `
+Feature: A data table with PHP Fully Qualified Classnames
+
+    Scenario:
+        When I have a data table
+            | entityClassName | id |
+            | App\\Entity\\Cart | 4 |
+            | App\\\\Entity\\\\Cart | 5 |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: A data table with PHP Fully Qualified Classnames
+
+    Scenario:
+        When I have a data table
+            | entityClassName | id |
+            | App\\Entity\\Cart | 4  |
+            | App\\Entity\\Cart | 5  |
+
+`;
+
+exports[`docstring_with_json.feature 1`] = `
+Feature: complex docstring with JSON in it
+
+    Scenario:
+    Given a docstring with 
+        """
+        1
+        "
+        2
+        \\"
+        3
+        \\"\\"\\"
+        4
+        """
+
+        Given I have a complex docstring
+        """
+        A docstring that is not JSON 
+        =======================================
+
+        but will include some somewhere
+        -----------------------------------------------------
+
+         [WARNING] Some warning
+
+                   {"error":"NOT AUTHENTICATED","comment":"authentication refused"}
+
+         [OK] Declarations complete.
+        """
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: complex docstring with JSON in it
+
+    Scenario:
+        Given a docstring with
+            """
+            1
+            "
+            2
+            \\"
+            3
+            \\"\\"\\"
+            4
+            """
+
+        Given I have a complex docstring
+            """
+            A docstring that is not JSON
+            =======================================
+
+            but will include some somewhere
+            -----------------------------------------------------
+
+             [WARNING] Some warning
+
+                       {"error":"NOT AUTHENTICATED","comment":"authentication refused"}
+
+             [OK] Declarations complete.
+            """
+
+`;
+
 exports[`example.feature 1`] = `
 @accountability
 @accountability-json
@@ -87,6 +167,43 @@ Feature: accountability
 
 `;
 
+exports[`last_line_comment.feature 1`] = `
+Feature: some feature
+    Scenario: Insert fixtures
+        # add OAuth token
+        Given something
+# saleStartDate is on summer time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: some feature
+
+    Scenario: Insert fixtures
+        # add OAuth token
+        Given something
+
+# saleStartDate is on summer time
+`;
+
+exports[`last_line_comment_multiples.feature 1`] = `
+Feature: some feature
+    Scenario: Insert fixtures
+        # add OAuth token
+        Given something
+        # Then the response status code should be 403
+        # And the JSON nodes should be equal to:
+        #     | hydra:description | Some error did happened |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: some feature
+
+    Scenario: Insert fixtures
+        # add OAuth token
+        Given something
+
+# Then the response status code should be 403
+# And the JSON nodes should be equal to:
+#     | hydra:description | Some error did happened |
+`;
+
 exports[`simple-comment.feature 1`] = `
 # feature comment
 Feature: coucou
@@ -104,5 +221,53 @@ Feature: coucou
     Scenario: Scenario name
         # step comment
         Given a step
+
+`;
+
+exports[`unescape_backslashes_table_cell.feature 1`] = `
+Feature: Escaped pipes
+    The \\-character will be considered as an escape in table cell
+    iff it is followed by a |-character, a \\-character or an n.
+
+  Scenario: They are the future
+    Given a huge table with escaped characters
+     | \\n | 
+     | \\\\n |
+     | \\\\\\n | 
+     | \\\\\\\\n |
+      | \\\\\\\\\\n |
+      | \\\\\\\\\\\\n |
+     | \\| | 
+     | \\\\\\| |
+     | \\ |
+     | a\\b |
+     | a\\\\b |
+      | a\\\\\\b |
+      | a\\\\\\\\b |
+      | a\\ |
+      | \\a |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Escaped pipes
+    The \\-character will be considered as an escape in table cell
+    iff it is followed by a |-character, a \\-character or an n.
+
+    Scenario: They are the future
+        Given a huge table with escaped characters
+            | \\n       |
+            | \\\\n     |
+            | \\\\\\n     |
+            | \\\\\\\\n   |
+            | \\\\\\\\\\n   |
+            | \\\\\\\\\\\\n |
+            | \\|      |
+            | \\\\\\|    |
+            | \\       |
+            | a\\b     |
+            | a\\b     |
+            | a\\\\\\b   |
+            | a\\\\\\b   |
+            | a\\      |
+            | \\a      |
 
 `;

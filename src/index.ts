@@ -562,11 +562,17 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       // console.log({ node });
 
       // if the content contains the delimiter, the parser will unescape it, so we need to escape it again
-      const escapeDelimiter = (content: string) =>
-        content.replace(
-          new RegExp(node.delimiter[0], 'g'),
-          `\\${node.delimiter[0]}`
+      const escapeDelimiter = (content: string) => {
+        return content.replace(
+          new RegExp(`(${node.delimiter})`, 'g'),
+          (match) => {
+            return match
+              .split('')
+              .map((c) => `\\${c}`)
+              .join('');
+          }
         );
+      };
 
       return join(printHardline(), [
         `${node.delimiter}${node.mediaType || ''}`,
