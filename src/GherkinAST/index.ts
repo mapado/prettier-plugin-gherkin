@@ -17,6 +17,7 @@ import {
   DataTable,
   RuleChild,
 } from '@cucumber/messages';
+import { ParserOptions } from 'prettier';
 
 export type GherkinNodeWithLocation =
   | Comment
@@ -42,8 +43,19 @@ export function isWithLocation(node: unknown): node is GherkinNodeWithLocation {
   return typeof node === 'object' && node !== null && 'location' in node;
 }
 
-function reEscapeTableCell(str: string) {
-  return str.replace(/\\/g, '\\\\').replace('|', '\\|');
+function reEscapeTableCell(str: string): string {
+  const out = str
+    // espace all pipes that have been unescaped
+    .replace('|', '\\|')
+    // espace all backslashes that have been unescaped
+    .replace(/\\/g, '\\\\');
+
+  if (OPTIONS.escapeBackslashes) {
+    return out;
+  }
+
+  // replace all escaped backslashes, except those that are followed by a newline or a pipe
+  return out.replace(/(\\\\)(?![n\n\\])/g, '\\');
 }
 
 /**
@@ -96,6 +108,17 @@ export abstract class TypedGherkinNodeWithLocation<
   }
 }
 
+type Options = {
+  escapeBackslashes: boolean;
+};
+
+/**
+ * An options object that will be set for a document
+ * It is stored as a singleton that will be reset on each document to avoid passing it around for now.
+ * A better option may to have access to the options on every classes.
+ */
+let OPTIONS: Options;
+
 export class TypedGherkinDocument
   extends TypedGherkinNode<GherkinDocument>
   implements GherkinDocument, HasChild<TypedFeature>
@@ -106,8 +129,10 @@ export class TypedGherkinDocument
 
   comments: readonly TypedComment[];
 
-  constructor(originalNode: GherkinDocument) {
+  constructor(originalNode: GherkinDocument, options: Options) {
     super(originalNode);
+
+    OPTIONS = options;
 
     this.uri = originalNode.uri;
     this.feature = originalNode.feature

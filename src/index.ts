@@ -18,6 +18,7 @@ import {
   util,
   doc,
   Doc,
+  ParserOptions,
 } from 'prettier';
 import {
   TypedGherkinDocument,
@@ -44,6 +45,8 @@ import {
   GherkinNodeWithLocation,
   isWithLocation,
 } from './GherkinAST';
+
+const DEFAULT_ESCAPE_BACKSLASH = false;
 
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
 const { hasNewline, isPreviousLineEmpty, makeString } = util;
@@ -103,8 +106,16 @@ function generateColumnSizes(text: string) {
   textColumnWidth = columnSizes;
 }
 
+interface GherkinParseOptions extends ParserOptions<GherkinNode> {
+  escapeBackslashes?: boolean;
+}
+
 const gherkinParser: Parser<GherkinNode> = {
-  parse: (text: string): GherkinDocument => {
+  parse: (
+    text: string,
+    parsers,
+    options: GherkinParseOptions
+  ): GherkinDocument => {
     const uuidFn = IdGenerator.uuid();
     const builder = new AstBuilder(uuidFn);
     const matcher = new GherkinClassicTokenMatcher(); // or GherkinInMarkdownTokenMatcher()
@@ -125,10 +136,16 @@ const gherkinParser: Parser<GherkinNode> = {
     //   util.skipEverythingButNewLine(text, 18)
     // );
 
-    return new TypedGherkinDocument({
-      ...document,
-      // comments: [], // igonre comments for now
-    });
+    return new TypedGherkinDocument(
+      {
+        ...document,
+        // comments: [], // igonre comments for now
+      },
+      {
+        escapeBackslashes:
+          options.escapeBackslashes ?? DEFAULT_ESCAPE_BACKSLASH,
+      }
+    );
   },
 
   locStart: (node: TypedGherkinNode<GherkinNode>) => {
@@ -646,7 +663,16 @@ const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
     printWidth: 120,
     tabWidth: 4,
   },
-  options: {},
+  options: {
+    escapeBackslashes: {
+      type: 'boolean',
+      default: DEFAULT_ESCAPE_BACKSLASH,
+      description: 'Escape backslashes in strings',
+      oppositeDescription: 'Do not escape backslashes in strings',
+      since: '1.0.0',
+      category: 'Format',
+    },
+  },
 };
 
 module.exports = plugin;

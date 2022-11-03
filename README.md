@@ -66,6 +66,25 @@ Feature: accountability
             """
 ```
 
+## Options
+
+This plugin has a single options:
+
+### `escapeBackslashes`
+
+default to `false`
+
+If false, all escaped backslash will be transformed to simple backslash : `\\` → `\`
+If true, all backslash will be espaced : `\` → `\\`
+
+This option may due to the parser([see issue](https://github.com/cucumber/common/issues/2115)) and is here because of an inconsistence between the [gherkin reference](https://cucumber.io/docs/gherkin/reference/#table-cell-escaping), that said that:
+
+> if you need a `\`, you can escape that with `\\`.
+
+and the tooling that accept unescaped `\`, including the cucumber parser used under the hood.
+
+You may want to check your code base and be consistent : if you use simple backslash, keep the default option, if you escape all backslash, then set this option to `true`.
+
 ## Documentation
 
 [Prettier plugin documentation](https://prettier.io/docs/en/plugins.html#developing-plugins)
