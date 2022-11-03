@@ -372,7 +372,21 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         util.addLeadingComment(node, commentNode);
 
         return true;
+      } else {
+        // we are on the latest lines of the file, and they all contains comments, so attach comment after the ast
+        const isRemainingLinesComments =
+          text
+            .split('\n')
+            .slice(commentNode.location.line)
+            .filter((row) => row.match(/^\s#/)).length === 0;
+
+        if (isRemainingLinesComments) {
+          util.addTrailingComment(ast, commentNode);
+
+          return true;
+        }
       }
+
       // console.log({ ownLine: commentNode, ast });
 
       return false;
