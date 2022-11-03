@@ -458,6 +458,7 @@ exports[`i18n_emoji.feature 1`] = `
     😐🎸
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: em
 📚: 🙈🙉🙊
 
     📕: 💃
@@ -531,6 +532,7 @@ Fonctionnalité: i18n support
     Alors j'ai 1 gâteau
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: fr
 Fonctionnalité: i18n support
 
     Scénario: Support des caractères spéciaux
@@ -617,6 +619,7 @@ Egenskap: i18n support
     Så they should be recognized
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: no
 Egenskap: i18n support
 
     Scenario: Parsing many languages
@@ -777,6 +780,7 @@ Feature: Explicit language specification
     Given the minimalism
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 Feature: Explicit language specification
 
     Scenario: minimalistic
@@ -1231,6 +1235,7 @@ exports[`spaces_in_language.feature 1`] = `
 OH HAI: STUFFING
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en-lol
 OH HAI: STUFFING
 
 
