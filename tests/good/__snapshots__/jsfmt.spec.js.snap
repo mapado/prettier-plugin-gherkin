@@ -135,7 +135,7 @@ Feature: DataTables
 
     Scenario: some whitespace is important
         Given 3 lines of poetry on 5 lines
-            | \\nraindrops--\\nher last kiss\\ngoodbye.\\\\r\\n |
+            | \\nraindrops--\\nher last kiss\\ngoodbye.\\r\\n |
 
         Given an example of negative space
             | lost        i n        space |
@@ -388,8 +388,8 @@ Feature: Escaped pipes
             | a | ø |
 
         Given they have arrived
-            | \\|æ\\\\n     | \\\\o\\no\\\\ |
-            | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\\\ |
+            | \\|æ\\\\n     | \\o\\no\\  |
+            | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\ |
 
 `;
 
@@ -1135,8 +1135,8 @@ Feature: Scenario Outline with values with trailing backslash
         Then <that>
 
         Examples:
-            | what | this   | that   |
-            | x\\\\y | this\\\\ | that\\\\ |
+            | what | this  | that  |
+            | x\\y  | this\\ | that\\ |
 
 `;
 
