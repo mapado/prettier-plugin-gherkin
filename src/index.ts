@@ -48,6 +48,9 @@ import {
 
 const DEFAULT_ESCAPE_BACKSLASH = false;
 
+// taken from https://github.com/cucumber/gherkin-javascript/blob/e25a1be3b21133c7a92eb7735997c6e774406226/src/GherkinClassicTokenMatcher.ts#L11
+const LANGUAGE_PATTERN = /^\s*#\s*language\s*:\s*([a-zA-Z\-_]+)\s*$/;
+
 const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
 const { hasNewline, isPreviousLineEmpty, makeString } = util;
 
@@ -466,8 +469,12 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         return '';
       }
     } else if (node instanceof TypedFeature || node instanceof TypedRule) {
+      const hasLanguageInSourceFile = !!options.originalText.match(
+        new RegExp(LANGUAGE_PATTERN, 'm')
+      );
+
       return [
-        node instanceof TypedFeature && node.language
+        node instanceof TypedFeature && hasLanguageInSourceFile
           ? ['# language: ' + node.language, printHardline()]
           : '',
         printTags(path, node),

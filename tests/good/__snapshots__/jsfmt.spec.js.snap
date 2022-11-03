@@ -13,7 +13,6 @@ Feature: Background
   Scenario: also minimalistic
     Given the minimalism
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Background
 
     Background: a simple background
@@ -54,7 +53,6 @@ Feature: Complex background
       | 2     |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Complex background
     We want to ensure PickleStep all have different IDs
 
@@ -103,7 +101,6 @@ Feature: DataTables
       | boz2 | boo2 |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: DataTables
 
     Scenario: minimalistic
@@ -134,7 +131,6 @@ Feature: DataTables
       |        lost        i n        space        |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: DataTables
 
     Scenario: some whitespace is important
@@ -201,7 +197,6 @@ This is an examples description
     | bar |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Descriptions everywhere
     This is a single line description
 
@@ -310,7 +305,6 @@ Feature: DocString variations
       third line
       \`\`\`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: DocString variations
 
     Scenario: minimalistic
@@ -384,7 +378,6 @@ Feature: Escaped pipes
       | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\\\|
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Escaped pipes
     The \\-character will be considered as an escape in table cell
     iff it is followed by a |-character, a \\-character or an n.
@@ -411,7 +404,6 @@ Feature: Example token used multiple times
       | usage |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Example token used multiple times
 
     Scenario Outline: Token used twice in a single step
@@ -440,7 +432,6 @@ Feature: Example tokens everywhere
       | uno | dos  | tres  | quatro | cinco |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Example tokens everywhere
 
     Scenario Outline: the <one>
@@ -648,7 +639,6 @@ Feature: Incomplete backgrounds, Part 1
     * a step
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Incomplete backgrounds, Part 1
 
     Background: no steps
@@ -668,7 +658,6 @@ Feature: Incomplete backgrounds, Part 2
     * a step
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Incomplete backgrounds, Part 2
 
     Background: just a description
@@ -686,7 +675,6 @@ Feature: Just a description
   A short description
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Just a description
     A short description
 
@@ -698,7 +686,6 @@ exports[`incomplete_feature_2.feature 1`] = `
 Feature: Empty feature
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Empty feature
 
 
@@ -721,7 +708,6 @@ Feature: Incomplete scenarios
   Scenario: no steps
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Incomplete scenarios
 
     Background: Adding a background won't make a pickle
@@ -759,7 +745,6 @@ Feature: Incomplete scenario outlines
     | nada |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Incomplete scenario outlines
 
     Background: Adding a background won't make a pickle
@@ -809,7 +794,6 @@ Feature: Minimal
   Scenario: minimalistic
     Given the minimalism
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Minimal
 
     Scenario: minimalistic
@@ -824,7 +808,6 @@ Feature: Minimal
     Given the minimalism
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Minimal
 
     Example: minimalistic
@@ -853,7 +836,6 @@ Feature: test
       |  	red  	|
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: test
 
     Scenario: test
@@ -895,7 +877,6 @@ Feature:
       | n |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 @a
 Feature:
 
@@ -941,7 +922,6 @@ Feature: Some rules
     Example: Example B
       Given b
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Some rules
 
     Background:
@@ -995,7 +975,6 @@ Feature: Some tagged rules
         | a      |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 @tag_feature
 Feature: Some tagged rules
 
@@ -1035,7 +1014,6 @@ Feature:
     Given text
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature:
 
     Rule:
@@ -1056,7 +1034,6 @@ Feature: Minimal Scenario Outline
       | minimalism |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Minimal Scenario Outline
 
     Scenario: minimalistic
@@ -1078,7 +1055,6 @@ Examples:
   | what       |
   | minimalism |
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Minimal Scenario Outline
 
     Scenario Outline: minimalistic
@@ -1105,7 +1081,6 @@ Examples:
   | fr    | Bonjour |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Scenario Outline with a docstring
 
     Scenario Outline: Greetings come in many forms
@@ -1132,7 +1107,6 @@ Examples:
   | pa$$word |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Scenario Outline with a value with a dollar sign ($)
 
     Scenario Outline: minimalistic
@@ -1156,7 +1130,6 @@ Examples:
   | what | this  | that   |
   | x\\\\y | this\\ | that\\\\ |
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Scenario Outline with values with trailing backslash
 
     Scenario Outline: minimalistic
@@ -1192,7 +1165,6 @@ Feature:
       | n |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 @a
 Feature:
 
@@ -1237,7 +1209,6 @@ Feature: Tagged Examples
   Scenario: ha ok
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Tagged Examples
 
     Scenario Outline: minimalistic
@@ -1284,7 +1255,6 @@ Feature: Foo
     | Y    |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 @sometag
 Feature: Foo
 
@@ -1341,7 +1311,6 @@ Scenario: joined tags
   Given the @delimits tags
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 @feature_tag1
 @feature_tag2
 @feature_tag3
@@ -3096,7 +3065,6 @@ Feature: Long feature file
       | boz2 | boo2 |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# language: en
 Feature: Long feature file
     This is a long feature file
 
