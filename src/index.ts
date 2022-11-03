@@ -595,11 +595,11 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
       return [
         printTags(path, node),
-
         `${node.keyword}: ${node.name}`,
+
         indent([
           printHardline(),
-
+          printDescription(path, node, false),
           join(
             printHardline(),
             [
