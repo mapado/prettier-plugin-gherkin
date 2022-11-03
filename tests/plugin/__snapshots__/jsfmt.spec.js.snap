@@ -9,6 +9,7 @@ Feature: A data table with PHP Fully Qualified Classnames
             | App\\Entity\\Cart | 4 |
             | App\\\\Entity\\\\Cart | 5 |
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 Feature: A data table with PHP Fully Qualified Classnames
 
     Scenario:
@@ -49,6 +50,7 @@ Feature: complex docstring with JSON in it
          [OK] Declarations complete.
         """
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 Feature: complex docstring with JSON in it
 
     Scenario:
@@ -122,6 +124,7 @@ Feature: accountability
             ]
             """
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 @accountability
 @accountability-json
 Feature: accountability
@@ -174,6 +177,7 @@ Feature: some feature
         Given something
 # saleStartDate is on summer time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 Feature: some feature
 
     Scenario: Insert fixtures
@@ -193,6 +197,7 @@ Feature: some feature
         #     | hydra:description | Some error did happened |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 Feature: some feature
 
     Scenario: Insert fixtures
@@ -215,6 +220,7 @@ Feature: coucou
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # feature comment
+# language: en
 Feature: coucou
 
     # scenario comment
@@ -248,6 +254,7 @@ Feature: Escaped pipes
       | \\a |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
 Feature: Escaped pipes
     The \\-character will be considered as an escape in table cell
     iff it is followed by a |-character, a \\-character or an n.

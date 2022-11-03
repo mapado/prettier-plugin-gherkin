@@ -467,6 +467,9 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       }
     } else if (node instanceof TypedFeature || node instanceof TypedRule) {
       return [
+        node instanceof TypedFeature && node.language
+          ? ['# language: ' + node.language, printHardline()]
+          : '',
         printTags(path, node),
         `${node.keyword}: ${node.name}`,
 
