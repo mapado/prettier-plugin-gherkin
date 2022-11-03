@@ -52,7 +52,7 @@ const languages: SupportLanguage[] = [
   {
     extensions: ['.feature'],
     name: 'Gherkin',
-    parsers: ['gherkin-parse'],
+    parsers: ['gherkin'],
   },
 ];
 
@@ -623,7 +623,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
   languages,
   parsers: {
-    'gherkin-parse': gherkinParser,
+    gherkin: gherkinParser,
   },
   printers: {
     'gherkin-ast': gherkinAstPrinter,
