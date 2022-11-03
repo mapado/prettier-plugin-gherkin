@@ -585,7 +585,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       };
 
       return join(printHardline(), [
-        `${node.delimiter}${node.mediaType || ''}`,
+        [node.delimiter, node.mediaType || ''],
         // split the string on newlines to preserve the indentation
         ...escapeDelimiter(node.content).split('\n'),
         node.delimiter,
@@ -643,6 +643,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       if (mediaType === 'xml') {
         return [
           node.delimiter,
+          mediaType,
           printHardline(),
           textToDoc(content, { ...options, parser: 'html' }),
           node.delimiter,
@@ -654,6 +655,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
         return [
           node.delimiter,
+          mediaType ?? '',
           printHardline(),
           textToDoc(content, { ...options, parser: 'json' }),
           node.delimiter,

@@ -317,7 +317,7 @@ Feature: DocString variations
             """
 
         Given a DocString with content type
-            """
+            """xml
             <foo>
                 <bar />
             </foo>
