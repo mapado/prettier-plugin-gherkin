@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.1
+
+### Fixes
+
+handle comments before "Given" and "When" [#6](https://github.com/mapado/prettier-plugin-gherkin/pull/6)
+
 ## 1.1.0
 
 - handle "language" comment
