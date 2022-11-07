@@ -6,6 +6,18 @@ const path = require('path');
 
 const prettier = require('prettier');
 
+const IGNORED_FILES_SAME_CONTENT = new Set([
+  'tests/good/escaped_pipes.feature',
+  'tests/plugin/unescape_backslashes_table_cell.feature',
+  'tests/plugin/datatable_with_PHP_FQCN.feature',
+  'tests/good/tags.feature',
+  'tests/good/scenario_outline_with_value_with_trailing_backslash.feature',
+]);
+
+function fileContentShouldBeTheSameExceptSpacing(filepath) {
+  return !IGNORED_FILES_SAME_CONTENT.has(filepath);
+}
+
 function run_spec(dirname, options) {
   fs.readdirSync(dirname).forEach((filename) => {
     const filepath = dirname + '/' + filename;
@@ -47,6 +59,14 @@ function run_spec(dirname, options) {
             source + '\n' + '~'.repeat(mergedOptions.printWidth) + '\n' + output
           )
         ).toMatchSnapshot();
+
+        if (
+          fileContentShouldBeTheSameExceptSpacing(
+            filepath.substring(process.cwd().length + 1)
+          )
+        ) {
+          expect(input.replace(/\s/g, '')).toBe(output.replace(/\s/g, ''));
+        }
       });
     }
   });
