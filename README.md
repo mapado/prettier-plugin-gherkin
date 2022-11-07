@@ -5,8 +5,7 @@ This prettier plugin format your gherkin (`.feature` files) documents.
 Example of changes:
 
 ```gherkin
-@accountability
-@accountability-json
+@accountability @accountability-json
 Feature: accountability
     accounts should always be good
     @truncateTables
@@ -21,6 +20,7 @@ Feature: accountability
 
         And I inject the header "accept" with value "application/json"
 
+# I will create an order here
         Given I create an order
             Then the response status code should be 200
             When I pay the latest order
@@ -52,18 +52,16 @@ Feature: accountability
         Given I inject the header "authorization" with value 'Bearer some-token'
         And I inject the header "accept" with value "application/json"
 
+        # I will create an order here
         Given I create an order
         Then the response status code should be 200
 
         When I pay the latest order
         And I refund the last payment and transaction list with transactions:
             """
-            [
-                {"name": "card",
-                    "credit": 5000
-                }
-            ]
+            [{ "name": "card", "credit": 5000 }]
             """
+
 ```
 
 ## Options
