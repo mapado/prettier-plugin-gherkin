@@ -295,60 +295,15 @@ function findNodeForCommentInAST(
 
   return null;
 
-  // if (!child || !children) {
-  //   return null;
-  // }
-
-  // for (const featureChild of feature.children) {
-  //   if (isHasChildren(featureChild)) {
-  //     for (const child of featureChild.children) {
-  //     }
-  //   }
-
-  //   if (isHasChild(featureChild)) {
-  //   }
-
-  //   // const item =
-  //   //   featureChild.scenario || featureChild.background || featureChild.rule;
-
-  //   // if (!item) {
-  //   //   continue;
-  //   // }
-
-  //   // if (item.location.line > line) {
-  //   //   return item;
-  //   // }
-
-  //   // if (item instanceof TypedScenario || item instanceof TypedBackground) {
-  //   //   for (const step of item.steps) {
-  //   //     if (step.location.line > line) {
-  //   //       return step;
-  //   //     }
-  //   //   }
-  //   // } else {
-  //   //   for (const ruleChild of item.children) {
-  //   //     const ruleItem = featureChild.scenario || featureChild.background;
-
-  //   //     if (!ruleItem) {
-  //   //       continue;
-  //   //     }
-
-  //   //     for (const step of ruleItem.steps) {
-  //   //       if (step.location.line > line) {
-  //   //         return step;
-  //   //       }
-  //   //     }
-  //   //   }
-  //   // }
-
-  //   // for (const step of scenario.steps) {
-  //   //   if (step.location.line > line) {
-  //   //     return step;
-  //   //   }
-  //   // }
-  // }
-
   return null;
+}
+
+function stepNeedsHardline(node: TypedStep, isFirstStep: boolean) {
+  return (
+    !isFirstStep &&
+    node.keywordType &&
+    [StepKeywordType.CONTEXT, StepKeywordType.ACTION].includes(node.keywordType)
+  );
 }
 
 const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
@@ -360,13 +315,19 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       throw new Error('printComment: not a comment');
     }
 
-    // console.log('printComment', node, path, '\n');
+    const parentNode = path.getParentNode();
+    const parentNodeIsFirstStep = path.stack[path.stack.length - 6] === 0;
 
-    return [
-      node.text.trim(),
-      // node.text.split('\n').map((s) => s.trim()),
-      // printHardline(),
-    ];
+    // if the comment follows a `Given` step, then the comment should have a leading blank line
+    // but no blank line between the comment and the step
+    if (
+      parentNode instanceof TypedStep &&
+      stepNeedsHardline(parentNode, parentNodeIsFirstStep)
+    ) {
+      return [printHardline(), node.text.trim()];
+    }
+
+    return node.text.trim();
   },
 
   // canAttachComment(node): boolean {
@@ -443,10 +404,6 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         return true;
       }
 
-      // commentNode.followingNode = ast;
-
-      // return true;
-      // return commentNode.text;
       return false;
     },
   },
@@ -455,10 +412,6 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     const node = path.getValue();
 
     // console.log({ node, isDocument: node instanceof TypedGherkinDocument });
-
-    // if (Array.isArray(node)) {
-    //   return concat(path.map(print));
-    // }
 
     if (node instanceof TypedGherkinDocument) {
       if (node.feature) {
@@ -515,8 +468,6 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       return node.name;
     } else if (node instanceof TypedBackground) {
       // console.log(node.steps);
-
-      // console.log(node.description || node.steps.length > 0);
       return [
         `${node.keyword}: ${node.name}`,
         node.description || node.steps.length > 0
@@ -549,14 +500,11 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       ];
     } else if (node instanceof TypedStep) {
       // console.log(node);
-      const isFirstStep = path.stack[path.stack.length - 2] === 0; // path.getParentNode(1).scenario.steps[0] === node;
-
       return [
-        !isFirstStep &&
-        node.keywordType &&
-        [StepKeywordType.CONTEXT, StepKeywordType.ACTION].includes(
-          node.keywordType
-        )
+        // if the step has comment, the hardline will be handled by the comment printer
+        stepNeedsHardline(node, path.stack[path.stack.length - 2] === 0) &&
+        // @ts-expect-error comments are injected by prettier directly
+        !node.comments
           ? printHardline()
           : '',
         `${node.keyword}${node.text.trim()}`,
