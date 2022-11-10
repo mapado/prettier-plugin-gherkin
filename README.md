@@ -64,6 +64,30 @@ Feature: accountability
 
 ```
 
+## Installation
+
+Install [prettier](https://prettier.io/docs/en/install.html) if you don't have already.
+
+```sh
+npm install --save prettier-plugin-gherkin
+
+// or with yarn
+yarn add prettier-plugin-gherkin
+```
+
+That's all ! the plugin will be automatically detected by prettier.
+
+You can then configure your git precommit, IDE, etc. to format the `.features` file with prettier.
+
+### Example with VSCode
+
+
+
+https://user-images.githubusercontent.com/1398469/201110132-88fe1554-ab28-44c4-a0a2-7755910136c1.mp4
+
+
+
+
 ## Options
 
 This plugin has a single options:
