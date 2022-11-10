@@ -82,9 +82,7 @@ You can then configure your git precommit, IDE, etc. to format the `.features` f
 ### Example with VSCode
 
 
-
-https://user-images.githubusercontent.com/1398469/201110132-88fe1554-ab28-44c4-a0a2-7755910136c1.mp4
-
+https://user-images.githubusercontent.com/1398469/201128147-ad2ecba8-253d-4c70-9133-ae28d178ed2b.mp4
 
 
 
