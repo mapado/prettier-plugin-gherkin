@@ -120,6 +120,24 @@ Gherkin AST schema
 - [Cucumber Gherkin JavaScript parser](https://github.com/cucumber/gherkin-javascript/)
 - [Prettier command reference](https://github.com/prettier/prettier/blob/main/commands.md)
 
-## Test datas
+## Contributing to this plugin
 
-Test datas can be found here : https://github.com/cucumber/common/tree/main/gherkin/testdata
+Clone the repository and install dependencies:
+
+```sh
+git clone git@github.com:mapado/prettier-plugin-gherkin.git
+cd prettier-plugin-gherkin
+yarn install
+```
+
+Several commands are available:
+
+```sh
+yarn example # print the example file with the plugin. You can change de content of the example file as you need
+yarn test # run the tests suites : all features are tested
+yarn lint # the plugin is writter in TypeScript, this command will help you detect typescript issue 
+```
+
+### Test datas
+
+Test datas can be found here : https://github.com/cucumber/gherkin-utils/tree/main/testdata
