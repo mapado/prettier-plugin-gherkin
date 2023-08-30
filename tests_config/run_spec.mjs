@@ -1,10 +1,7 @@
-// source: https://github.com/prettier/prettier/blob/ee2839bacbf6a52d004fa2f0373b732f6f191ccc/tests_config/run_spec.js
-'use strict';
-
-const fs = require('fs');
-const path = require('path');
-
-const prettier = require('prettier');
+import fs from  'node:fs';
+import path from  'node:path';
+import url from 'node:url';
+import prettier from 'prettier';
 
 const IGNORED_FILES_SAME_CONTENT = new Set([
   'tests/good/escaped_pipes.feature',
@@ -18,14 +15,17 @@ function fileContentShouldBeTheSameExceptSpacing(filepath) {
   return !IGNORED_FILES_SAME_CONTENT.has(filepath);
 }
 
-function run_spec(dirname, options) {
+function run_spec(importMeta, options) {
+  const dirname = path.dirname(url.fileURLToPath(importMeta.url));
+
   fs.readdirSync(dirname).forEach((filename) => {
     const filepath = dirname + '/' + filename;
+
     if (
-      path.extname(filename) !== '.snap' &&
-      fs.lstatSync(filepath).isFile() &&
-      filename[0] !== '.' &&
-      filename !== 'jsfmt.spec.js'
+      path.extname(filename) !== '.snap' && // Skip snapshots
+      fs.lstatSync(filepath).isFile() && // Skip directories
+      filename[0] !== '.' && // Skip dotfiles
+      filename !== 'jsfmt.spec.mjs' // Skip self
     ) {
       let rangeStart = 0;
       let rangeEnd = Infinity;
@@ -72,7 +72,7 @@ function run_spec(dirname, options) {
   });
 }
 
-global.run_spec = run_spec;
+globalThis.run_spec = run_spec;
 
 function prettyprint(src, options) {
   const result = prettier.formatWithCursor(src, options);
@@ -104,7 +104,7 @@ function raw(string) {
 function mergeDefaultOptions(parserConfig) {
   return Object.assign(
     {
-      plugins: [path.dirname(__dirname)],
+      plugins: ['prettier-plugin-gherkin'],
       printWidth: 80,
     },
     parserConfig

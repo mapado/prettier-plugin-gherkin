@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.js',
@@ -6,10 +6,10 @@ module.exports = {
     '!src/prettier-comments/**/*.js'
   ],
   coverageDirectory: './coverage/',
-  setupFiles: ['<rootDir>/tests_config/run_spec.js'],
+  setupFiles: ['<rootDir>/tests_config/run_spec.mjs'],
   snapshotSerializers: ['<rootDir>/tests_config/raw-serializer.js'],
   testEnvironment: 'node',
-  testRegex: 'jsfmt\\.spec\\.js$|__tests__/.*\\.js$',
+  testRegex: 'jsfmt\\.spec\\.[cm]?js$|__tests__/.*\\.[cm]?js$',
   transform: {},
   watchPlugins: [
     'jest-watch-typeahead/filename',
