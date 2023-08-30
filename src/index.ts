@@ -602,6 +602,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
             mediaType,
             printHardline(),
             await textToDoc(content, { ...options, parser: 'html' }),
+            printHardline(),
             node.delimiter,
           ];
         };
@@ -616,6 +617,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
             mediaType ?? '',
             printHardline(),
             await textToDoc(content, { ...options, parser: 'json' }),
+            printHardline(),
             node.delimiter,
           ];
         };
