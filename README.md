@@ -64,6 +64,10 @@ Feature: accountability
 
 ```
 
+### Versions
+
+This version is compatible with prettier 3. If you still use prettier 2, you should use the [1.1.1](https://github.com/mapado/prettier-plugin-gherkin/blob/main/CHANGELOG.md#111) version of this plugin.
+
 ## Installation
 
 Install [prettier](https://prettier.io/docs/en/install.html) if you don't have already.
@@ -81,10 +85,7 @@ You can then configure your git precommit, IDE, etc. to format the `.features` f
 
 ### Example with VSCode
 
-
 https://user-images.githubusercontent.com/1398469/201128147-ad2ecba8-253d-4c70-9133-ae28d178ed2b.mp4
-
-
 
 ## Options
 
@@ -135,7 +136,7 @@ Several commands are available:
 ```sh
 yarn example # print the example file with the plugin. You can change de content of the example file as you need
 yarn test # run the tests suites : all features are tested
-yarn lint # the plugin is writter in TypeScript, this command will help you detect typescript issue 
+yarn lint # the plugin is writter in TypeScript, this command will help you detect typescript issue
 ```
 
 ### Test datas

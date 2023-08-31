@@ -1,5 +1,5 @@
-import fs from  'node:fs';
-import path from  'node:path';
+import fs from 'node:fs';
+import path from 'node:path';
 import url from 'node:url';
 import prettier from 'prettier';
 
@@ -52,8 +52,10 @@ function run_spec(importMeta, options) {
         rangeEnd,
         cursorOffset,
       });
-      const output = prettyprint(input, mergedOptions);
-      test(filename, () => {
+      
+      test(filename, async () => {
+        const output = await prettyprint(input, mergedOptions);
+
         expect(
           raw(
             source + '\n' + '~'.repeat(mergedOptions.printWidth) + '\n' + output
@@ -74,8 +76,9 @@ function run_spec(importMeta, options) {
 
 globalThis.run_spec = run_spec;
 
-function prettyprint(src, options) {
-  const result = prettier.formatWithCursor(src, options);
+async function prettyprint(src, options) {
+  const result = await prettier.formatWithCursor(src, options);
+
   if (options.cursorOffset >= 0) {
     result.formatted =
       result.formatted.slice(0, result.cursorOffset) +
@@ -102,9 +105,11 @@ function raw(string) {
 }
 
 function mergeDefaultOptions(parserConfig) {
+  const pluginPath = `${path.resolve()}/dist/index.js`;
+
   return Object.assign(
     {
-      plugins: ['prettier-plugin-gherkin'],
+      plugins: [pluginPath],
       printWidth: 80,
     },
     parserConfig

@@ -19,6 +19,7 @@ import {
   doc,
   Doc,
   ParserOptions,
+  Options,
 } from 'prettier';
 import {
   TypedGherkinDocument,
@@ -44,15 +45,14 @@ import {
   HasChildren,
   GherkinNodeWithLocation,
   isWithLocation,
-} from './GherkinAST';
+} from './GherkinAST/index.js';
 
 const DEFAULT_ESCAPE_BACKSLASH = false;
 
 // taken from https://github.com/cucumber/gherkin-javascript/blob/e25a1be3b21133c7a92eb7735997c6e774406226/src/GherkinClassicTokenMatcher.ts#L11
 const LANGUAGE_PATTERN = /^\s*#\s*language\s*:\s*([a-zA-Z\-_]+)\s*$/;
 
-const { literalline, hardline, join, group, trim, indent, line } = doc.builders;
-const { hasNewline, isPreviousLineEmpty, makeString } = util;
+const { hardline, join, indent } = doc.builders;
 
 const languages: SupportLanguage[] = [
   {
@@ -114,11 +114,7 @@ interface GherkinParseOptions extends ParserOptions<GherkinNode> {
 }
 
 const gherkinParser: Parser<GherkinNode> = {
-  parse: (
-    text: string,
-    parsers,
-    options: GherkinParseOptions
-  ): GherkinDocument => {
+  parse: (text: string, options: GherkinParseOptions): GherkinDocument => {
     const uuidFn = IdGenerator.uuid();
     const builder = new AstBuilder(uuidFn);
     const matcher = new GherkinClassicTokenMatcher(); // or GherkinInMarkdownTokenMatcher()
@@ -330,15 +326,24 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     return node.text.trim();
   },
 
-  // canAttachComment(node): boolean {
-  //   console.log('canAttachComment', node);
-  //   return true;
-  // },
+  canAttachComment(node): boolean {
+    // comments are all in the TypedGherkinDocument.comments array. 
+    // Do not handle comments in the subtree of the AST.
+    return node instanceof TypedGherkinDocument;
+  },
 
   isBlockComment(node): boolean {
     //   // console.log('isBlockComment', node);
     return false; // block comments are not supported by gherkin for now. See https://cucumber.io/docs/gherkin/reference/
   },
+
+  
+
+  // getCommentChildNodes: (node) => {
+  //   console.log('getCommentChildNodes', node)
+
+  //   return []
+  // },
 
   handleComments: {
     ownLine: (
@@ -380,6 +385,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       isLastComment: boolean
     ) => {
       const node = findNodeForCommentInAST(ast, commentNode);
+
       if (node) {
         util.addLeadingComment(node, commentNode);
 
@@ -414,11 +420,12 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     // console.log({ node, isDocument: node instanceof TypedGherkinDocument });
 
     if (node instanceof TypedGherkinDocument) {
+      // console.log(node)
       if (node.feature) {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedGherkinDocument>
         return [path.call(print, 'feature'), printHardline()];
       } else {
-        // return empty sting if there is no feature (it can contain only comments)
+        // return empty string if there is no feature (it can contain only comments)
         return '';
       }
     } else if (node instanceof TypedFeature || node instanceof TypedRule) {
@@ -583,31 +590,37 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     }
   },
 
-  embed(path: AstPath, print, textToDoc, options: object): Doc | null {
+  embed(path: AstPath, options: Options) {
     const node = path.getValue();
     if (node instanceof TypedDocString) {
       const { content, mediaType } = node;
 
       if (mediaType === 'xml') {
-        return [
-          node.delimiter,
-          mediaType,
-          printHardline(),
-          textToDoc(content, { ...options, parser: 'html' }),
-          node.delimiter,
-        ];
+        return async (textToDoc): Promise<Doc> => {
+          return [
+            node.delimiter,
+            mediaType,
+            printHardline(),
+            await textToDoc(content, { ...options, parser: 'html' }),
+            printHardline(),
+            node.delimiter,
+          ];
+        };
       }
 
       try {
         JSON.parse(content);
 
-        return [
-          node.delimiter,
-          mediaType ?? '',
-          printHardline(),
-          textToDoc(content, { ...options, parser: 'json' }),
-          node.delimiter,
-        ];
+        return async (textToDoc): Promise<Doc> => {
+          return [
+            node.delimiter,
+            mediaType ?? '',
+            printHardline(),
+            await textToDoc(content, { ...options, parser: 'json' }),
+            printHardline(),
+            node.delimiter,
+          ];
+        };
       } catch (e) {
         // igonre non-JSON content
       }
@@ -635,10 +648,9 @@ const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
       default: DEFAULT_ESCAPE_BACKSLASH,
       description: 'Escape backslashes in strings',
       oppositeDescription: 'Do not escape backslashes in strings',
-      since: '1.0.0',
       category: 'Format',
     },
   },
 };
 
-module.exports = plugin;
+export default plugin;
