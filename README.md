@@ -79,7 +79,15 @@ npm install --save prettier-plugin-gherkin
 yarn add prettier-plugin-gherkin
 ```
 
-That's all ! the plugin will be automatically detected by prettier.
+Activate the plugin in your prettier configuration file:
+
+
+> .prettierrc
+```diff
+  {
++     "plugins": ["prettier-plugin-gherkin"]
+  }
+```
 
 You can then configure your git precommit, IDE, etc. to format the `.features` file with prettier.
 

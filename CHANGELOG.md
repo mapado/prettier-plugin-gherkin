@@ -2,10 +2,31 @@
 
 ## [2.0.0] - 2023-08-31
 
-### Changed
+### Prettier 3
 
-- [Breaking] Handle prettier 3. Prettier 2 is not compatible with this version as the plugin API did change totally.
-- [Breaking] (maybe) drop support for node 14: prettier 3 does still support node 14, but it is unmaintained, and [the tests does not pass on node 14 only](https://github.com/mapado/prettier-plugin-gherkin/actions/runs/6030258360/job/16361678638?pr=9). If you are willing to spend some time on this, feel free to open a PR, but I suggest you to migrate to a more recent version of node. [#9](https://github.com/mapado/prettier-plugin-gherkin/pull/9) by [@jdeniau](https://github.com/jdeniau)
+Handle prettier 3. Prettier 2 is not compatible with this version as the plugin API did change totally.
+
+Prettier 3 remove plugin auto-detection, so you now need to active the plugin explicitly:
+
+> package.json
+```diff
+-     "prettier": "^2.0.0",
+-     "prettier-plugin-gherkin": "^1.0.0",
++     "prettier": "^3.0.0",
++     "prettier-plugin-gherkin": "^2.0.0",
+```
+
+> .prettierrc
+```diff
+  {
++     "plugins": ["prettier-plugin-gherkin"]
+  }
+```
+
+
+### (maybe) remove support for Node 14
+
+(maybe) drop support for node 14: prettier 3 does still support node 14, but it is unmaintained, and [the tests does not pass on node 14 only](https://github.com/mapado/prettier-plugin-gherkin/actions/runs/6030258360/job/16361678638?pr=9). If you are willing to spend some time on this, feel free to open a PR, but I suggest you to migrate to a more recent version of node. [#9](https://github.com/mapado/prettier-plugin-gherkin/pull/9) by [@jdeniau](https://github.com/jdeniau)
 
 ## [1.1.1]
 
