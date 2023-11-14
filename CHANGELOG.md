@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.1.0] - 2023-11-14
+
+- Upgrade cucumber packages [#13](https://github.com/mapado/prettier-plugin-gherkin/pull/13) by [@jdeniau](https://github.com/jdeniau)
+
 ## [2.0.0] - 2023-08-31
 
 ### Prettier 3
