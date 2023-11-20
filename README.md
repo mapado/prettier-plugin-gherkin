@@ -106,7 +106,7 @@ default to `false`
 If false, all escaped backslash will be transformed to simple backslash : `\\` → `\`
 If true, all backslash will be espaced : `\` → `\\`
 
-This option may due to the parser([see issue](https://github.com/cucumber/common/issues/2115)) and is here because of an inconsistence between the [gherkin reference](https://cucumber.io/docs/gherkin/reference/#table-cell-escaping), that said that:
+This option may be due to the parser ([see issue](https://github.com/cucumber/common/issues/2115)) and is here because of an inconsistence between the [gherkin reference](https://cucumber.io/docs/gherkin/reference/#table-cell-escaping), that said that:
 
 > if you need a `\`, you can escape that with `\\`.
 
@@ -120,7 +120,7 @@ You may want to check your code base and be consistent : if you use simple backs
 
 Gherkin AST schema
 
-![Gherkin AST schema](https://raw.githubusercontent.com/cucumber/common/main/gherkin/docs/ast.png)
+![Gherkin AST schema](https://github.com/cucumber/gherkin/blob/main/docs/ast.png?raw=true)
 
 ### Useful resources on Gherkin language
 
