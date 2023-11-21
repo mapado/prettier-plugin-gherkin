@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.1.1] - 2023-11-21
+
+- Add repository, homepage and bugs field to package.json [#14](https://github.com/mapado/prettier-plugin-gherkin/pull/14) by [@sonallux](https://github.com/sonallux)
+
 ## [2.1.0] - 2023-11-14
 
 - Upgrade cucumber packages [#13](https://github.com/mapado/prettier-plugin-gherkin/pull/13) by [@jdeniau](https://github.com/jdeniau)
