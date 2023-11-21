@@ -3,6 +3,10 @@
   "version": "2.1.0",
   "type": "module",
   "description": "This prettier plugin format your gherkin (`.feature` files) documents.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapado/prettier-plugin-gherkin.git"
+  }
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
