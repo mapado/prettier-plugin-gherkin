@@ -313,7 +313,6 @@ function findNodeForCommentInAST(
 function stepNeedsHardline(
   options: GherkinParseOptions,
   node: TypedStep,
-  commentNode: null | TypedComment,
   previousNode: null | TypedStep
 ) {
   if (!previousNode) {
@@ -321,11 +320,16 @@ function stepNeedsHardline(
     return false;
   }
 
-  const currentNode = commentNode ?? node;
+  const currentNode = node;
 
   if (options.forceNewlineBetweenStepBlocks !== true) {
+    // @ts-expect-error comments are injected by prettier directly
+    const commentNodes = node.comments ?? [];
+
     const hadHardlineBefore =
-      previousNode && currentNode.location.line - previousNode.lastLine >= 2;
+      previousNode &&
+      currentNode.location.line - commentNodes.length - previousNode.lastLine >=
+        2;
 
     if (hadHardlineBefore) {
       return true;
@@ -356,7 +360,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     // but no blank line between the comment and the step
     if (
       stepNode instanceof TypedStep &&
-      stepNeedsHardline(options, stepNode, node, previousNode)
+      stepNeedsHardline(options, stepNode, previousNode)
     ) {
       return [printHardline(), node.text.trim()];
     }
@@ -546,7 +550,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
       return [
         // if the step has comment, the hardline will be handled by the comment printer
-        stepNeedsHardline(options, node, null, previousNode) &&
+        stepNeedsHardline(options, node, previousNode) &&
         // @ts-expect-error comments are injected by prettier directly
         !node.comments
           ? printHardline()
