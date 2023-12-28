@@ -91,6 +91,21 @@ function assertNodeHasLocation(
   }
 }
 
+function findPreviousNode(
+  path: AstPath<TypedGherkinNode<GherkinNode>>,
+  reversePosition: number
+) {
+  const nodePosition = path.stack[path.stack.length - reversePosition];
+
+  // @ts-expect-error -- in a TypedStep, we have an array of TypedStep at position reversePosition -1
+  const siblings: Array<TypedStep> =
+    path.stack[path.stack.length - (reversePosition + 1)];
+
+  return typeof nodePosition === 'number' && nodePosition > 0
+    ? siblings[nodePosition - 1]
+    : null;
+}
+
 let textColumnWidth: Array<number> = [];
 
 function generateColumnSizes(text: string) {
@@ -111,6 +126,7 @@ function generateColumnSizes(text: string) {
 
 interface GherkinParseOptions extends ParserOptions<GherkinNode> {
   escapeBackslashes?: boolean;
+  forceHardlineBetweenSteps?: boolean;
 }
 
 const gherkinParser: Parser<GherkinNode> = {
@@ -294,9 +310,31 @@ function findNodeForCommentInAST(
   return null;
 }
 
-function stepNeedsHardline(node: TypedStep, isFirstStep: boolean) {
+function stepNeedsHardline(
+  options: GherkinParseOptions,
+  node: TypedStep,
+  commentNode: null | TypedComment,
+  previousNode: null | TypedStep
+) {
+  if (!previousNode) {
+    // do not force hardline for the first step
+    return false;
+  }
+
+  const currentNode = commentNode ?? node;
+
+  if (options.forceHardlineBetweenSteps !== true) {
+    const hadHardlineBefore =
+      previousNode && currentNode.location.line - previousNode.lastLine >= 2;
+
+    if (hadHardlineBefore) {
+      return true;
+    }
+
+    return false;
+  }
+
   return (
-    !isFirstStep &&
     node.keywordType &&
     [StepKeywordType.CONTEXT, StepKeywordType.ACTION].includes(node.keywordType)
   );
@@ -311,14 +349,14 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       throw new Error('printComment: not a comment');
     }
 
-    const parentNode = path.getParentNode();
-    const parentNodeIsFirstStep = path.stack[path.stack.length - 6] === 0;
+    const stepNode = path.getParentNode();
+    const previousNode = findPreviousNode(path, 6);
 
     // if the comment follows a `Given` step, then the comment should have a leading blank line
     // but no blank line between the comment and the step
     if (
-      parentNode instanceof TypedStep &&
-      stepNeedsHardline(parentNode, parentNodeIsFirstStep)
+      stepNode instanceof TypedStep &&
+      stepNeedsHardline(options, stepNode, node, previousNode)
     ) {
       return [printHardline(), node.text.trim()];
     }
@@ -327,7 +365,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
   },
 
   canAttachComment(node): boolean {
-    // comments are all in the TypedGherkinDocument.comments array. 
+    // comments are all in the TypedGherkinDocument.comments array.
     // Do not handle comments in the subtree of the AST.
     return node instanceof TypedGherkinDocument;
   },
@@ -336,8 +374,6 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     //   // console.log('isBlockComment', node);
     return false; // block comments are not supported by gherkin for now. See https://cucumber.io/docs/gherkin/reference/
   },
-
-  
 
   // getCommentChildNodes: (node) => {
   //   console.log('getCommentChildNodes', node)
@@ -506,10 +542,11 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         ]),
       ];
     } else if (node instanceof TypedStep) {
-      // console.log(node);
+      const previousNode = findPreviousNode(path, 2);
+
       return [
         // if the step has comment, the hardline will be handled by the comment printer
-        stepNeedsHardline(node, path.stack[path.stack.length - 2] === 0) &&
+        stepNeedsHardline(options, node, null, previousNode) &&
         // @ts-expect-error comments are injected by prettier directly
         !node.comments
           ? printHardline()
@@ -648,6 +685,14 @@ const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
       default: DEFAULT_ESCAPE_BACKSLASH,
       description: 'Escape backslashes in strings',
       oppositeDescription: 'Do not escape backslashes in strings',
+      category: 'Format',
+    },
+    forceHardlineBetweenSteps: {
+      type: 'boolean',
+      default: true, // TODO set to false
+      description: 'Force hardline between Context and Action blocks',
+      oppositeDescription:
+        'Do not force hardline between Context and Action blocks',
       category: 'Format',
     },
   },

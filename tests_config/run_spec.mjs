@@ -52,7 +52,7 @@ function run_spec(importMeta, options) {
         rangeEnd,
         cursorOffset,
       });
-      
+
       test(filename, async () => {
         const output = await prettyprint(input, mergedOptions);
 

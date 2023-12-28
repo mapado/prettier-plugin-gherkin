@@ -98,13 +98,17 @@ export function isHasChild<N extends TypedGherkinNode<N>>(
 }
 
 export abstract class TypedGherkinNodeWithLocation<
-  N extends GherkinNodeWithLocation
+  N extends GherkinNodeWithLocation,
 > extends TypedGherkinNode<N> {
   location: Location;
 
   constructor(originalNode: N) {
     super(originalNode);
     this.location = originalNode.location;
+  }
+
+  get lastLine(): number {
+    return this.location.line;
   }
 }
 
@@ -324,6 +328,15 @@ export class TypedStep
     return [this.docString, this.dataTable].filter(
       (c): c is TypedDataTable | TypedDocString => typeof c !== 'undefined'
     );
+  }
+
+  get lastLine(): number {
+    const dataTableLength = this.dataTable?.rows.length ?? 0;
+    const docStringLength = this.docString
+      ? this.docString.content.split('\n').length + 2
+      : 0;
+
+    return this.location.line + dataTableLength + docStringLength;
   }
 }
 
