@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- Add `forceNewlineBetweenStepBlocks` option [#16](https://github.com/mapado/prettier-plugin-gherkin/pull/16) by [@jdeniau](https://github.com/jdeniau)
+
 ## [2.1.1] - 2023-11-21
 
 - Add repository, homepage and bugs field to package.json [#14](https://github.com/mapado/prettier-plugin-gherkin/pull/14) by [@sonallux](https://github.com/sonallux)
@@ -17,6 +21,7 @@ Handle prettier 3. Prettier 2 is not compatible with this version as the plugin 
 Prettier 3 remove plugin auto-detection, so you now need to active the plugin explicitly:
 
 > package.json
+
 ```diff
 -     "prettier": "^2.0.0",
 -     "prettier-plugin-gherkin": "^1.0.0",
@@ -25,12 +30,12 @@ Prettier 3 remove plugin auto-detection, so you now need to active the plugin ex
 ```
 
 > .prettierrc
+
 ```diff
   {
 +     "plugins": ["prettier-plugin-gherkin"]
   }
 ```
-
 
 ### (maybe) remove support for Node 14
 

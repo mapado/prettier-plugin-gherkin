@@ -126,7 +126,7 @@ function generateColumnSizes(text: string) {
 
 interface GherkinParseOptions extends ParserOptions<GherkinNode> {
   escapeBackslashes?: boolean;
-  forceHardlineBetweenSteps?: boolean;
+  forceNewlineBetweenStepBlocks?: boolean;
 }
 
 const gherkinParser: Parser<GherkinNode> = {
@@ -323,7 +323,7 @@ function stepNeedsHardline(
 
   const currentNode = commentNode ?? node;
 
-  if (options.forceHardlineBetweenSteps !== true) {
+  if (options.forceNewlineBetweenStepBlocks !== true) {
     const hadHardlineBefore =
       previousNode && currentNode.location.line - previousNode.lastLine >= 2;
 
@@ -687,10 +687,10 @@ const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
       oppositeDescription: 'Do not escape backslashes in strings',
       category: 'Format',
     },
-    forceHardlineBetweenSteps: {
+    forceNewlineBetweenStepBlocks: {
       type: 'boolean',
       default: true, // TODO set to false
-      description: 'Force hardline between Context and Action blocks',
+      description: 'Force new line between Context and Action blocks',
       oppositeDescription:
         'Do not force hardline between Context and Action blocks',
       category: 'Format',
