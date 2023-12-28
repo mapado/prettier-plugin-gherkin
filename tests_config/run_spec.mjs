@@ -52,13 +52,44 @@ function run_spec(importMeta, options) {
         rangeEnd,
         cursorOffset,
       });
-      
+
+      const separator = '~'.repeat(mergedOptions.printWidth);
+      const firstLineSeparator = separator + '\n';
+      const lineSeparator = '\n' + separator + '\n';
+      const lastLineSeparator = '\n' + separator;
+
       test(filename, async () => {
-        const output = await prettyprint(input, mergedOptions);
+        const getOutput = async (options) => {
+          const output = await prettyprint(input, {
+            ...mergedOptions,
+            ...options,
+          });
+
+          return {
+            output,
+            snapshot:
+              lineSeparator +
+              'options: ' +
+              JSON.stringify(options, undefined, 1) +
+              lineSeparator +
+              output,
+          };
+        };
+
+        const defaultOutput = await getOutput({});
+        const outputWithNewline = await getOutput({
+          forceNewlineBetweenStepBlocks: true,
+        });
 
         expect(
           raw(
-            source + '\n' + '~'.repeat(mergedOptions.printWidth) + '\n' + output
+            firstLineSeparator +
+              'source' +
+              lineSeparator +
+              source +
+              defaultOutput.snapshot +
+              outputWithNewline.snapshot +
+              lastLineSeparator
           )
         ).toMatchSnapshot();
 
@@ -67,7 +98,9 @@ function run_spec(importMeta, options) {
             filepath.substring(process.cwd().length + 1)
           )
         ) {
-          expect(input.replace(/\s/g, '')).toBe(output.replace(/\s/g, ''));
+          expect(input.replace(/\s/g, '')).toBe(
+            defaultOutput.output.replace(/\s/g, '')
+          );
         }
       });
     }

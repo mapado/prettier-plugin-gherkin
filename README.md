@@ -81,8 +81,8 @@ yarn add prettier-plugin-gherkin
 
 Activate the plugin in your prettier configuration file:
 
-
 > .prettierrc
+
 ```diff
   {
 +     "plugins": ["prettier-plugin-gherkin"]
@@ -97,7 +97,35 @@ https://user-images.githubusercontent.com/1398469/201128147-ad2ecba8-253d-4c70-9
 
 ## Options
 
-This plugin has a single options:
+This plugin has the following options:
+
+### `forceNewlineBetweenStepBlocks` (default: `false`)
+
+Do force a blank linesbetween steps block:
+
+Given the following block:
+
+```gherkin
+Given some context
+And some other context
+When I do something
+Then I should have a result
+```
+
+The default output will be the same as the input (no blank lines).
+
+If you set this option to `true`, it will force a blank line between the context block and the action block:
+
+```gherkin
+Given some context
+And some other context
+
+When I do something
+Then I should have a result
+```
+
+If you already have a blank line in your input, it will be kept as-is (event with this option set to `false`).
+If you have more than one blank line, it will be reduced to a single blank line.
 
 ### `escapeBackslashes`
 

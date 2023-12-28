@@ -1,6 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`background.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Background
 
   Background: a simple background
@@ -13,6 +16,8 @@ Feature: Background
   Scenario: also minimalistic
     Given the minimalism
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Background
 
     Background: a simple background
@@ -24,9 +29,29 @@ Feature: Background
     Scenario: also minimalistic
         Given the minimalism
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Background
+
+    Background: a simple background
+        Given the minimalism inside a background
+
+    Scenario: minimalistic
+        Given the minimalism
+
+    Scenario: also minimalistic
+        Given the minimalism
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`complex_background.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Complex background
   We want to ensure PickleStep all have different IDs
 
@@ -53,6 +78,8 @@ Feature: Complex background
       | 2     |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Complex background
     We want to ensure PickleStep all have different IDs
 
@@ -78,9 +105,43 @@ Feature: Complex background
                 | 1     |
                 | 2     |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Complex background
+    We want to ensure PickleStep all have different IDs
+
+    Background: a simple background
+        Given the minimalism inside a background
+
+    Scenario: minimalistic
+        Given the minimalism
+
+    Scenario: also minimalistic
+        Given the minimalism
+
+    Rule: My Rule
+
+        Background:
+            Given a rule background step
+
+        Scenario: with examples
+            Given the <value> minimalism
+
+            Examples:
+                | value |
+                | 1     |
+                | 2     |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`datatables.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: DataTables
 
   Scenario: minimalistic
@@ -101,6 +162,8 @@ Feature: DataTables
       | boz2 | boo2 |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: DataTables
 
     Scenario: minimalistic
@@ -119,9 +182,36 @@ Feature: DataTables
             # this is a comment
             | boz2 | boo2 |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: DataTables
+
+    Scenario: minimalistic
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`datatables_with_new_lines.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: DataTables
 
   Scenario: some whitespace is important
@@ -130,6 +220,21 @@ Feature: DataTables
     Given an example of negative space
       |        lost        i n        space        |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: DataTables
+
+    Scenario: some whitespace is important
+        Given 3 lines of poetry on 5 lines
+            | \\nraindrops--\\nher last kiss\\ngoodbye.\\r\\n |
+        Given an example of negative space
+            | lost        i n        space |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: DataTables
 
@@ -140,9 +245,13 @@ Feature: DataTables
         Given an example of negative space
             | lost        i n        space |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`descriptions.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Descriptions everywhere
   This is a single line description
 
@@ -196,6 +305,8 @@ This is an examples description
     | foo |
     | bar |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Descriptions everywhere
     This is a single line description
@@ -254,9 +365,75 @@ Feature: Descriptions everywhere
             | foo |
             | bar |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Descriptions everywhere
+    This is a single line description
+
+    Scenario: two lines
+        This description
+        has two lines and indented with two spaces
+
+        Given the minimalism
+
+    Scenario: without indentation
+        This is a description without indentation
+
+        Given the minimalism
+
+    Scenario: empty lines in the middle
+        This description
+
+        has an empty line in the middle
+
+        Given the minimalism
+
+    Scenario: empty lines around
+        This description
+        has an empty lines around
+
+        Given the minimalism
+
+    Scenario: comment after description
+        This description
+        has a comment after
+
+        # this is a comment
+        Given the minimalism
+
+    Scenario: comment right after description
+        This description
+        has a comment right after
+
+        #  this is another comment
+        Given the minimalism
+
+    Scenario: description with escaped docstring separator
+        This description has an \\"\\"\\" (escaped docstring sparator)
+
+        Given the minimalism
+
+    Scenario Outline: scenario outline with a description
+        This is a scenario outline description
+
+        Given the minimalism
+
+        Examples: examples with description
+            This is an examples description
+
+            | foo |
+            | bar |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`docstrings.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: DocString variations
 
   Scenario: minimalistic
@@ -306,6 +483,63 @@ Feature: DocString variations
       \\\`\\\`\\\`
       third line
       \`\`\`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: DocString variations
+
+    Scenario: minimalistic
+        Given a simple DocString
+            """
+            first line (no indent)
+              second line (indented with two spaces)
+
+            third line was empty
+            """
+        Given a DocString with content type
+            """xml
+            <foo>
+                <bar />
+            </foo>
+            """
+        And a DocString with wrong indentation
+            """
+            wrongly indented line
+            """
+        And a DocString with alternative separator
+            \`\`\`
+            first line
+            second line
+            \`\`\`
+        And a DocString with normal separator inside
+            \`\`\`
+            first line
+            """
+            third line
+            \`\`\`
+        And a DocString with alternative separator inside
+            """
+            first line
+            \`\`\`
+            third line
+            """
+        And a DocString with escaped separator inside
+            """
+            first line
+            \\"\\"\\"
+            third line
+            """
+        And a DocString with an escaped alternative separator inside
+            \`\`\`
+            first line
+            \\\`\\\`\\\`
+            third line
+            \`\`\`
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: DocString variations
 
@@ -358,15 +592,31 @@ Feature: DocString variations
             third line
             \`\`\`
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`empty.feature 1`] = `
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`escaped_pipes.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Escaped pipes
     The \\-character will be considered as an escape in table cell
     iff it is followed by a |-character, a \\-character or an n.
@@ -379,6 +629,25 @@ Feature: Escaped pipes
       | \\|æ\\\\n     | \\o\\no\\  |
       | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\\\|
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Escaped pipes
+    The \\-character will be considered as an escape in table cell
+    iff it is followed by a |-character, a \\-character or an n.
+
+    Scenario: They are the future
+        Given they have arrived
+            | æ | o |
+            | a | ø |
+        Given they have arrived
+            | \\|æ\\\\n     | \\o\\no\\  |
+            | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\ |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Escaped pipes
     The \\-character will be considered as an escape in table cell
@@ -393,9 +662,13 @@ Feature: Escaped pipes
             | \\|æ\\\\n     | \\o\\no\\  |
             | \\\\\\|a\\\\\\\\n | ø\\\\\\nø\\ |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`example_token_multiple.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Example token used multiple times
 
   Scenario Outline: Token used twice in a single step
@@ -406,6 +679,8 @@ Feature: Example token used multiple times
       | usage |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Example token used multiple times
 
     Scenario Outline: Token used twice in a single step
@@ -415,9 +690,27 @@ Feature: Example token used multiple times
             | what  |
             | usage |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Example token used multiple times
+
+    Scenario Outline: Token used twice in a single step
+        Given <what> <what>
+
+        Examples:
+            | what  |
+            | usage |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`example_tokens_everywhere.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Example tokens everywhere
 
   Scenario Outline: the <one>
@@ -433,6 +726,28 @@ Feature: Example tokens everywhere
       | un  | deux | trois | quatre | cinq  |
       | uno | dos  | tres  | quatro | cinco |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Example tokens everywhere
+
+    Scenario Outline: the <one>
+        Given the <two>:
+            """
+            <three>
+            """
+        Given the <four>:
+            | <five> |
+
+        Examples:
+            | one | two  | three | four   | five  |
+            | un  | deux | trois | quatre | cinq  |
+            | uno | dos  | tres  | quatro | cinco |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Example tokens everywhere
 
@@ -450,9 +765,13 @@ Feature: Example tokens everywhere
             | un  | deux | trois | quatre | cinq  |
             | uno | dos  | tres  | quatro | cinco |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`i18n_emoji.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # language: em
 📚: 🙈🙉🙊
 
@@ -460,15 +779,32 @@ exports[`i18n_emoji.feature 1`] = `
     😐🎸
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # language: em
 📚: 🙈🙉🙊
 
     📕: 💃
         😐🎸
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: em
+📚: 🙈🙉🙊
+
+    📕: 💃
+        😐🎸
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`i18n_fr.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #language:fr
 Fonctionnalité: i18n support
 
@@ -533,6 +869,77 @@ Fonctionnalité: i18n support
     Mais quelqu'un me vole 1 gâteau
     Alors j'ai 1 gâteau
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: fr
+Fonctionnalité: i18n support
+
+    Scénario: Support des caractères spéciaux
+        Soit un exemple de scénario en français
+        Quand j'ai 1 gâteau
+        Alors je suis heureux
+
+    Scénario: Support du mot-clef "Etant donné que "
+        Etant donné que j'aime les gâteaux
+        Lorsqu'on m'offre 1 gâteau
+        Alors je suis heureux
+
+    Scénario: Support du mot-clef "Etant donné qu'"
+        Etant donné qu'offrir un gâteau rend heureux
+        Lorsqu'on m'offre 1 gâteau
+        Alors je suis heureux
+
+    Scénario: Support du mot-clef "Étant donné que "
+        Étant donné que j'aime les gâteaux
+        Lorsqu'on m'offre 1 gâteau
+        Alors je suis heureux
+
+    Scénario: Support du mot-clef "Étant donné qu'"
+        Étant donné qu'offrir un gâteau rend heureux
+        Lorsqu'on m'offre 1 gâteau
+        Alors je suis heureux
+
+    Scénario: Support du mot-clef "Et que "
+        Soit un exemple de scénario en français
+        Lorsque j'ai 2 gâteaux
+        Et que quelqu'un m'offre 1 gâteau
+        Alors j'ai 3 gâteaux
+
+    Scénario: Support du mot-clef "Et qu'"
+        Soit un exemple de scénario en français
+        Lorsque j'ai 2 gâteaux
+        Et qu'on m'offre 1 gâteau
+        Alors j'ai 3 gâteaux
+
+    Scénario: Support du mot-clef "Et "
+        Soit un exemple de scénario en français
+        Quand j'ai 2 gâteaux
+        Et quelqu'un m'offre 1 gâteau
+        Alors j'ai 3 gâteaux
+
+    Scénario: Support du mot-clef "Mais que "
+        Soit un exemple de scénario en français
+        Lorsque j'ai 2 gâteaux
+        Mais que quelqu'un me vole 1 gâteau
+        Alors j'ai 1 gâteau
+
+    Scénario: Support du mot-clef "Mais qu'"
+        Soit un exemple de scénario en français
+        Lorsque j'ai 2 gâteaux
+        Mais qu'on me vole 1 gâteau
+        Alors j'ai 1 gâteau
+
+    Scénario: Support du mot-clef "Mais "
+        Soit un exemple de scénario en français
+        Quand j'ai 2 gâteaux
+        Mais quelqu'un me vole 1 gâteau
+        Alors j'ai 1 gâteau
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # language: fr
 Fonctionnalité: i18n support
@@ -609,9 +1016,13 @@ Fonctionnalité: i18n support
         Mais quelqu'un me vole 1 gâteau
         Alors j'ai 1 gâteau
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`i18n_no.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #language:no
 Egenskap: i18n support
 
@@ -620,6 +1031,21 @@ Egenskap: i18n support
     Når Norwegian keywords are parsed
     Så they should be recognized
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: no
+Egenskap: i18n support
+
+    Scenario: Parsing many languages
+        Gitt Gherkin supports many languages
+        Når Norwegian keywords are parsed
+        Så they should be recognized
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # language: no
 Egenskap: i18n support
@@ -630,9 +1056,13 @@ Egenskap: i18n support
         Når Norwegian keywords are parsed
         Så they should be recognized
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_background_1.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete backgrounds, Part 1
 
   Background: no steps
@@ -641,6 +1071,8 @@ Feature: Incomplete backgrounds, Part 1
     * a step
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete backgrounds, Part 1
 
     Background: no steps
@@ -648,9 +1080,25 @@ Feature: Incomplete backgrounds, Part 1
     Scenario: still pickles up
         * a step
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Incomplete backgrounds, Part 1
+
+    Background: no steps
+
+    Scenario: still pickles up
+        * a step
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_background_2.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete backgrounds, Part 2
 
   Background: just a description
@@ -659,6 +1107,8 @@ Feature: Incomplete backgrounds, Part 2
   Scenario: still pickles up
     * a step
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete backgrounds, Part 2
 
@@ -670,38 +1120,101 @@ Feature: Incomplete backgrounds, Part 2
     Scenario: still pickles up
         * a step
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Incomplete backgrounds, Part 2
+
+    Background: just a description
+        A short description
+
+
+
+    Scenario: still pickles up
+        * a step
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_feature_1.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Just a description
   A short description
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Just a description
     A short description
 
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Just a description
+    A short description
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_feature_2.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Empty feature
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Empty feature
 
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Empty feature
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_feature_3.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Just a comment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Just a comment
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Just a comment
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_scenario.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete scenarios
 
   Background: Adding a background won't make a pickle
@@ -709,6 +1222,8 @@ Feature: Incomplete scenarios
 
   Scenario: no steps
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete scenarios
 
@@ -718,9 +1233,26 @@ Feature: Incomplete scenarios
     Scenario: no steps
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Incomplete scenarios
+
+    Background: Adding a background won't make a pickle
+        * a step
+
+    Scenario: no steps
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`incomplete_scenario_outline.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete scenario outlines
 
   Background: Adding a background won't make a pickle
@@ -747,6 +1279,8 @@ Feature: Incomplete scenario outlines
     | nada |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Incomplete scenario outlines
 
     Background: Adding a background won't make a pickle
@@ -771,9 +1305,42 @@ Feature: Incomplete scenario outlines
             | nope |
             | nada |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Incomplete scenario outlines
+
+    Background: Adding a background won't make a pickle
+        * a step
+
+    Scenario Outline: steps, no examples
+        Given a step
+
+    Scenario Outline: no steps, no examples
+
+
+    Scenario Outline: no steps, no table
+        Examples:
+
+
+    Scenario Outline: no steps, only table header
+        Examples:
+            | what |
+
+    Scenario Outline: no steps, one example header
+        Examples:
+            | nope |
+            | nada |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`language.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #language:en
 
 Feature: Explicit language specification
@@ -782,42 +1349,91 @@ Feature: Explicit language specification
     Given the minimalism
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # language: en
 Feature: Explicit language specification
 
     Scenario: minimalistic
         Given the minimalism
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en
+Feature: Explicit language specification
+
+    Scenario: minimalistic
+        Given the minimalism
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`minimal.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal
 
   Scenario: minimalistic
     Given the minimalism
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal
 
     Scenario: minimalistic
         Given the minimalism
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal
+
+    Scenario: minimalistic
+        Given the minimalism
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`minimal-example.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal
 
   Example: minimalistic
     Given the minimalism
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal
 
     Example: minimalistic
         Given the minimalism
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal
+
+    Example: minimalistic
+        Given the minimalism
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`padded_example.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: test
 
   Scenario: test
@@ -838,6 +1454,8 @@ Feature: test
       |  	red  	|
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: test
 
     Scenario: test
@@ -856,9 +1474,36 @@ Feature: test
             | color |
             | red   |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: test
+
+    Scenario: test
+        Given a <color> ball with:
+            | type     | diameter |
+            | football | 69       |
+            | pool     | 5.6      |
+
+        # The "red" cell below has the following whitespace characters on each side:
+        # - U+00A0 (non-breaking space)
+        # - U+0020 (space)
+        # - U+0009 (tab)
+        # This is generated with \`ruby -e 'STDOUT.write "\\u00A0\\u0020\\u0009".encode("utf-8")' | pbcopy\`
+        # and pasted.
+        Examples:
+            | color |
+            | red   |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`readme_example.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @a
 Feature:
   @b @c
@@ -878,6 +1523,8 @@ Feature:
       | m |
       | n |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @a
 Feature:
@@ -901,9 +1548,40 @@ Feature:
             | m |
             | n |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@a
+Feature:
+
+    @b
+    @c
+    Scenario Outline:
+        Given <x>
+
+        Examples:
+            | x |
+            | y |
+
+    @d
+    @e
+    Scenario Outline:
+        Given <m>
+
+        @f
+        Examples:
+            | m |
+            | n |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`rule.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Some rules
 
   Background:
@@ -923,6 +1601,8 @@ Feature: Some rules
 
     Example: Example B
       Given b
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Some rules
 
@@ -944,9 +1624,38 @@ Feature: Some rules
         Example: Example B
             Given b
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Some rules
+
+    Background:
+        Given fb
+
+    Rule: A
+        The rule A description
+
+        Background:
+            Given ab
+
+        Example: Example A
+            Given a
+
+    Rule: B
+        The rule B description
+
+        Example: Example B
+            Given b
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`rule_with_tag.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @tag_feature
 Feature: Some tagged rules
 
@@ -977,6 +1686,8 @@ Feature: Some tagged rules
         | a      |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @tag_feature
 Feature: Some tagged rules
 
@@ -1006,15 +1717,55 @@ Feature: Some tagged rules
                 | header |
                 | a      |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@tag_feature
+Feature: Some tagged rules
+
+    Rule: Untagged rule
+        The untagged rule description
+
+        Scenario: Scenario with only a feature tag
+            Given a
+
+    @tag_rule
+    Rule: Tagged rule
+        The tagged rule description
+
+        Scenario: Scenario with feature and rule tags
+            Given b
+
+        @tag_scenario
+        Scenario: Scenario with feature, rule and scenario tags
+            Given b
+
+        @tag_outline
+        Scenario Outline: Tagged Scenario outline
+            Given b
+
+            @examples_tag
+            Examples:
+                | header |
+                | a      |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`rule_without_name_and_description.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature:
 
   Rule:
   Scenario:
     Given text
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature:
 
@@ -1023,9 +1774,25 @@ Feature:
         Scenario:
             Given text
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature:
+
+    Rule:
+
+        Scenario:
+            Given text
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`scenario_outline.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal Scenario Outline
 
   Scenario: minimalistic
@@ -1036,6 +1803,8 @@ Feature: Minimal Scenario Outline
       | minimalism |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal Scenario Outline
 
     Scenario: minimalistic
@@ -1045,9 +1814,27 @@ Feature: Minimal Scenario Outline
             | what       |
             | minimalism |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal Scenario Outline
+
+    Scenario: minimalistic
+        Given the <what>
+
+        Examples:
+            | what       |
+            | minimalism |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`scenario_outline_no_newline.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal Scenario Outline
 
 Scenario Outline: minimalistic
@@ -1056,6 +1843,8 @@ Scenario Outline: minimalistic
 Examples:
   | what       |
   | minimalism |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Minimal Scenario Outline
 
@@ -1066,9 +1855,27 @@ Feature: Minimal Scenario Outline
             | what       |
             | minimalism |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Minimal Scenario Outline
+
+    Scenario Outline: minimalistic
+        Given the <what>
+
+        Examples:
+            | what       |
+            | minimalism |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`scenario_outline_with_docstring.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Scenario Outline with a docstring
 
 Scenario Outline: Greetings come in many forms
@@ -1083,6 +1890,8 @@ Examples:
   | fr    | Bonjour |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Scenario Outline with a docstring
 
     Scenario Outline: Greetings come in many forms
@@ -1096,9 +1905,31 @@ Feature: Scenario Outline with a docstring
             | en   | Hello   |
             | fr   | Bonjour |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Scenario Outline with a docstring
+
+    Scenario Outline: Greetings come in many forms
+        Given this file:
+            """<type>
+            Greeting:<content>
+            """
+
+        Examples:
+            | type | content |
+            | en   | Hello   |
+            | fr   | Bonjour |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`scenario_outline_with_value_with_dollar_sign.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Scenario Outline with a value with a dollar sign ($)
 
 Scenario Outline: minimalistic
@@ -1109,6 +1940,8 @@ Examples:
   | pa$$word |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Scenario Outline with a value with a dollar sign ($)
 
     Scenario Outline: minimalistic
@@ -1118,9 +1951,27 @@ Feature: Scenario Outline with a value with a dollar sign ($)
             | what     |
             | pa$$word |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Scenario Outline with a value with a dollar sign ($)
+
+    Scenario Outline: minimalistic
+        Given the <what>
+
+        Examples:
+            | what     |
+            | pa$$word |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`scenario_outline_with_value_with_trailing_backslash.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Scenario Outline with values with trailing backslash
 
 Scenario Outline: minimalistic
@@ -1131,6 +1982,24 @@ Scenario Outline: minimalistic
 Examples:
   | what | this  | that   |
   | x\\\\y | this\\ | that\\\\ |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Scenario Outline with values with trailing backslash
+
+    Scenario Outline: minimalistic
+        Given <what>
+        When <this>
+        Then <that>
+
+        Examples:
+            | what | this  | that  |
+            | x\\y  | this\\ | that\\ |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Scenario Outline with values with trailing backslash
 
@@ -1144,9 +2013,13 @@ Feature: Scenario Outline with values with trailing backslash
             | what | this  | that  |
             | x\\y  | this\\ | that\\ |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`scenario_outlines_with_tags.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @a
 Feature:
   @b @c
@@ -1166,6 +2039,8 @@ Feature:
       | m |
       | n |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @a
 Feature:
@@ -1189,9 +2064,40 @@ Feature:
             | m |
             | n |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@a
+Feature:
+
+    @b
+    @c
+    Scenario Outline:
+        Given <x>
+
+        Examples:
+            | x |
+            | y |
+
+    @d
+    @e
+    Scenario Outline:
+        Given <m>
+
+        @f
+        Examples:
+            | m |
+            | n |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`several_examples.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Tagged Examples
 
   Scenario Outline: minimalistic
@@ -1210,6 +2116,8 @@ Feature: Tagged Examples
   @zap
   Scenario: ha ok
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Tagged Examples
 
@@ -1230,21 +2138,65 @@ Feature: Tagged Examples
     Scenario: ha ok
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Tagged Examples
+
+    Scenario Outline: minimalistic
+        Given the <what>
+
+        @foo
+        Examples:
+            | what |
+            | foo  |
+
+        @bar
+        Examples:
+            | what |
+            | bar  |
+
+    @zap
+    Scenario: ha ok
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`spaces_in_language.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   #  language  :   en-lol
 OH HAI: STUFFING
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # language: en-lol
 OH HAI: STUFFING
 
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# language: en-lol
+OH HAI: STUFFING
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`tagged_feature_with_scenario_outline.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @sometag
 Feature: Foo
 
@@ -1257,6 +2209,8 @@ Feature: Foo
     | Y    |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @sometag
 Feature: Foo
 
@@ -1268,9 +2222,29 @@ Feature: Foo
             | X    |
             | Y    |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@sometag
+Feature: Foo
+
+    Scenario Outline: Bar
+        Then Baz
+
+        Examples:
+            | name |
+            | X    |
+            | Y    |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`tags.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @feature_tag1 @feature_tag2
   @feature_tag3
 Feature: Minimal Scenario Outline
@@ -1312,6 +2286,8 @@ Rule:
 Scenario: joined tags
   Given the @delimits tags
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @feature_tag1
 @feature_tag2
@@ -1360,9 +2336,65 @@ Feature: Minimal Scenario Outline
         Scenario: joined tags
             Given the @delimits tags
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@feature_tag1
+@feature_tag2
+@feature_tag3
+Feature: Minimal Scenario Outline
+
+    @scenario_tag1
+    @scenario_tag2
+    @scenario_tag3
+    Scenario: minimalistic
+        Given the minimalism
+
+    @so_tag1
+    @so_tag2
+    @so_tag3
+    Scenario Outline: minimalistic outline
+        Given the <what>
+
+        @ex_tag1
+        @ex_tag2
+        @ex_tag3
+        Examples:
+            | what       |
+            | minimalism |
+
+        @ex_tag4
+        @ex_tag5
+        @ex_tag6
+        Examples:
+            | what            |
+            | more minimalism |
+
+    @comment_tag1
+    Scenario: comments
+        Given a comment
+
+    @comment_tag#2
+    Scenario: hash in tags
+        Given a comment is preceded by a space
+
+    @rule_tag
+    Rule:
+
+        @joined_tag3
+        @joined_tag4
+        Scenario: joined tags
+            Given the @delimits tags
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
 exports[`very_long.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Long feature file
   This is a long feature file
 
@@ -3067,6 +4099,8 @@ Feature: Long feature file
       | boz2 | boo2 |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Long feature file
     This is a long feature file
 
@@ -4670,4 +5704,1613 @@ Feature: Long feature file
             # this is a comment
             | boz2 | boo2 |
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Long feature file
+    This is a long feature file
+
+    Scenario: scenario 01
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 02
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 03
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 04
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 05
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 06
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 07
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 08
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 09
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 10
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 11
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 12
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 13
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 14
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 15
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 16
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 17
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 18
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 19
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 20
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 21
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 22
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 23
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 24
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 25
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 26
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 27
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 28
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 29
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 30
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 31
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 32
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 33
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 34
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 35
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 36
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 37
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 38
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 39
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 40
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 41
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 42
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 43
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 44
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 45
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 46
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 47
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 48
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 49
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 50
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 51
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 52
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 53
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 54
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 55
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 56
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 57
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 58
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 59
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 60
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 61
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 62
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 63
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 64
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 65
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 66
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 67
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 68
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 69
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 70
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 71
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 72
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 73
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 74
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 75
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 76
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 77
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 78
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 79
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 80
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 81
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 82
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 83
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 84
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 85
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 86
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 87
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 88
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 89
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 90
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 91
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 92
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 93
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 94
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 95
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 96
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 97
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 98
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 99
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+    Scenario: scenario 100
+        Given a simple data table
+            | foo | bar |
+            | boz | boo |
+        And a data table with a single cell
+            | foo |
+        And a data table with different fromatting
+            | foo | bar | boz |
+        And a data table with an empty cell
+            | foo |  | boz |
+        And a data table with comments and newlines inside
+            | foo  | bar  |
+            | boz  | boo  |
+            # this is a comment
+            | boz2 | boo2 |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
