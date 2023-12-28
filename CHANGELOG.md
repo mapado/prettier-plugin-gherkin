@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## [2.2.0] - 2023-12-28
 
 - Add `forceNewlineBetweenStepBlocks` option [#16](https://github.com/mapado/prettier-plugin-gherkin/pull/16) by [@jdeniau](https://github.com/jdeniau)
 
