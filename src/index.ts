@@ -689,7 +689,7 @@ const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
     },
     forceNewlineBetweenStepBlocks: {
       type: 'boolean',
-      default: true, // TODO set to false
+      default: true, // TODO set this to false
       description: 'Force new line between Context and Action blocks',
       oppositeDescription:
         'Do not force hardline between Context and Action blocks',

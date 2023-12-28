@@ -77,10 +77,9 @@ function run_spec(importMeta, options) {
         };
 
         const defaultOutput = await getOutput({});
-        // const outputWithNewline = await prettyprint(input, {
-        //   ...mergedOptions,
-        //   forceNewlineBetweenStepBlocks: true,
-        // });
+        const outputWithNewline = await getOutput({
+          forceNewlineBetweenStepBlocks: true,
+        });
 
         expect(
           raw(
@@ -89,10 +88,7 @@ function run_spec(importMeta, options) {
               lineSeparator +
               source +
               defaultOutput.snapshot +
-              // separator +
-              // 'options: { forceNewlineBetweenStepBlocks: true }' +
-              // separator +
-              // outputWithNewline
+              outputWithNewline.snapshot +
               lastLineSeparator
           )
         ).toMatchSnapshot();
