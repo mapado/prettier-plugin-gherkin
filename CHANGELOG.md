@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [2.2.1] - 2023-12-28
+
+- Fix new lines between two comments line [#17](https://github.com/mapado/prettier-plugin-gherkin/pull/17) by [@jdeniau](https://github.com/jdeniau)
+- Fix new line for comments in data tables [#18](https://github.com/mapado/prettier-plugin-gherkin/pull/18) by [@jdeniau](https://github.com/jdeniau)
+
 ## [2.2.0] - 2023-12-28
 
 - Add `forceNewlineBetweenStepBlocks` option [#16](https://github.com/mapado/prettier-plugin-gherkin/pull/16) by [@jdeniau](https://github.com/jdeniau)
