@@ -331,10 +331,8 @@ export class TypedStep
   }
 
   get lastLine(): number {
-    const dataTableLength = this.dataTable?.rows.length ?? 0;
-    const docStringLength = this.docString
-      ? this.docString.content.split('\n').length + 2
-      : 0;
+    const dataTableLength = this.dataTable?.nbRows ?? 0;
+    const docStringLength = this.docString?.nbRows ?? 0;
 
     return this.location.line + dataTableLength + docStringLength;
   }
@@ -469,6 +467,10 @@ export class TypedDocString
     this.content = originalNode.content;
     this.delimiter = originalNode.delimiter;
   }
+
+  get nbRows(): number {
+    return this.content.split('\n').length + 2;
+  }
 }
 
 export class TypedDataTable
@@ -483,6 +485,17 @@ export class TypedDataTable
     const columnSizes = generateColumnSizes(originalNode.rows);
 
     this.rows = originalNode.rows.map((r) => new TypedTableRow(r, columnSizes));
+  }
+
+  get nbRows(): number {
+    return (
+      this.rows.reduce((acc, row) => {
+        // @ts-expect-error comments are added by prettier directly
+        const commentLines: number = row.comments?.length ?? 0;
+
+        return acc + commentLines + 1;
+      }, 0) ?? 0
+    );
   }
 
   get children(): ReadonlyArray<TypedTableRow> {

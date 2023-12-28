@@ -55,6 +55,50 @@ Feature: A comment before a "Given" should stay before the "Given".
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
+exports[`data_table_with_comments.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: accountability
+    Scenario: Scenario Outline name
+        Given context
+        Then table node with a comment:
+            | amountForPro       | 0  |
+            # a comment in between
+            | collectedFeeAmount | 95 |
+        Then result
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: accountability
+
+    Scenario: Scenario Outline name
+        Given context
+        Then table node with a comment:
+            | amountForPro       | 0  |
+            # a comment in between
+            | collectedFeeAmount | 95 |
+        Then result
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: accountability
+
+    Scenario: Scenario Outline name
+        Given context
+        Then table node with a comment:
+            | amountForPro       | 0  |
+            # a comment in between
+            | collectedFeeAmount | 95 |
+        Then result
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`;
+
 exports[`datatable_with_PHP_FQCN.feature 1`] = `
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 source
