@@ -38,3 +38,31 @@ Feature: accountability
                 }
             ]
             """
+      
+        When I receive the following feed from the bank:
+        """xml
+        <feed>
+        <account number="123456789">
+        <entry>
+        <type>credit</type>
+        <amount>1000</amount>
+        <label>My company salary</label>
+        </entry>
+        </account>
+        </feed>
+        """
+
+        And I make the following query to the API:
+        """graphql
+        union Transaction =  CreditTransaction|DebitTransaction
+
+        query AccountBalance($accountNumber:String!) {
+            account(accountNumber:$accountNumber) {
+                balance
+                transactions { amount
+                }
+            }
+        }
+        """
+
+        Then the response status code should be 200
