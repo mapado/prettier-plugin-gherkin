@@ -636,37 +636,36 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     if (node instanceof TypedDocString) {
       const { content, mediaType } = node;
 
-      if (mediaType === 'xml') {
-        return async (textToDoc): Promise<Doc> => {
-          return [
-            node.delimiter,
-            mediaType,
-            printHardline(),
-            await textToDoc(content, { ...options, parser: 'html' }),
-            printHardline(),
-            node.delimiter,
-          ];
-        };
-      }
+      return async (textToDoc): Promise<Doc|undefined> => {
+        let doc : doc.builders.Doc | null = null;
 
-      try {
-        JSON.parse(content);
+        if (mediaType) {
+          // try applying the prettier parser for the media type
+          doc = await textToDoc(content, { ...options, parser: mediaType }).catch(() => null);
 
-        return async (textToDoc): Promise<Doc> => {
+          // if the parser failed for xml, try with the html parser
+          if (!doc && mediaType === 'xml') {
+            doc = await textToDoc(content, { ...options, parser: 'html' }).catch(() => null);
+          }
+        }
+
+        // try applying the json parser
+        if (!doc) {
+          doc = await textToDoc(content, { ...options, parser: 'json' }).catch(() => null);
+        }
+
+        if (doc) {
           return [
             node.delimiter,
             mediaType ?? '',
             printHardline(),
-            await textToDoc(content, { ...options, parser: 'json' }),
+            doc,
             printHardline(),
             node.delimiter,
           ];
-        };
-      } catch (e) {
-        // igonre non-JSON content
-      }
+        }
+      };
     }
-
     return null;
   },
 };
