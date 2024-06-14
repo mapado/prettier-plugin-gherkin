@@ -653,7 +653,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         if (!doc) {
           doc = await textToDoc(content, { ...options, parser: 'json' }).catch(() => null);
         }
-        
+
         if (doc) {
           return [
             node.delimiter,
