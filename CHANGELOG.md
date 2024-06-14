@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.3.0] - 2024-06-14
+
+- feat: docstring now supports all language [#21](https://github.com/mapado/prettier-plugin-gherkin/pull/21) by [@bdo](https://github.com/bdo)
+
 ## [2.2.1] - 2023-12-28
 
 - Fix new lines between two comments line [#17](https://github.com/mapado/prettier-plugin-gherkin/pull/17) by [@jdeniau](https://github.com/jdeniau)
