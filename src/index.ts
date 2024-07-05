@@ -41,8 +41,6 @@ import {
   TypedRuleChild,
   isHasChildren,
   isHasChild,
-  HasChild,
-  HasChildren,
   GherkinNodeWithLocation,
   isWithLocation,
 } from './GherkinAST/index.js';
@@ -52,7 +50,7 @@ const DEFAULT_ESCAPE_BACKSLASH = false;
 // taken from https://github.com/cucumber/gherkin-javascript/blob/e25a1be3b21133c7a92eb7735997c6e774406226/src/GherkinClassicTokenMatcher.ts#L11
 const LANGUAGE_PATTERN = /^\s*#\s*language\s*:\s*([a-zA-Z\-_]+)\s*$/;
 
-const { hardline, join, indent } = doc.builders;
+const { hardline, join, indent, line, fill } = doc.builders;
 
 const languages: SupportLanguage[] = [
   {
@@ -205,9 +203,9 @@ const gherkinParser: Parser<GherkinNode> = {
       return gherkinParser.locStart(node) + node.text.trim().length;
     }
 
-    if (!(node instanceof TypedComment)) {
-      console.log({ method: 'locEnd', nodeName: node.constructor.name });
-    }
+    // if (!(node instanceof TypedComment)) {
+    // console.log({ method: 'locEnd', nodeName: node.constructor.name });
+    // }
 
     if (node instanceof TypedFeature) {
       return (
@@ -238,8 +236,6 @@ function printTags(
   path: AstPath<TypedGherkinNode<GherkinNode & { tags: readonly TypedTag[] }>>,
   node: GherkinNode & { tags: readonly TypedTag[] }
 ) {
-  // console.log(node);
-
   return [
     // @ts-expect-error TODO path should be recognized as an AstPath<GherkinNode & { tags: readonly TypedTag[] }>>
     join(printHardline(), path.map(gherkinAstPrinter.print, 'tags')),
@@ -247,25 +243,21 @@ function printTags(
   ];
 }
 
-function printDescription(
-  path: AstPath<TypedGherkinNode<GherkinNode & { description: string }>>,
-  node: GherkinNode & { description: string },
-  hardlineIfDescription: boolean
-) {
-  // console.log(node);
+function printNodeHeading(
+  node: GherkinNode & { keyword: string; name: string }
+): Doc {
+  return printTextBloc(`${node.keyword}: ${node.name}`, true);
+}
 
+function printDescription(
+  node: GherkinNode & { description: string; location: Location },
+  hardlineIfNoDescription: boolean
+): Doc {
   if (!node.description) {
-    return hardlineIfDescription ? printHardline() : '';
+    return hardlineIfNoDescription ? printHardline() : '';
   }
 
-  return [
-    join(
-      printHardline(),
-      node.description.split('\n').map((s) => s.trim())
-    ),
-    printHardline(),
-    printHardline(),
-  ];
+  return [printTextBloc(node.description), printHardline()];
 }
 
 /**
@@ -306,8 +298,6 @@ function findNodeForCommentInAST(
   }
 
   return null;
-
-  return null;
 }
 
 function stepNeedsHardline(
@@ -342,6 +332,35 @@ function stepNeedsHardline(
     node.keywordType &&
     [StepKeywordType.CONTEXT, StepKeywordType.ACTION].includes(node.keywordType)
   );
+}
+
+function printTextBloc(text: string, doIndent: boolean = false) {
+  const filledHeading = fill(
+    text
+      // replace all line break by a hardline
+      .split('\n')
+      .map(
+        (
+          l: string
+        ): Array<string | doc.builders.Line | doc.builders.Hardline> => {
+          const splittedLine: Array<string | doc.builders.Line> = l
+            .trim()
+            // replace all spaces by a line, that will break only if it overflow thanks to the `fill` method
+            .split(' ')
+            .map((l): Array<string | doc.builders.Line> => [l, line])
+            .flat();
+
+          return [...splittedLine, hardline];
+        }
+      )
+      .flat()
+  );
+
+  if (!doIndent) {
+    return filledHeading;
+  }
+
+  return indent(filledHeading);
 }
 
 const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
@@ -457,7 +476,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
   print: (path, options, print) => {
     const node = path.getValue();
 
-    // console.log({ node, isDocument: node instanceof TypedGherkinDocument });
+    // console.log(node);
 
     if (node instanceof TypedGherkinDocument) {
       // console.log(node)
@@ -478,11 +497,10 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
           ? ['# language: ' + node.language, printHardline()]
           : '',
         printTags(path, node),
-        `${node.keyword}: ${node.name}`,
+        printNodeHeading(node),
 
         indent([
-          printHardline(),
-          printDescription(path, node, true),
+          printDescription(node, true),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
           join(printTwoHardlines(), path.map(print, 'children')),
@@ -502,7 +520,6 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         // @ts-expect-error TODO  path should be recognized as an AstPath<TypedFeatureChild>
         return path.call(print, 'rule');
       } else {
-        console.log(node);
         throw new Error(
           `unhandled case where ${
             node instanceof TypedFeatureChild
@@ -516,24 +533,20 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     } else if (node instanceof TypedBackground) {
       // console.log(node.steps);
       return [
-        `${node.keyword}: ${node.name}`,
-        node.description || node.steps.length > 0
-          ? indent([
-              printHardline(),
-              printDescription(path, node, false),
-              // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
-              join(printHardline(), path.map(print, 'steps')),
-            ])
-          : '',
+        printNodeHeading(node),
+        indent([
+          printDescription(node, false),
+          // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
+          path.map(print, 'steps'),
+        ]),
       ];
     } else if (node instanceof TypedScenario) {
       // console.log(node);
       return [
         printTags(path, node),
-        `${node.keyword}: ${node.name}`,
+        printNodeHeading(node),
         indent([
-          printHardline(),
-          printDescription(path, node, false),
+          printDescription(node, false),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
           join(printHardline(), path.map(print, 'steps')),
@@ -591,11 +604,10 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
 
       return [
         printTags(path, node),
-        `${node.keyword}: ${node.name}`,
+        printNodeHeading(node),
 
         indent([
-          printHardline(),
-          printDescription(path, node, false),
+          printDescription(node, false),
           join(
             printHardline(),
             [
@@ -636,22 +648,30 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     if (node instanceof TypedDocString) {
       const { content, mediaType } = node;
 
-      return async (textToDoc): Promise<Doc|undefined> => {
-        let doc : doc.builders.Doc | null = null;
+      return async (textToDoc): Promise<Doc | undefined> => {
+        let doc: doc.builders.Doc | null = null;
 
         if (mediaType) {
           // try applying the prettier parser for the media type
-          doc = await textToDoc(content, { ...options, parser: mediaType }).catch(() => null);
+          doc = await textToDoc(content, {
+            ...options,
+            parser: mediaType,
+          }).catch(() => null);
 
           // if the parser failed for xml, try with the html parser
           if (!doc && mediaType === 'xml') {
-            doc = await textToDoc(content, { ...options, parser: 'html' }).catch(() => null);
+            doc = await textToDoc(content, {
+              ...options,
+              parser: 'html',
+            }).catch(() => null);
           }
         }
 
         // try applying the json parser
         if (!doc) {
-          doc = await textToDoc(content, { ...options, parser: 'json' }).catch(() => null);
+          doc = await textToDoc(content, { ...options, parser: 'json' }).catch(
+            () => null
+          );
         }
 
         if (doc) {
