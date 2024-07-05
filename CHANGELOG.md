@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.4.0] - 2024-07-05
+
+- Handle printWidth for node description [#24](https://github.com/mapado/prettier-plugin-gherkin/pull/24) by [@jdeniau](https://github.com/jdeniau)
+
 ## [2.3.0] - 2024-06-14
 
 - feat: docstring now supports all language [#21](https://github.com/mapado/prettier-plugin-gherkin/pull/21) by [@bdo](https://github.com/bdo)
