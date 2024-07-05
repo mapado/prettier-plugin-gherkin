@@ -246,7 +246,7 @@ function printTags(
 function printNodeHeading(
   node: GherkinNode & { keyword: string; name: string }
 ): Doc {
-  return printTextBloc(`${node.keyword}: ${node.name}`, true);
+  return `${node.keyword}: ${node.name}`;
 }
 
 function printDescription(
@@ -500,6 +500,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         printNodeHeading(node),
 
         indent([
+          printHardline(),
           printDescription(node, true),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedFeature>
@@ -534,11 +535,14 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
       // console.log(node.steps);
       return [
         printNodeHeading(node),
-        indent([
-          printDescription(node, false),
-          // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
-          path.map(print, 'steps'),
-        ]),
+        node.description || node.steps.length > 0
+          ? indent([
+              printHardline(),
+              printDescription(node, false),
+              // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
+              path.map(print, 'steps'),
+            ])
+          : '',
       ];
     } else if (node instanceof TypedScenario) {
       // console.log(node);
@@ -546,6 +550,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         printTags(path, node),
         printNodeHeading(node),
         indent([
+          printHardline(),
           printDescription(node, false),
 
           // @ts-expect-error TODO path should be recognized as an AstPath<TypedScenario>
@@ -607,6 +612,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
         printNodeHeading(node),
 
         indent([
+          printHardline(),
           printDescription(node, false),
           join(
             printHardline(),
