@@ -177,4 +177,5 @@ yarn lint # the plugin is writter in TypeScript, this command will help you dete
 
 ### Test datas
 
-Test datas can be found here : https://github.com/cucumber/gherkin-utils/tree/main/testdata
+Test datas can be found here : https://github.com/cucumber/gherkin-utils/tree/c35857189c2da3a9b84796ad585d25e70f7bf3b8/testdata
+
