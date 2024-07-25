@@ -148,7 +148,7 @@ You may want to check your code base and be consistent : if you use simple backs
 
 Gherkin AST schema
 
-![Gherkin AST schema](https://github.com/cucumber/gherkin/blob/main/docs/ast.png?raw=true)
+![Gherkin AST schema](https://github.com/cucumber/gherkin?tab=readme-ov-file#abstract-syntax-tree-ast)
 
 ### Useful resources on Gherkin language
 
