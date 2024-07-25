@@ -532,7 +532,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     } else if (node instanceof TypedTag) {
       return node.name;
     } else if (node instanceof TypedBackground) {
-      // console.log(node.steps);
+      // console.log(node);
       return [
         printNodeHeading(node),
         node.description || node.steps.length > 0
@@ -540,7 +540,7 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
               printHardline(),
               printDescription(node, false),
               // @ts-expect-error TODO  path should be recognized as an AstPath<TypedBackground>
-              path.map(print, 'steps'),
+              join(printHardline(), path.map(print, 'steps')),
             ])
           : '',
       ];
