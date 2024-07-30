@@ -13,5 +13,5 @@ module.exports = {
       Object.prototype.hasOwnProperty.call(val, RAW) &&
       typeof val[RAW] === 'string'
     );
-  }
+  },
 };
