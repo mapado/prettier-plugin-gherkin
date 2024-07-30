@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.4.1] - 2024-07-26
+
+- Re-set hardline for Background [#27](https://github.com/mapado/prettier-plugin-gherkin/pull/27) by [@jdeniau](https://github.com/jdeniau)
+
 ## [2.4.0] - 2024-07-05
 
 - Handle printWidth for node description [#24](https://github.com/mapado/prettier-plugin-gherkin/pull/24) by [@jdeniau](https://github.com/jdeniau)
