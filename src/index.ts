@@ -706,7 +706,7 @@ const plugin: Plugin<TypedGherkinNode<GherkinNode>> = {
   },
   defaultOptions: {
     printWidth: 120,
-    tabWidth: 4,
+    tabWidth: 2,
   },
   options: {
     escapeBackslashes: {

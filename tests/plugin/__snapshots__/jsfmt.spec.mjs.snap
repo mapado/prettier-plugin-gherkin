@@ -16,6 +16,20 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Example with multiple Background Steps
 
+  Background:
+    Given the user is on the homepage
+    And the user has the language "en" selected in the user settings
+
+  Scenario: example Scenario
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Example with multiple Background Steps
+
     Background:
         Given the user is on the homepage
         And the user has the language "en" selected in the user settings
@@ -30,11 +44,11 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Example with multiple Background Steps
 
-    Background:
-        Given the user is on the homepage
-        And the user has the language "en" selected in the user settings
+  Background:
+    Given the user is on the homepage
+    And the user has the language "en" selected in the user settings
 
-    Scenario: example Scenario
+  Scenario: example Scenario
 
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -60,6 +74,25 @@ Feature: A comment before a "Given" should stay before the "Given".
 options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: A comment before a "Given" should stay before the "Given".
+  The blankline should be before the comment and not between the comment and the
+  "Given".
+
+  Scenario:
+    Given I have a feature file
+    When I run the feature file
+    Then I should see the output
+
+    # this comment should stay just before the second given
+    Given I have another feature file
+    When I run the feature file
+    Then I should see the output
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: A comment before a "Given" should stay before the "Given".
     The blankline should be before the comment and not between the comment and
     the "Given".
 
@@ -79,20 +112,20 @@ options: {
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: A comment before a "Given" should stay before the "Given".
-    The blankline should be before the comment and not between the comment and
-    the "Given".
+  The blankline should be before the comment and not between the comment and the
+  "Given".
 
-    Scenario:
-        Given I have a feature file
+  Scenario:
+    Given I have a feature file
 
-        When I run the feature file
-        Then I should see the output
+    When I run the feature file
+    Then I should see the output
 
-        # this comment should stay just before the second given
-        Given I have another feature file
+    # this comment should stay just before the second given
+    Given I have another feature file
 
-        When I run the feature file
-        Then I should see the output
+    When I run the feature file
+    Then I should see the output
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -115,6 +148,21 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: accountability
 
+  Scenario: Scenario Outline name
+    Given context
+    Then table node with a comment:
+      | amountForPro       | 0  |
+      # a comment in between
+      | collectedFeeAmount | 95 |
+    Then result
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: accountability
+
     Scenario: Scenario Outline name
         Given context
         Then table node with a comment:
@@ -130,13 +178,13 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: accountability
 
-    Scenario: Scenario Outline name
-        Given context
-        Then table node with a comment:
-            | amountForPro       | 0  |
-            # a comment in between
-            | collectedFeeAmount | 95 |
-        Then result
+  Scenario: Scenario Outline name
+    Given context
+    Then table node with a comment:
+      | amountForPro       | 0  |
+      # a comment in between
+      | collectedFeeAmount | 95 |
+    Then result
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -157,6 +205,19 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: A data table with PHP Fully Qualified Classnames
 
+  Scenario:
+    When I have a data table
+      | entityClassName | id |
+      | App\\Entity\\Cart | 4  |
+      | App\\Entity\\Cart | 5  |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: A data table with PHP Fully Qualified Classnames
+
     Scenario:
         When I have a data table
             | entityClassName | id |
@@ -170,11 +231,11 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: A data table with PHP Fully Qualified Classnames
 
-    Scenario:
-        When I have a data table
-            | entityClassName | id |
-            | App\\Entity\\Cart | 4  |
-            | App\\Entity\\Cart | 5  |
+  Scenario:
+    When I have a data table
+      | entityClassName | id |
+      | App\\Entity\\Cart | 4  |
+      | App\\Entity\\Cart | 5  |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -240,6 +301,60 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Test different embed
 
+  Scenario: XML
+    When I receive the following feed from the bank:
+      """xml
+      <feed>
+        <account number="123456789">
+          <entry>
+            <type>credit</type>
+            <amount>1000</amount>
+            <label>My company salary</label>
+          </entry>
+        </account>
+      </feed>
+      """
+
+  Scenario: JSON
+    When I receive the following feed from the bank:
+      """json
+      { "account": "1234", "amount": 1000 }
+      """
+
+  Scenario: JSON if no language is specified (default fallback)
+    When I receive the following feed from the bank:
+      """
+      { "account": "1234", "amount": 1000 }
+      """
+
+  Scenario: GraphQL
+    When I make the following query to the API:
+      """graphql
+      union Transaction = CreditTransaction | DebitTransaction
+
+      query AccountBalance($accountNumber: String!) {
+        account(accountNumber: $accountNumber) {
+          balance
+          transactions {
+            amount
+          }
+        }
+      }
+      """
+
+  Scenario: Unknown
+    When I make the following query to the API:
+      """unknown-language
+      this language is not known from prettier
+      """
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Test different embed
+
     Scenario: XML
         When I receive the following feed from the bank:
             """xml
@@ -294,52 +409,52 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Test different embed
 
-    Scenario: XML
-        When I receive the following feed from the bank:
-            """xml
-            <feed>
-                <account number="123456789">
-                    <entry>
-                        <type>credit</type>
-                        <amount>1000</amount>
-                        <label>My company salary</label>
-                    </entry>
-                </account>
-            </feed>
-            """
+  Scenario: XML
+    When I receive the following feed from the bank:
+      """xml
+      <feed>
+        <account number="123456789">
+          <entry>
+            <type>credit</type>
+            <amount>1000</amount>
+            <label>My company salary</label>
+          </entry>
+        </account>
+      </feed>
+      """
 
-    Scenario: JSON
-        When I receive the following feed from the bank:
-            """json
-            { "account": "1234", "amount": 1000 }
-            """
+  Scenario: JSON
+    When I receive the following feed from the bank:
+      """json
+      { "account": "1234", "amount": 1000 }
+      """
 
-    Scenario: JSON if no language is specified (default fallback)
-        When I receive the following feed from the bank:
-            """
-            { "account": "1234", "amount": 1000 }
-            """
+  Scenario: JSON if no language is specified (default fallback)
+    When I receive the following feed from the bank:
+      """
+      { "account": "1234", "amount": 1000 }
+      """
 
-    Scenario: GraphQL
-        When I make the following query to the API:
-            """graphql
-            union Transaction = CreditTransaction | DebitTransaction
+  Scenario: GraphQL
+    When I make the following query to the API:
+      """graphql
+      union Transaction = CreditTransaction | DebitTransaction
 
-            query AccountBalance($accountNumber: String!) {
-                account(accountNumber: $accountNumber) {
-                    balance
-                    transactions {
-                        amount
-                    }
-                }
-            }
-            """
+      query AccountBalance($accountNumber: String!) {
+        account(accountNumber: $accountNumber) {
+          balance
+          transactions {
+            amount
+          }
+        }
+      }
+      """
 
-    Scenario: Unknown
-        When I make the following query to the API:
-            """unknown-language
-            this language is not known from prettier
-            """
+  Scenario: Unknown
+    When I make the following query to the API:
+      """unknown-language
+      this language is not known from prettier
+      """
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -381,6 +496,40 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: complex docstring with JSON in it
 
+  Scenario:
+    Given a docstring with
+      """
+      1
+      "
+      2
+      \\"
+      3
+      \\"\\"\\"
+      4
+      """
+
+    Given I have a complex docstring
+      """
+      A docstring that is not JSON
+      =======================================
+
+      but will include some somewhere
+      -----------------------------------------------------
+
+       [WARNING] Some warning
+
+                 {"error":"NOT AUTHENTICATED","comment":"authentication refused"}
+
+       [OK] Declarations complete.
+      """
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: complex docstring with JSON in it
+
     Scenario:
         Given a docstring with
             """
@@ -415,32 +564,32 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: complex docstring with JSON in it
 
-    Scenario:
-        Given a docstring with
-            """
-            1
-            "
-            2
-            \\"
-            3
-            \\"\\"\\"
-            4
-            """
+  Scenario:
+    Given a docstring with
+      """
+      1
+      "
+      2
+      \\"
+      3
+      \\"\\"\\"
+      4
+      """
 
-        Given I have a complex docstring
-            """
-            A docstring that is not JSON
-            =======================================
+    Given I have a complex docstring
+      """
+      A docstring that is not JSON
+      =======================================
 
-            but will include some somewhere
-            -----------------------------------------------------
+      but will include some somewhere
+      -----------------------------------------------------
 
-             [WARNING] Some warning
+       [WARNING] Some warning
 
-                       {"error":"NOT AUTHENTICATED","comment":"authentication refused"}
+                 {"error":"NOT AUTHENTICATED","comment":"authentication refused"}
 
-             [OK] Declarations complete.
-            """
+       [OK] Declarations complete.
+      """
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -496,6 +645,53 @@ options: {}
 @accountability
 @accountability-json
 Feature: accountability
+  accounts should always be good
+
+  Scenario Outline: Scenario Outline name
+    Given I have <number> cukes in my belly
+    When I wait <hour> hour
+    Then my belly should growl
+
+    Examples:
+      | number | hour                      |
+      | 1      | the first hour of the day |
+      | 2      | 2                         |
+
+  @truncateTables
+  Scenario: Check accountability
+    The scenario definition for "Check accountability"
+
+    # Insert fixtures
+    Given the following fixtures files are loaded:
+      | 10.contracts.yml |
+      | 20.wallet.yml    |
+      | 30.tax.yml       |
+
+    Given I inject the header "authorization" with value 'Bearer some-token'
+
+    And I inject the header "accept" with value "application/json"
+
+    Given I create an order
+    Then the response status code should be 200
+    When I pay the latest order
+    And I refund the last payment and transaction list with transactions:
+      """
+      [
+        {
+          "name": "card",
+          "credit": 5000
+        }
+      ]
+      """
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+@accountability
+@accountability-json
+Feature: accountability
     accounts should always be good
 
     Scenario Outline: Scenario Outline name
@@ -543,45 +739,45 @@ options: {
 @accountability
 @accountability-json
 Feature: accountability
-    accounts should always be good
+  accounts should always be good
 
-    Scenario Outline: Scenario Outline name
-        Given I have <number> cukes in my belly
+  Scenario Outline: Scenario Outline name
+    Given I have <number> cukes in my belly
 
-        When I wait <hour> hour
-        Then my belly should growl
+    When I wait <hour> hour
+    Then my belly should growl
 
-        Examples:
-            | number | hour                      |
-            | 1      | the first hour of the day |
-            | 2      | 2                         |
+    Examples:
+      | number | hour                      |
+      | 1      | the first hour of the day |
+      | 2      | 2                         |
 
-    @truncateTables
-    Scenario: Check accountability
-        The scenario definition for "Check accountability"
+  @truncateTables
+  Scenario: Check accountability
+    The scenario definition for "Check accountability"
 
-        # Insert fixtures
-        Given the following fixtures files are loaded:
-            | 10.contracts.yml |
-            | 20.wallet.yml    |
-            | 30.tax.yml       |
+    # Insert fixtures
+    Given the following fixtures files are loaded:
+      | 10.contracts.yml |
+      | 20.wallet.yml    |
+      | 30.tax.yml       |
 
-        Given I inject the header "authorization" with value 'Bearer some-token'
-        And I inject the header "accept" with value "application/json"
+    Given I inject the header "authorization" with value 'Bearer some-token'
+    And I inject the header "accept" with value "application/json"
 
-        Given I create an order
-        Then the response status code should be 200
+    Given I create an order
+    Then the response status code should be 200
 
-        When I pay the latest order
-        And I refund the last payment and transaction list with transactions:
-            """
-            [
-                {
-                    "name": "card",
-                    "credit": 5000
-                }
-            ]
-            """
+    When I pay the latest order
+    And I refund the last payment and transaction list with transactions:
+      """
+      [
+        {
+          "name": "card",
+          "credit": 5000
+        }
+      ]
+      """
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -600,6 +796,18 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: some feature
 
+  Scenario: Insert fixtures
+    # add OAuth token
+    Given something
+
+# saleStartDate is on summer time
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: some feature
+
     Scenario: Insert fixtures
         # add OAuth token
         Given something
@@ -612,9 +820,9 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: some feature
 
-    Scenario: Insert fixtures
-        # add OAuth token
-        Given something
+  Scenario: Insert fixtures
+    # add OAuth token
+    Given something
 
 # saleStartDate is on summer time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -637,6 +845,20 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: some feature
 
+  Scenario: Insert fixtures
+    # add OAuth token
+    Given something
+
+# Then the response status code should be 403
+# And the JSON nodes should be equal to:
+#     | hydra:description | Some error did happened |
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: some feature
+
     Scenario: Insert fixtures
         # add OAuth token
         Given something
@@ -651,9 +873,9 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: some feature
 
-    Scenario: Insert fixtures
-        # add OAuth token
-        Given something
+  Scenario: Insert fixtures
+    # add OAuth token
+    Given something
 
 # Then the response status code should be 403
 # And the JSON nodes should be equal to:
@@ -677,6 +899,19 @@ options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: f
 
+  Scenario: s
+    When context
+    # comment 1
+    # comment 2
+    Then result
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: f
+
     Scenario: s
         When context
         # comment 1
@@ -690,11 +925,11 @@ options: {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: f
 
-    Scenario: s
-        When context
-        # comment 1
-        # comment 2
-        Then result
+  Scenario: s
+    When context
+    # comment 1
+    # comment 2
+    Then result
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -717,6 +952,19 @@ options: {}
 # feature comment
 Feature: coucou
 
+  # scenario comment
+  Scenario: Scenario name
+    # step comment
+    Given a step
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# feature comment
+Feature: coucou
+
     # scenario comment
     Scenario: Scenario name
         # step comment
@@ -730,10 +978,10 @@ options: {
 # feature comment
 Feature: coucou
 
-    # scenario comment
-    Scenario: Scenario name
-        # step comment
-        Given a step
+  # scenario comment
+  Scenario: Scenario name
+    # step comment
+    Given a step
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -768,6 +1016,33 @@ Feature: Escaped pipes
 options: {}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Escaped pipes
+  The \\-character will be considered as an escape in table cell
+  iff it is followed by a |-character, a \\-character or an n.
+
+  Scenario: They are the future
+    Given a huge table with escaped characters
+      | \\n       |
+      | \\\\n     |
+      | \\\\\\n     |
+      | \\\\\\\\n   |
+      | \\\\\\\\\\n   |
+      | \\\\\\\\\\\\n |
+      | \\|      |
+      | \\\\\\|    |
+      | \\       |
+      | a\\b     |
+      | a\\b     |
+      | a\\\\\\b   |
+      | a\\\\\\b   |
+      | a\\      |
+      | \\a      |
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Escaped pipes
     The \\-character will be considered as an escape in table cell
     iff it is followed by a |-character, a \\-character or an n.
 
@@ -795,26 +1070,26 @@ options: {
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: Escaped pipes
-    The \\-character will be considered as an escape in table cell
-    iff it is followed by a |-character, a \\-character or an n.
+  The \\-character will be considered as an escape in table cell
+  iff it is followed by a |-character, a \\-character or an n.
 
-    Scenario: They are the future
-        Given a huge table with escaped characters
-            | \\n       |
-            | \\\\n     |
-            | \\\\\\n     |
-            | \\\\\\\\n   |
-            | \\\\\\\\\\n   |
-            | \\\\\\\\\\\\n |
-            | \\|      |
-            | \\\\\\|    |
-            | \\       |
-            | a\\b     |
-            | a\\b     |
-            | a\\\\\\b   |
-            | a\\\\\\b   |
-            | a\\      |
-            | \\a      |
+  Scenario: They are the future
+    Given a huge table with escaped characters
+      | \\n       |
+      | \\\\n     |
+      | \\\\\\n     |
+      | \\\\\\\\n   |
+      | \\\\\\\\\\n   |
+      | \\\\\\\\\\\\n |
+      | \\|      |
+      | \\\\\\|    |
+      | \\       |
+      | a\\b     |
+      | a\\b     |
+      | a\\\\\\b   |
+      | a\\\\\\b   |
+      | a\\      |
+      | \\a      |
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
@@ -833,6 +1108,59 @@ Feature: A very long feature name should be broken after printWidth  Lorem ipsum
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: A very long feature name should be broken after printWidth  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum eu urna ac placerat. Nulla vehicula id mi vitae tristique. Donec imperdiet tincidunt tellus, ac imperdiet metus venenatis sed. Cras quis est tempor justo luctus rutrum. Praesent accumsan, leo in commodo eleifend, lorem ex accumsan dui, nec rutrum lorem leo vitae neque. Fusce nec magna in arcu imperdiet tincidunt. In auctor velit ante, et interdum tellus commodo a. Donec in euismod tellus. Donec in nibh sit amet magna sagittis mollis accumsan ac felis. Proin suscipit turpis id ornare maximus.
+  Phasellus ultrices mattis erat vitae consectetur. Mauris nec volutpat tortor.
+  Duis maximus ipsum ac felis ultricies scelerisque. Sed vehicula ex vitae
+  iaculis rhoncus. Etiam tortor quam, scelerisque non interdum imperdiet,
+  euismod id dui. Etiam tristique fringilla bibendum. Vivamus efficitur elit sed
+  augue lacinia blandit. In bibendum eget lorem quis pretium. Quisque sapien
+  est, feugiat ornare dictum nec, rutrum sed quam. Vestibulum ante ipsum primis
+  in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque
+  tincidunt vehicula leo in tristique. Sed ut gravida urna, pulvinar aliquam
+  eros. Suspendisse sed leo sed mi consequat fringilla. Pellentesque habitant
+  morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+  Scenario: Morbi ligula lorem, mollis quis porttitor non, hendrerit in purus. Aenean a dui malesuada, euismod lacus sit amet, mollis ante. Vestibulum purus diam, malesuada a pulvinar a, ullamcorper nec odio. Nam volutpat faucibus pulvinar. Mauris maximus enim nec quam rhoncus, at semper nunc sagittis. In finibus, libero quis tristique viverra, magna erat mattis tortor, eu accumsan felis risus vitae diam. Praesent eleifend hendrerit tempor. Quisque nec posuere justo.
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+    vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+    ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum ac
+    et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus interdum
+    massa, vel congue lectus molestie at. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Sed fringilla justo vitae ultricies pretium.
+    Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius natoque
+    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
+    pharetra id. Curabitur nec sapien id mauris viverra tempus.
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis erat
+    ut, egestas sem. Mauris tristique massa velit, id feugiat justo vehicula sodales.
+    Morbi mattis ipsum vel leo varius venenatis. Etiam in ipsum in quam viverra convallis.
+    Sed et tellus nec neque luctus bibendum ac et augue. Nunc tincidunt interdum
+    ex in mollis. Donec faucibus interdum massa, vel congue lectus molestie at. Lorem
+    ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla justo vitae
+    ultricies pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
+    natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
+    pharetra id. Curabitur nec sapien id mauris viverra tempus.
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+    vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+    ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum ac
+    et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus interdum
+    massa, vel congue lectus molestie at. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Sed fringilla justo vitae ultricies pretium.
+    Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius natoque
+    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
+    pharetra id. Curabitur nec sapien id mauris viverra tempus.
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: A very long feature name should be broken after printWidth  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum eu urna ac placerat. Nulla vehicula id mi vitae tristique. Donec imperdiet tincidunt tellus, ac imperdiet metus venenatis sed. Cras quis est tempor justo luctus rutrum. Praesent accumsan, leo in commodo eleifend, lorem ex accumsan dui, nec rutrum lorem leo vitae neque. Fusce nec magna in arcu imperdiet tincidunt. In auctor velit ante, et interdum tellus commodo a. Donec in euismod tellus. Donec in nibh sit amet magna sagittis mollis accumsan ac felis. Proin suscipit turpis id ornare maximus.
     Phasellus ultrices mattis erat vitae consectetur. Mauris nec volutpat
@@ -892,54 +1220,50 @@ options: {
 }
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Feature: A very long feature name should be broken after printWidth  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vestibulum eu urna ac placerat. Nulla vehicula id mi vitae tristique. Donec imperdiet tincidunt tellus, ac imperdiet metus venenatis sed. Cras quis est tempor justo luctus rutrum. Praesent accumsan, leo in commodo eleifend, lorem ex accumsan dui, nec rutrum lorem leo vitae neque. Fusce nec magna in arcu imperdiet tincidunt. In auctor velit ante, et interdum tellus commodo a. Donec in euismod tellus. Donec in nibh sit amet magna sagittis mollis accumsan ac felis. Proin suscipit turpis id ornare maximus.
-    Phasellus ultrices mattis erat vitae consectetur. Mauris nec volutpat
-    tortor. Duis maximus ipsum ac felis ultricies scelerisque. Sed vehicula ex
-    vitae iaculis rhoncus. Etiam tortor quam, scelerisque non interdum
-    imperdiet, euismod id dui. Etiam tristique fringilla bibendum. Vivamus
-    efficitur elit sed augue lacinia blandit. In bibendum eget lorem quis
-    pretium. Quisque sapien est, feugiat ornare dictum nec, rutrum sed quam.
-    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-    cubilia curae; Pellentesque tincidunt vehicula leo in tristique. Sed ut
-    gravida urna, pulvinar aliquam eros. Suspendisse sed leo sed mi consequat
-    fringilla. Pellentesque habitant morbi tristique senectus et netus et
-    malesuada fames ac turpis egestas.
+  Phasellus ultrices mattis erat vitae consectetur. Mauris nec volutpat tortor.
+  Duis maximus ipsum ac felis ultricies scelerisque. Sed vehicula ex vitae
+  iaculis rhoncus. Etiam tortor quam, scelerisque non interdum imperdiet,
+  euismod id dui. Etiam tristique fringilla bibendum. Vivamus efficitur elit sed
+  augue lacinia blandit. In bibendum eget lorem quis pretium. Quisque sapien
+  est, feugiat ornare dictum nec, rutrum sed quam. Vestibulum ante ipsum primis
+  in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque
+  tincidunt vehicula leo in tristique. Sed ut gravida urna, pulvinar aliquam
+  eros. Suspendisse sed leo sed mi consequat fringilla. Pellentesque habitant
+  morbi tristique senectus et netus et malesuada fames ac turpis egestas.
 
-    Scenario: Morbi ligula lorem, mollis quis porttitor non, hendrerit in purus. Aenean a dui malesuada, euismod lacus sit amet, mollis ante. Vestibulum purus diam, malesuada a pulvinar a, ullamcorper nec odio. Nam volutpat faucibus pulvinar. Mauris maximus enim nec quam rhoncus, at semper nunc sagittis. In finibus, libero quis tristique viverra, magna erat mattis tortor, eu accumsan felis risus vitae diam. Praesent eleifend hendrerit tempor. Quisque nec posuere justo.
-        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
-        erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
-        vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
-        ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum
-        ac et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus
-        interdum massa, vel congue lectus molestie at. Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit. Sed fringilla justo vitae ultricies
-        pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
-        natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-        mus. Sed pretium eget leo ac luctus. Etiam tristique commodo libero, at
-        egestas lacus pharetra id. Curabitur nec sapien id mauris viverra
-        tempus.
-        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
-        erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo vehicula
-        sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in ipsum in quam
-        viverra convallis. Sed et tellus nec neque luctus bibendum ac et augue. Nunc
-        tincidunt interdum ex in mollis. Donec faucibus interdum massa, vel congue
-        lectus molestie at. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Sed fringilla justo vitae ultricies pretium. Nam pulvinar sem risus, a sagittis
-        mi fermentum ac. Orci varius natoque penatibus et magnis dis parturient montes,
-        nascetur ridiculus mus. Sed pretium eget leo ac luctus. Etiam tristique commodo
-        libero, at egestas lacus pharetra id. Curabitur nec sapien id mauris viverra
-        tempus.
-        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
-        erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
-        vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
-        ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum
-        ac et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus
-        interdum massa, vel congue lectus molestie at. Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit. Sed fringilla justo vitae ultricies
-        pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
-        natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-        mus. Sed pretium eget leo ac luctus. Etiam tristique commodo libero, at
-        egestas lacus pharetra id. Curabitur nec sapien id mauris viverra
-        tempus.
+  Scenario: Morbi ligula lorem, mollis quis porttitor non, hendrerit in purus. Aenean a dui malesuada, euismod lacus sit amet, mollis ante. Vestibulum purus diam, malesuada a pulvinar a, ullamcorper nec odio. Nam volutpat faucibus pulvinar. Mauris maximus enim nec quam rhoncus, at semper nunc sagittis. In finibus, libero quis tristique viverra, magna erat mattis tortor, eu accumsan felis risus vitae diam. Praesent eleifend hendrerit tempor. Quisque nec posuere justo.
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+    vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+    ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum ac
+    et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus interdum
+    massa, vel congue lectus molestie at. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Sed fringilla justo vitae ultricies pretium.
+    Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius natoque
+    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
+    pharetra id. Curabitur nec sapien id mauris viverra tempus.
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis erat
+    ut, egestas sem. Mauris tristique massa velit, id feugiat justo vehicula sodales.
+    Morbi mattis ipsum vel leo varius venenatis. Etiam in ipsum in quam viverra convallis.
+    Sed et tellus nec neque luctus bibendum ac et augue. Nunc tincidunt interdum
+    ex in mollis. Donec faucibus interdum massa, vel congue lectus molestie at. Lorem
+    ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla justo vitae
+    ultricies pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
+    natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
+    pharetra id. Curabitur nec sapien id mauris viverra tempus.
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+    vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+    ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum ac
+    et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus interdum
+    massa, vel congue lectus molestie at. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Sed fringilla justo vitae ultricies pretium.
+    Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius natoque
+    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
+    pharetra id. Curabitur nec sapien id mauris viverra tempus.
 
 
 
