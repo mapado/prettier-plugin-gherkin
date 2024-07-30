@@ -77,6 +77,9 @@ function run_spec(importMeta, options) {
         };
 
         const defaultOutput = await getOutput({});
+        const overrideTabWidthOutput = await getOutput({
+          tabWidth: 4,
+        });
         const outputWithNewline = await getOutput({
           forceNewlineBetweenStepBlocks: true,
         });
@@ -88,6 +91,7 @@ function run_spec(importMeta, options) {
               lineSeparator +
               source +
               defaultOutput.snapshot +
+              overrideTabWidthOutput.snapshot +
               outputWithNewline.snapshot +
               lastLineSeparator
           )
