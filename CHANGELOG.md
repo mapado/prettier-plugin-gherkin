@@ -1,5 +1,27 @@
 # CHANGELOG
 
+## Unreleased
+
+### Changed
+
+[BREAKING] Set default `tabWidth` to 2, as documented in [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/).
+
+If you want to use four space, you can override this values in your prettier configuration file:
+
+```json
+{
+  // …
+  "overrides": [
+    {
+      "files": "*.feature",
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}
+```
+
 ## [2.4.1] - 2024-07-26
 
 - Re-set hardline for Background [#27](https://github.com/mapado/prettier-plugin-gherkin/pull/27) by [@jdeniau](https://github.com/jdeniau)
