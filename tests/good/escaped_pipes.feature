@@ -9,3 +9,6 @@ Feature: Escaped pipes
     Given they have arrived
       | \|æ\\n     | \o\no\  |
       | \\\|a\\\\n | ø\\\nø\\|
+
+    When I escape several pipes
+      | a \| b \| c | d \| e \| f |
