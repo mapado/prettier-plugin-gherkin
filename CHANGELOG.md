@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [3.1.0] - 2024-09-02
+
+- Escaping multiple pipes should keep pipes escaped [#30](https://github.com/mapado/prettier-plugin-gherkin/pull/30) by [@jdeniau](https://github.com/jdeniau)
+
 ## [3.0.0] - 2024-07-30
 
 ### Changed
