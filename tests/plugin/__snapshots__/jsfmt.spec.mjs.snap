@@ -782,6 +782,64 @@ Feature: accountability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
+exports[`fixed_description.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+  Scenario: scenario
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is isa
+    erat ut, egestas sem. Mauris tristique massa
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+  Scenario: scenario
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is isa
+    erat ut, egestas sem. Mauris tristique massa
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+    Scenario: scenario
+        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+        erat ut, egestas sem. Mauris tristique massa
+        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is
+        isa
+        erat ut, egestas sem. Mauris tristique massa
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+  Scenario: scenario
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is isa
+    erat ut, egestas sem. Mauris tristique massa
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`;
+
 exports[`last_line_comment.feature 1`] = `
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 source
@@ -1133,14 +1191,15 @@ Feature: A very long feature name should be broken after printWidth  Lorem ipsum
     penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
     pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
     pharetra id. Curabitur nec sapien id mauris viverra tempus.
-    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis erat
-    ut, egestas sem. Mauris tristique massa velit, id feugiat justo vehicula sodales.
-    Morbi mattis ipsum vel leo varius venenatis. Etiam in ipsum in quam viverra convallis.
-    Sed et tellus nec neque luctus bibendum ac et augue. Nunc tincidunt interdum
-    ex in mollis. Donec faucibus interdum massa, vel congue lectus molestie at. Lorem
-    ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla justo vitae
-    ultricies pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
-    natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+    vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+    ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum ac
+    et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus interdum
+    massa, vel congue lectus molestie at. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Sed fringilla justo vitae ultricies pretium.
+    Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius natoque
+    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
     pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
     pharetra id. Curabitur nec sapien id mauris viverra tempus.
     Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
@@ -1189,15 +1248,16 @@ Feature: A very long feature name should be broken after printWidth  Lorem ipsum
         egestas lacus pharetra id. Curabitur nec sapien id mauris viverra
         tempus.
         Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
-        erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo vehicula
-        sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in ipsum in quam
-        viverra convallis. Sed et tellus nec neque luctus bibendum ac et augue. Nunc
-        tincidunt interdum ex in mollis. Donec faucibus interdum massa, vel congue
-        lectus molestie at. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Sed fringilla justo vitae ultricies pretium. Nam pulvinar sem risus, a sagittis
-        mi fermentum ac. Orci varius natoque penatibus et magnis dis parturient montes,
-        nascetur ridiculus mus. Sed pretium eget leo ac luctus. Etiam tristique commodo
-        libero, at egestas lacus pharetra id. Curabitur nec sapien id mauris viverra
+        erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+        vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+        ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum
+        ac et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus
+        interdum massa, vel congue lectus molestie at. Lorem ipsum dolor sit
+        amet, consectetur adipiscing elit. Sed fringilla justo vitae ultricies
+        pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
+        natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        mus. Sed pretium eget leo ac luctus. Etiam tristique commodo libero, at
+        egestas lacus pharetra id. Curabitur nec sapien id mauris viverra
         tempus.
         Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
         erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
@@ -1243,14 +1303,15 @@ Feature: A very long feature name should be broken after printWidth  Lorem ipsum
     penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
     pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
     pharetra id. Curabitur nec sapien id mauris viverra tempus.
-    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis erat
-    ut, egestas sem. Mauris tristique massa velit, id feugiat justo vehicula sodales.
-    Morbi mattis ipsum vel leo varius venenatis. Etiam in ipsum in quam viverra convallis.
-    Sed et tellus nec neque luctus bibendum ac et augue. Nunc tincidunt interdum
-    ex in mollis. Donec faucibus interdum massa, vel congue lectus molestie at. Lorem
-    ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla justo vitae
-    ultricies pretium. Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius
-    natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa velit, id feugiat justo
+    vehicula sodales. Morbi mattis ipsum vel leo varius venenatis. Etiam in
+    ipsum in quam viverra convallis. Sed et tellus nec neque luctus bibendum ac
+    et augue. Nunc tincidunt interdum ex in mollis. Donec faucibus interdum
+    massa, vel congue lectus molestie at. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit. Sed fringilla justo vitae ultricies pretium.
+    Nam pulvinar sem risus, a sagittis mi fermentum ac. Orci varius natoque
+    penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed
     pretium eget leo ac luctus. Etiam tristique commodo libero, at egestas lacus
     pharetra id. Curabitur nec sapien id mauris viverra tempus.
     Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis

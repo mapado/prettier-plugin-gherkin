@@ -347,7 +347,15 @@ function printTextBloc(text: string, doIndent: boolean = false) {
             .trim()
             // replace all spaces by a line, that will break only if it overflow thanks to the `fill` method
             .split(' ')
-            .map((l): Array<string | doc.builders.Line> => [l, line])
+            .map((l, i, a): string | Array<string | doc.builders.Line> => {
+              // if we are on the last element, we do not need to add a line as we will hard a "hardline" just after
+              if (i === a.length - 1) {
+                return l;
+              }
+
+              // return the current word and a line after that to break if needed
+              return [l, line];
+            })
             .flat();
 
           return [...splittedLine, hardline];
