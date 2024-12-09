@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [3.1.1] - 2024-12-09
+
+- Stable formatting for node description [#33](https://github.com/mapado/prettier-plugin-gherkin/pull/33) by [@jdeniau](https://github.com/jdeniau)
+
 ## [3.1.0] - 2024-09-02
 
 - Escaping multiple pipes should keep pipes escaped [#30](https://github.com/mapado/prettier-plugin-gherkin/pull/30) by [@jdeniau](https://github.com/jdeniau)
