@@ -782,6 +782,67 @@ Feature: accountability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `;
 
+exports[`fixed_description.feature 1`] = `
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+  Scenario: scenario
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is isa
+    erat ut, egestas sem. Mauris tristique massa
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+  Scenario: scenario
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is isa
+
+    erat ut, egestas sem. Mauris tristique massa
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "tabWidth": 4
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+    Scenario: scenario
+        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+
+        erat ut, egestas sem. Mauris tristique massa
+        Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is
+        isa
+        erat ut, egestas sem. Mauris tristique massa
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+options: {
+ "forceNewlineBetweenStepBlocks": true
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Feature: Ploup
+
+  Scenario: scenario
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, convallis
+    erat ut, egestas sem. Mauris tristique massa
+    Maecenas ullamcorper porta sapien. Vestibulum id ex fermentum, conval is isa
+
+    erat ut, egestas sem. Mauris tristique massa
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`;
+
 exports[`last_line_comment.feature 1`] = `
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 source
