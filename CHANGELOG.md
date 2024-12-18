@@ -16,7 +16,7 @@
 
 [BREAKING] Set default `tabWidth` to 2, as documented in [Gherkin Reference](https://cucumber.io/docs/gherkin/reference/).
 
-If you want to keep v2 version and use four space, you can override this values in your prettier configuration file:
+If you want to update to version 3 and use four space, you can override this values in your prettier configuration file:
 
 ```json
 {
