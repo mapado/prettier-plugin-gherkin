@@ -16,7 +16,7 @@
     "build": "tsc",
     "lint": "tsc --noEmit",
     "example": "yarn build && prettier --plugin=dist/index.js tests/plugin/example.feature",
-    "test": "yarn build && NODE_OPTIONS=--experimental-vm-modules jest",
+    "test": "yarn build && NODE_OPTIONS=--experimental-vm-modules jest --maxWorkers=3",
     "prepublishOnly": "yarn build"
   },
   "keywords": [
