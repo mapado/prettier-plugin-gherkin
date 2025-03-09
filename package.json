@@ -5,15 +5,20 @@
   "description": "This prettier plugin format your gherkin (`.feature` files) documents.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mapado/prettier-plugin-gherkin.git"
+    "url": "git+https://github.com/mapado/prettier-plugin-gherkin.git"
   },
   "bugs": {
     "url": "https://github.com/mapado/prettier-plugin-gherkin/issues"
   },
   "homepage": "https://github.com/mapado/prettier-plugin-gherkin",
-  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "node build/clean-dist.mjs && tsc",
     "lint": "tsc --noEmit",
     "example": "yarn build && prettier --plugin=dist/index.js tests/plugin/example.feature",
     "test": "yarn build && NODE_OPTIONS=--experimental-vm-modules jest",
