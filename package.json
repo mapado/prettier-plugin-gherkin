@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-gherkin",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "type": "module",
   "description": "This prettier plugin format your gherkin (`.feature` files) documents.",
   "repository": {
