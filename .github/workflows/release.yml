@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  workflow_dispatch: ~
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: 'Build & Publish to NPM'
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      # maybe handled via setup-node action one day https://github.com/actions/setup-node/pull/901
+      - name: enable corepack
+        run: corepack enable
+
+      # why did we did that twice ? https://github.com/actions/setup-node/issues/1075
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+
+      - run: yarn install
+      - run: yarn build
+
+      - name: 'Determine NPM tag: latest or next depending if we are on a prerelease or not (version with hyphen should be a prerelease)'
+        id: npm_tag
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ $VERSION == *-* ]]; then
+            echo "TAG=next" >> "$GITHUB_OUTPUT"
+          else
+            echo "TAG=latest" >> "$GITHUB_OUTPUT"
+          fi
+
+      - run: cd npm && npm publish --provenance --tag ${{ steps.npm_tag.outputs.TAG }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
