@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [3.1.2] - 2025-03-03
+
+- Fix package.json warning [#36](https://github.com/mapado/prettier-plugin-gherkin/pull/36) by [@jdeniau](https://github.com/jdeniau)
+
 ## [3.1.1] - 2024-12-09
 
 - Stable formatting for node description [#33](https://github.com/mapado/prettier-plugin-gherkin/pull/33) by [@jdeniau](https://github.com/jdeniau)
