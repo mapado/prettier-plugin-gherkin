@@ -2,3 +2,13 @@ node_modules/
 coverage/
 dist/
 yarn-error.log
+
+
+# yarn berry 
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

@@ -202,9 +202,7 @@ export class TypedComment
 
 export class TypedFeatureChild
   extends TypedGherkinNode<FeatureChild>
-  implements
-    FeatureChild,
-    HasChild<TypedRule | TypedScenario | TypedBackground>
+  implements FeatureChild, HasChild<TypedRule | TypedScenario | TypedBackground>
 {
   rule?: TypedRule;
   background?: TypedBackground;
