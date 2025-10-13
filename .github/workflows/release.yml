@@ -29,6 +29,7 @@ jobs:
 
       # Ensure npm 11.5.1 or later is installed
       - name: Update npm
+        run: npm install -g npm@latest
 
       - run: yarn install --immutable
 
