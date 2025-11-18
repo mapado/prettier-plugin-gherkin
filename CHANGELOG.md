@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [3.1.3] - 2025-10-13
+
+- Release package with npm trusted publisher only
+
 ## [3.1.2] - 2025-03-03
 
 - Fix package.json warning [#36](https://github.com/mapado/prettier-plugin-gherkin/pull/36) by [@jdeniau](https://github.com/jdeniau)

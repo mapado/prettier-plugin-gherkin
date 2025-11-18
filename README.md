@@ -124,15 +124,16 @@ When I do something
 Then I should have a result
 ```
 
-If you already have a blank line in your input, it will be kept as-is (event with this option set to `false`).
+If you already have a blank line in your input, it will be kept as-is (even with this option set to `false`).
 If you have more than one blank line, it will be reduced to a single blank line.
 
 ### `escapeBackslashes`
 
 default to `false`
 
-If false, all escaped backslash will be transformed to simple backslash : `\\` → `\`
-If true, all backslash will be espaced : `\` → `\\`
+If `false`, all escaped backslash will be transformed to simple backslash : `\\` → `\`
+
+If `true`, all backslash will be espaced : `\` → `\\`
 
 This option may be due to the parser ([see issue](https://github.com/cucumber/common/issues/2115)) and is here because of an inconsistence between the [gherkin reference](https://cucumber.io/docs/gherkin/reference/#table-cell-escaping), that said that:
 
