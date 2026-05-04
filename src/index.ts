@@ -384,10 +384,17 @@ const gherkinAstPrinter: Printer<TypedGherkinNode<GherkinNode>> = {
     const previousNode = findPreviousNode(path, 6);
 
     // if the comment follows a `Given` step, then the comment should have a leading blank line
-    // but no blank line between the comment and the step
+    // but no blank line between the comment and the step.
+    // Only the first comment in a contiguous block prepends the hardline; subsequent
+    // comments rely on prettier's own join between leading own-line comments so that
+    // multi-line comment blocks do not get blank lines inserted between every line.
+    // @ts-expect-error comments are injected by prettier directly
+    const parentComments = stepNode?.comments ?? [];
+    const isFirstLeadingComment = parentComments.indexOf(node) <= 0;
     if (
       stepNode instanceof TypedStep &&
-      stepNeedsHardline(options, stepNode, previousNode)
+      stepNeedsHardline(options, stepNode, previousNode) &&
+      isFirstLeadingComment
     ) {
       return [printHardline(), node.text.trim()];
     }
