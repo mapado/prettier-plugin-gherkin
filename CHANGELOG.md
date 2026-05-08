@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [3.1.4] - 2026-05-08
+
 - Stop inserting blank lines between consecutive `#` comment lines that lead a step requiring a leading hardline (e.g. with `forceNewlineBetweenStepBlocks: true`). Only the first comment in a contiguous block now prepends the hardline; subsequent comments are joined directly.
 
 ## [3.1.3] - 2025-10-13
