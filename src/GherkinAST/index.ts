@@ -45,10 +45,10 @@ export function isWithLocation(node: unknown): node is GherkinNodeWithLocation {
 
 function reEscapeTableCell(str: string): string {
   const out = str
-    // espace all pipes that have been unescaped
-    .replaceAll('|', '\\|')
     // espace all backslashes that have been unescaped
-    .replace(/\\/g, '\\\\');
+    .replace(/\\/g, '\\\\')
+    // espace all pipes that have been unescaped
+    .replaceAll('|', '\\|');
 
   if (OPTIONS.escapeBackslashes) {
     return out;
