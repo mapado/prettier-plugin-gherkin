@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "node build/clean-dist.mjs && tsc",
+    "jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "lint": "tsc --noEmit",
     "example": "yarn build && prettier --plugin=dist/index.js tests/plugin/example.feature",
     "test": "yarn build && NODE_OPTIONS=--experimental-vm-modules jest",
