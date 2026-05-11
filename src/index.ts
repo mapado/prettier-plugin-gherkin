@@ -10,16 +10,16 @@ import {
   Location,
 } from '@cucumber/messages';
 import {
-  AstPath,
-  Parser,
-  Plugin,
-  Printer,
-  SupportLanguage,
-  util,
   doc,
-  Doc,
-  ParserOptions,
-  Options,
+  util,
+  type AstPath,
+  type Doc,
+  type Options,
+  type Parser,
+  type ParserOptions,
+  type Plugin,
+  type Printer,
+  type SupportLanguage,
 } from 'prettier';
 import {
   TypedGherkinDocument,
@@ -28,7 +28,6 @@ import {
   TypedTag,
   TypedFeatureChild,
   TypedScenario,
-  GherkinNode,
   TypedGherkinNode,
   TypedStep,
   TypedDocString,
@@ -41,8 +40,9 @@ import {
   TypedRuleChild,
   isHasChildren,
   isHasChild,
-  GherkinNodeWithLocation,
   isWithLocation,
+  type GherkinNode,
+  type GherkinNodeWithLocation,
 } from './GherkinAST/index.js';
 
 const DEFAULT_ESCAPE_BACKSLASH = false;

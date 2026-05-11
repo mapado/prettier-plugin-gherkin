@@ -17,7 +17,6 @@ import {
   DataTable,
   RuleChild,
 } from '@cucumber/messages';
-import { ParserOptions } from 'prettier';
 
 export type GherkinNodeWithLocation =
   | Comment
