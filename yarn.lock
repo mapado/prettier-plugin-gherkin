@@ -381,24 +381,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cucumber/gherkin@npm:^32.2.0":
-  version: 32.2.0
-  resolution: "@cucumber/gherkin@npm:32.2.0"
+"@cucumber/gherkin@npm:^39.1.0":
+  version: 39.1.0
+  resolution: "@cucumber/gherkin@npm:39.1.0"
   dependencies:
-    "@cucumber/messages": "npm:>=19.1.4 <28"
-  checksum: 10c0/43794c59ad1a43b09637455bad18f010fcb76e0b62103102f39007d43c09419027ee652cba329cc3c4f3ba07595246f197e13f618e0f92cfa3111373e5a41073
+    "@cucumber/messages": "npm:>=31.0.0 <33"
+  checksum: 10c0/e77aa2658aba240ba3834509571e43af74a67f9773ad4fd896b73232965719dc5f2935fbaa80676e02d64ca290c709304dcdd3881a7b38264bb790c1052d315e
   languageName: node
   linkType: hard
 
-"@cucumber/messages@npm:>=19.1.4 <28, @cucumber/messages@npm:^27.2.0":
-  version: 27.2.0
-  resolution: "@cucumber/messages@npm:27.2.0"
+"@cucumber/messages@npm:>=31.0.0 <33, @cucumber/messages@npm:^32.3.1":
+  version: 32.3.1
+  resolution: "@cucumber/messages@npm:32.3.1"
   dependencies:
-    "@types/uuid": "npm:10.0.0"
     class-transformer: "npm:0.5.1"
     reflect-metadata: "npm:0.2.2"
-    uuid: "npm:11.0.5"
-  checksum: 10c0/6b21e99976f1463ee7dc1fe36d74844cae559f1cf45f53e3b62b6cc9c7b1ca191ad971c9c3899fef5de0d2421c5b369cc64c4b9254ed2690791b2ecce096caf0
+  checksum: 10c0/030182a0746603e2188a9af4299249ff75262c21552b1e9e341b211710ba6cb0143583d5073a9dd51070bcb51a7420335e7479dc552d6b995350ab5dedada6da
   languageName: node
   linkType: hard
 
@@ -942,13 +940,6 @@ __metadata:
   version: 2.0.3
   resolution: "@types/stack-utils@npm:2.0.3"
   checksum: 10c0/1f4658385ae936330581bcb8aa3a066df03867d90281cdf89cc356d404bd6579be0f11902304e1f775d92df22c6dd761d4451c804b0a4fba973e06211e9bd77c
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:10.0.0":
-  version: 10.0.0
-  resolution: "@types/uuid@npm:10.0.0"
-  checksum: 10c0/9a1404bf287164481cb9b97f6bb638f78f955be57c40c6513b7655160beb29df6f84c915aaf4089a1559c216557dc4d2f79b48d978742d3ae10b937420ddac60
   languageName: node
   linkType: hard
 
@@ -2964,8 +2955,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "prettier-plugin-gherkin@workspace:."
   dependencies:
-    "@cucumber/gherkin": "npm:^32.2.0"
-    "@cucumber/messages": "npm:^27.2.0"
+    "@cucumber/gherkin": "npm:^39.1.0"
+    "@cucumber/messages": "npm:^32.3.1"
     "@types/node": "npm:^25.6.2"
     jest: "npm:^30.4.2"
     jest-watch-typeahead: "npm:^3.0.1"
@@ -3498,15 +3489,6 @@ __metadata:
   bin:
     update-browserslist-db: cli.js
   checksum: 10c0/13a00355ea822388f68af57410ce3255941d5fb9b7c49342c4709a07c9f230bbef7f7499ae0ca7e0de532e79a82cc0c4edbd125f1a323a1845bf914efddf8bec
-  languageName: node
-  linkType: hard
-
-"uuid@npm:11.0.5":
-  version: 11.0.5
-  resolution: "uuid@npm:11.0.5"
-  bin:
-    uuid: dist/esm/bin/uuid
-  checksum: 10c0/6f59f0c605e02c14515401084ca124b9cb462b4dcac866916a49862bcf831874508a308588c23a7718269226ad11a92da29b39d761ad2b86e736623e3a33b6e7
   languageName: node
   linkType: hard
 
