@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## [4.0.0] - 2026-05-11
+
 - [BREAKING] Drop support for Node.js 18
 - [Internal] Upgrade to jest 30
 - [Internal] Update workflow files
