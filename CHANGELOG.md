@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- [BREAKING] Drop support for Node.js 18
+- [Internal] Upgrade to jest 30
+- [Internal] Update workflow files
+
 ## [3.1.4] - 2026-05-08
 
 - Stop inserting blank lines between consecutive `#` comment lines that lead a step requiring a leading hardline (e.g. with `forceNewlineBetweenStepBlocks: true`). Only the first comment in a contiguous block now prepends the hardline; subsequent comments are joined directly.
