@@ -19,6 +19,7 @@
   ],
   "scripts": {
     "build": "node build/clean-dist.mjs && tsc",
+    "jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "lint": "tsc --noEmit",
     "example": "yarn build && prettier --plugin=dist/index.js tests/plugin/example.feature",
     "test": "yarn build && NODE_OPTIONS=--experimental-vm-modules jest",
@@ -35,15 +36,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@cucumber/gherkin": "^32.0.0",
+    "@cucumber/gherkin": "^32.2.0",
     "@cucumber/messages": "^27.2.0",
     "prettier": "^3.5.3"
   },
   "devDependencies": {
-    "@types/node": "^22.13.10",
-    "jest": "^29.7.0",
-    "jest-watch-typeahead": "^2.2.2",
-    "typescript": "^5.8.2"
+    "@types/node": "^25.6.2",
+    "jest": "^30.4.2",
+    "jest-watch-typeahead": "^3.0.1",
+    "typescript": "^6.0.3"
   },
   "packageManager": "yarn@4.5.3"
 }
